@@ -10,6 +10,7 @@ class BookPage(TemplateView):
 		# Call the base implementation first to get a context
 		context = super().get_context_data(**kwargs)
 		context['books'] = Book.objects.all()
+		context['featuredbooks'] = Book.objects.filter(book_featured=True)
 		return context
 
 def index(request):

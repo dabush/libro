@@ -1,6 +1,14 @@
 {% load static %}
 
-<div class="carousel-item">
-  <img class="d-block w-100" src="{{ obj.cover_image.url }}" alt="First slide" style="height: 200px; width: auto;">
-    <p>{{ obj }}</p>
-</div>
+<div class="carousel-item col-md-4">
+        <a href="{{ obj.slug }},{{ obj.id }}">
+        <div class="card">
+          <div class="card-bg-image" style="background-image: url('{{ obj.cover_image.url }}'); background-size: cover;">
+            </div>
+          <div class="card-body">
+            <h4 class="card-title">{{ obj }}</h4>
+            <p class="card-text">by {{ obj.author }}</p>
+          </div>
+        </div>
+      </a>
+      </div>
