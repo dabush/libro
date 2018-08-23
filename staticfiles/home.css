@@ -1,3 +1,17 @@
+/*loading our fonts*/
+@import url('https://fonts.googleapis.com/css?family=Libre+Baskerville:400,700');
+
+
+/*site-wide*/
+a {
+	color: #E81C23;
+}
+
+a:hover {
+	color: #680D10;
+	text-decoration: none;
+}
+
 .libro-jumbotron {
 	height: 35vh;
 	padding-top: 0;
@@ -15,6 +29,10 @@
 	top: 50%;
 	transform: translateY(-50%);
 	-webkit-transform: translateY(-50%);
+}
+
+.libro-jumbotron div.jumbotron-text h2 {
+	font-family: "Libre Baskerville", serif;
 }
 
 .home-jumbotron {
@@ -35,6 +53,7 @@
 .books-jumbotron-text {
 	font-size: 25vh;
 	margin: auto;
+	font-family: "Libre Baskerville", serif;
 }
 
 .authors-jumbotron {
@@ -51,6 +70,7 @@
 
 .author-detail-jumbotron h1.author-name {
 	font-size: 1em;
+	font-family: "Libre Baskerville", serif;
 }
 
 .author-detail-jumbotron div.display-3 {
@@ -59,27 +79,20 @@
 	align-items: center;
 }
 
-.book-detail-jumbotron {
-	background: #000000;
+.featured-books div.card-group {
+	margin: auto;
 }
 
-.book-detail-jumbotron .cover-image {
-	background-size: cover;
+.featured-books div.card {
+	width: 25vw;
+	margin: 10px;
 }
 
-.book-detail-jumbotron h1.book-title {
-	font-size: 1em;
-}
-
-.book-detail-jumbotron div.display-3 {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-.card-bg-image {
+.featured-books div.card-bg-image {
 	height: 200px;
+	width: 40%;
 	overflow: hidden;
+	border-right: 2px solid black;
 }
 
 .card-bg-image img {
@@ -88,7 +101,78 @@
 }
 .card {
 	transition: 1s border ease;
+	flex-direction: row;
 }
+
 .card:hover {
 	border: 1px solid black;
+}
+
+.card-body {
+	max-width: 59%;
+}
+
+.books-breadcrumbs div.breadcrumbs-wrapper {
+	height: 10vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.books-breadcrumbs div.breadcrumbs-wrapper span {
+	margin-left: 5%;
+}
+
+.books-breadcrumbs div.breadcrumbs-wrapper a:hover {
+	text-decoration: none;
+}
+
+
+.book-details {
+	border-bottom: 1px solid black;
+}
+
+.book-details .cover-image {
+	background-size: cover;
+	height: 61vh;
+	width: 22vw;
+	margin: auto;
+}
+
+.book-details p.publisher {
+	width: 22vw;
+	margin: auto;
+}
+
+.book-details p.book-country {
+	width: 22vw;
+	margin: auto;
+}
+
+
+.book-details h1.book-title {
+	font-size: 1em;
+	font-family: "Libre Baskerville", serif;
+}
+
+.book-details h2.book-subtitle {
+	font-family: "Libre Baskerville", serif;
+}
+
+.book-details p.author-name {
+	font-family: "Libre Baskerville", serif;
+	font-size: 0.5em;
+}
+
+.book-details p.pub-year {
+	font-family: "Libre Baskerville", serif;
+	font-size: 0.4em;
+}
+
+.book-details p.book-desc {
+	font-size: 0.3em;
+}
+
+.book-details div.display-3 {
+	padding-right: 5%;
 }

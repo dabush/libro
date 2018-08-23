@@ -2,13 +2,29 @@
 {% load static %}
 
 {% block content %}
-<section class="jumbotron jumbotron-fluid libro-jumbotron book-detail-jumbotron">
+<section class="books-breadcrumbs">
+	<div class="breadcrumbs-wrapper">
+		<a href="../../books">
+			<span>
+				<i class="fas fa-chevron-left"></i>&nbsp;&nbsp;&nbsp;&nbsp;Books
+			</span>
+		</a>
+	</div>
+</section>
+<section class="book-details">
 		<div class="row book-row">
-		<div class="cover-image col-4" style="background-image: url('{{ book.cover_image.url }}');">
-
+		<div class="col-4">
+		<div class ="cover-image" style="background-image: url('{{ book.cover_image.url }}');">
+		</div>
+		<p class="publisher"><span>{{ book.publisher }}</span></p>
+		<p class="book-country"><span>{{ book.book_country.name }}</span></p>
 		</div>
 		<div class="display-3 col-8">
-			<h1 class = "text-white book-title">{{book.book_title}}</h1>
+			<h1 class="text-black book-title">{{book.book_title}}</h1>
+			<h2 class="text-black book-subtitle">{{ book.book_subtitle }}</h2>
+			<p class="author-name">by <a href="../../authors/{{ book.author.slug }},{{ book.author.id }}">{{ book.author }}</a></p>
+			<p class="pub-year">{{ book.pub_year }}</p>
+			<p class="book-desc">{{ book.book_desc }}</p>
 		</div>
 		</div>
 </section>
