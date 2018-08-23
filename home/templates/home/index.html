@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<section class="jumbotron jumbotron-fluid libro-jumbotron home-jumbotron">
+    <div>
+        <div class="row">
+            <div class="col-sm">
+            	<div class="jumbotron-text">
+                <h2 class="text-white">
+                    Everything about books, all in one place.
+                </h2>
+                <button class="btn btn-light">Read one now</button>
+            </div>
+            </div>
+            <div class="col-sm">
+                <div class="img-fluid home-image" style = "background-image: url({% static "banner_image.jpg" %})" </div>
+            </div>
+    </div>
+</section>
+
+<section>
+<div class="album pt-3 bg-light">
+    <div class="container text-center">
+        <h2 class="mb-3">Featured Authors</h2>
+        <div class="row">
+        </div>
+        <hr />
+        <h2 class="mb-3">Featured Books</h2>
+        <div class="row">
+        </div>
+    </div>
+</div>
+</section>
+{% endblock %}

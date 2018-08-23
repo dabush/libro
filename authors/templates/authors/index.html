@@ -1,9 +1,17 @@
-{% if latest_author_list %}
-    <ul>
-    {% for author in latest_author_list %}
-        <li><a href="{% url 'authors:detail' author.id %}"{{ author.id }}/">{{ author.last_name }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No authors have been added.</p>
-{% endif %}
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<section class="jumbotron jumbotron-fluid libro-jumbotron authors-jumbotron">
+    <div>
+        <div class="row">
+            <h1 class="text-white books-jumbotron-text">Authors</h1>
+    </div>
+</section>
+
+<section>
+    <div>
+        {% for author in authors %} {% include "./_card.html" with obj=author type="author" numTexts=ntexts %} {% endfor %}
+    </div>
+</section>
+{% endblock %}

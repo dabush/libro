@@ -1,1 +1,25 @@
-<h1>{{ author.last_name }}</h1>
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<section class="jumbotron jumbotron-fluid libro-jumbotron author-detail-jumbotron">
+		<div class="row author-row">
+		<div class="author-image col-4" style="background-image: url('{{ author.author_image.url }}');">
+
+		</div>
+		<div class="display-3 col-8">
+			<h1 class = "text-white author-name">{{author.first_name}} {{author.last_name}}</h1>
+		</div>
+		</div>
+</section>
+<div class="album py-5 bg-light">
+    <div class="container text-center">
+        <div class="row">
+            {% for book in books %}
+                {% include "./_card1.html" with obj=book type="book" %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

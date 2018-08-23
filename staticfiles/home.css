@@ -1,0 +1,94 @@
+.libro-jumbotron {
+	height: 35vh;
+	padding-top: 0;
+	padding-bottom: 0;
+	position: relative;
+}
+
+.libro-jumbotron .row {
+	height: 35vh;
+}
+
+.libro-jumbotron div.jumbotron-text {
+	margin-left: 10%;
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	-webkit-transform: translateY(-50%);
+}
+
+.home-jumbotron {
+	background: #000000;
+}
+
+.libro-jumbotron .home-image {
+	height: 35vh;
+	background-size: cover;
+	clip-path: polygon(40% 0, 100% 0, 100% 100%, 0 100%);
+	-webkit-clip-path: polygon(40% 0, 100% 0, 100% 100%, 0 100%);
+}
+
+.books-jumbotron {
+	background: #000000;
+}
+
+.books-jumbotron-text {
+	font-size: 25vh;
+	margin: auto;
+}
+
+.authors-jumbotron {
+	background: #000000;
+}
+
+.author-detail-jumbotron {
+	background: #000000;
+}
+
+.author-detail-jumbotron .author-image {
+	background-size: cover;
+}
+
+.author-detail-jumbotron h1.author-name {
+	font-size: 1em;
+}
+
+.author-detail-jumbotron div.display-3 {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.book-detail-jumbotron {
+	background: #000000;
+}
+
+.book-detail-jumbotron .cover-image {
+	background-size: cover;
+}
+
+.book-detail-jumbotron h1.book-title {
+	font-size: 1em;
+}
+
+.book-detail-jumbotron div.display-3 {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.card-bg-image {
+	height: 200px;
+	overflow: hidden;
+}
+
+.card-bg-image img {
+	width: 100%;
+	height: auto;
+}
+.card {
+	transition: 1s border ease;
+}
+.card:hover {
+	border: 1px solid black;
+}

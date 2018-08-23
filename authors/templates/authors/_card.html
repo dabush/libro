@@ -1,0 +1,14 @@
+{% load static %}
+
+<div class="col-sm-4 col-md-3">
+    <a href='/authors/{{ author.slug }},{{ author.id }}'>
+        <div class="card mb-4 box-shadow">
+            <div class="card-bg-image" style="background-image: url('{% if obj.author_image %}{{ obj.author_image.url }}{% endif %}'); background-size: cover;">
+            </div>
+            <div class="card-body">
+                <h4>{{obj}}</h4>
+                <p class="card-text"></p>
+            </div>
+        </div>
+    </a>
+</div>

@@ -1,9 +1,17 @@
-{% if latest_book_list %}
-    <ul>
-    {% for book in latest_book_list %}
-        <li><a href="{% url 'books:detail' book.id %}"{{ book.id }}/">{{ book.book_title }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No books have been added.</p>
-{% endif %}
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<section class="jumbotron jumbotron-fluid libro-jumbotron books-jumbotron">
+    <div>
+        <div class="row">
+            <h1 class="text-white books-jumbotron-text">Books</h1>
+    </div>
+</section>
+
+<section>
+    <div>
+    	{% for book in books %} {% include "./_card.html" with obj=book type="book" numTexts=ntexts %} {% endfor %}
+    </div>
+</section>
+{% endblock %}

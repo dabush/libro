@@ -1,9 +1,11 @@
 from django.urls import path
-
+from django.conf.urls import include
 from . import views
+from .views import BookPage, BookDetailPage
+
 
 app_name = 'books'
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('<int:book_id>/', views.detail, name='detail'),
+    path('', BookPage.as_view(), name='home'),
+    path('<slug:slug>,<int:book_id>/', BookDetailPage.as_view(), name='detail'),
 ]

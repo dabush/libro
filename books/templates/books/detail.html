@@ -1,3 +1,18 @@
-<h1>{{ book.book_title }}</h1>
-<h2>{{ book.pub_date }}</h2>
-<p>{{ book.publisher }}</p>
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<section class="jumbotron jumbotron-fluid libro-jumbotron book-detail-jumbotron">
+		<div class="row book-row">
+		<div class="cover-image col-4" style="background-image: url('{{ book.cover_image.url }}');">
+
+		</div>
+		<div class="display-3 col-8">
+			<h1 class = "text-white book-title">{{book.book_title}}</h1>
+		</div>
+		</div>
+</section>
+<div class="album py-5 bg-light">
+</div>
+
+{% endblock %}
