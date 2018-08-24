@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404, render
 from django.views.generic import TemplateView
 
 from .models import Book
+from authors.models import Author
 
 
 class BookPage(TemplateView):
@@ -29,6 +30,7 @@ class BookDetailPage(TemplateView):
 		book = Book.objects.get(pk=self.kwargs['book_id'])
 		context = super().get_context_data(**kwargs)
 		context['book'] = Book.objects.get(pk=self.kwargs['book_id'])
+		context['author_books'] = Book.objects.all().filter(author=book.author).exclude(id=book.id)
 		return context
 
 class BrowseAllBooksPage(TemplateView):

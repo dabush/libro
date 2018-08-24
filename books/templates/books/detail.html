@@ -28,7 +28,15 @@
 		</div>
 		</div>
 </section>
-<div class="album py-5 bg-light">
-</div>
+<section class="album py-5 bg-light">
+	<div class="text-center">
+		<h1>Other books by {{ book.author }}</h1>
+	</div>
+	<div class = "scrolling-wrapper">
+            {% for books in author_books %}
+                {% include "./_slide.html" with obj=books type="book" %}
+            {% endfor %}
+        </div>
+</section>
 
 {% endblock %}
