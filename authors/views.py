@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import TemplateView, ListView
+from django.db.models import Count
 
 from .models import Author
 from books.models import Book
@@ -27,6 +28,7 @@ class AuthorDetailPage(TemplateView):
 		context = super().get_context_data(**kwargs)
 		context['author'] = Author.objects.get(pk=self.kwargs['author_id'])
 		context['books'] = Book.objects.filter(author=author)
+		context['same_country'] = Author.objects.all().filter(country=author.country).exclude(id=author.id)
 		return context
 
 class BrowseAllAuthorsPage(ListView):

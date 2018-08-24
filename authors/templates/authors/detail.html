@@ -18,11 +18,28 @@
 <div class="album py-5 bg-light">
     <div class="container text-center">
         <div class="row">
+        	<div class="scrolling-wrapper">
             {% for book in books %}
                 {% include "./_card1.html" with obj=book type="book" %}
             {% endfor %}
         </div>
+        </div>
     </div>
 </div>
+{% if same_country %}
+<div class="album py-5 bg-light">
+    <div class="container text-center">
+    	<div class="text-center">
+    		<h1>Other authors from {{ author.country.name }}</h1>
+    	</div>
+        <div class="row">
+            {% for authors in same_country %}
+                {% include "./_slide1.html" with obj=authors type="author" %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}
+
 
 {% endblock %}
