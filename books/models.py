@@ -37,6 +37,15 @@ class Period(models.Model):
 	class Meta:
 		ordering = ('period_name',)
 
+class Setting(models.Model):
+	setting_name = models.CharField(max_length=100)
+
+	def __str__(self):
+		return self.setting_name
+
+	class Meta:
+		ordering = ('setting_name',)
+
 class Book(models.Model):
 	book_title = models.CharField(max_length=200)
 	book_subtitle = models.CharField(max_length=200, blank=True)
@@ -47,6 +56,7 @@ class Book(models.Model):
 	cover_image = models.ImageField(null=True, blank=True, upload_to='book_images')
 	slug = models.SlugField(max_length=30)
 	themes = models.ManyToManyField(Theme, blank=True)
+	settings = models.ManyToManyField(Setting, blank=True)
 	genres = models.ManyToManyField(Genre, blank=True)
 	forms = models.ManyToManyField(Form, blank=True)
 	periods = models.ManyToManyField(Period, blank=True)

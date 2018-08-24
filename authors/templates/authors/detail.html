@@ -2,15 +2,18 @@
 {% load static %}
 
 {% block content %}
-<section class="jumbotron jumbotron-fluid libro-jumbotron author-detail-jumbotron">
-		<div class="row author-row">
+<section class="jumbotron jumbotron-fluid author-detail-jumbotron">
+	<div class="row">
 		<div class="author-image col-4" style="background-image: url('{{ author.author_image.url }}');">
 
 		</div>
 		<div class="display-3 col-8">
-			<h1 class = "text-white author-name">{{author.first_name}} {{author.last_name}}</h1>
+			<h1 class = "text-dark author-name">{{author.first_name}} {{author.last_name}}</h1>
+			<h2 class = "text-dark author-country">{{ author.country.name }}</h2>
+			<h2 class = "text-dark author-birth">Born {{ author.birth_year }}</h2>
+			<p class= "text-dark author-bio">{{ author.bio }}</p>
 		</div>
-		</div>
+	</div>
 </section>
 <div class="album py-5 bg-light">
     <div class="container text-center">

@@ -9,9 +9,16 @@
     </div>
 </section>
 
-<section>
-    <div>
-        {% for author in authors %} {% include "./_card.html" with obj=author type="author" numTexts=ntexts %} {% endfor %}
-    </div>
+<section class="featured-authors">
+<div class="container-fluid">
+  <h1 class="text-center mb-3">Featured</h1>
+  <div class="slick-slider">
+    {% for author in featuredauthors %} {% include "./_slide.html" with obj=author type="author" numAuthors=nauthors %} {% endfor %}
+  </div>
+</div>
+</section>
+<section class="author-filters">
+<div class="container-fluid">
+	<a href="browse"><h1 class="text-center mb-3">Browse</h1></a>
 </section>
 {% endblock %}

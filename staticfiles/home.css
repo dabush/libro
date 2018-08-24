@@ -61,11 +61,15 @@ a:hover {
 }
 
 .author-detail-jumbotron {
-	background: #000000;
+	background: #CFD0D1;
+	padding-top: 0;
+	padding-bottom: 0;
 }
 
 .author-detail-jumbotron .author-image {
 	background-size: cover;
+	height: auto;
+	min-height: 50vh;
 }
 
 .author-detail-jumbotron h1.author-name {
@@ -74,30 +78,44 @@ a:hover {
 }
 
 .author-detail-jumbotron div.display-3 {
+	padding-left: 25px;
+}
+
+.author-detail-jumbotron p.author-bio {
+	font-size: 1rem;
+}
+
+.browse-author-books {
 	display: flex;
-	justify-content: center;
-	align-items: center;
 }
 
-/*for carousel*/
-.featured-books div.carousel-wrapper {
-	width: 66.67%;
-	margin: auto;
+.browse-author-books p {
+	text-decoration: underline;
+	margin-bottom: 0;
+	font-family: "Libre Baskerville", serif;
+	font-size: smaller;
 }
 
+.browse-authors h2.browse-author-name {
+	display: inline-block;
+	margin-top: 10px;
+}
+
+.browse-authors span {
+	font-size: small;
+}
+
+.browse-author-books a {
+	color: #000000;
+}
+
+.browse-author-books a:hover {
+	color: #000000;
+}
 
 /*for cards*/
-.featured-books div.card-group {
-	margin: auto;
-}
 
-.featured-books div.card {
-	width: 25vw;
-	margin-left: 45px;
-	margin-bottom: 25px;
-}
-
-.featured-books div.card-bg-image {
+div.card-bg-image {
 	height: 200px;
 	width: 40%;
 	overflow: hidden;
@@ -107,6 +125,7 @@ a:hover {
 .card {
 	transition: 1s border ease;
 	flex-direction: row;
+	margin: 20px;
 }
 
 .card:hover {

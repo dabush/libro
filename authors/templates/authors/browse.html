@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<section class="jumbotron">
+		<div class="row text-left author-row">
+			<span>Explore Authors</span
+		</div>
+</section>
+<section class="browse-authors">
+<div class="album py-5 bg-light">
+    <div class="container text-left">
+            {% for author in authors %}
+                <a href="../{{ author.slug }},{{ author.id }}"><h2 class="browse-author-name">{{ author.first_name }} {{ author.last_name }}</h2></a>
+                &nbsp;
+                <span><em>born {{author.birth_year}}</em></span>
+                <div class="browse-author-books">
+                {% for book in books %}
+                	{% if book.author == author %}
+                		<a href="../../books/{{ book.slug }},{{ book.id }}"><p>{{ book.book_title }}</p></a>&nbsp;&nbsp;
+                	{% endif %}
+                {% endfor %}
+            	</div>
+            {% endfor %}
+    </div>
+</div>
+</section>
+{% include "./pagination.html" with page=page_obj %}
+{% endblock %}

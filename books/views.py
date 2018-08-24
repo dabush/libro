@@ -30,3 +30,10 @@ class BookDetailPage(TemplateView):
 		context = super().get_context_data(**kwargs)
 		context['book'] = Book.objects.get(pk=self.kwargs['book_id'])
 		return context
+
+class BrowseAllBooksPage(TemplateView):
+	template_name="books/browse.html"
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['books'] = Book.objects.all().order_by('book_title')
+		return context
