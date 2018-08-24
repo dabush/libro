@@ -12,7 +12,7 @@
 <section class="featured-books">
 <div class="container-fluid">
   <h1 class="text-center mb-3">Featured</h1>
-  <div class="slick-slider">
+  <div class="scrolling-wrapper">
     {% for book in featuredbooks %} {% include "./_slide.html" with obj=book type="book" numBooks=nbooks %} {% endfor %}
   </div>
 </div>

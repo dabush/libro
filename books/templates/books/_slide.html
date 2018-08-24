@@ -2,11 +2,11 @@
 
         <a href="{{ obj.slug }},{{ obj.id }}">
         <div class="card">
+              <div class="card-block">
           <div class="card-bg-image" style="background-image: url('{{ obj.cover_image.url }}'); background-size: cover;">
             </div>
-          <div class="card-body">
-            <h4 class="card-title">{{ obj }}</h4>
+            <h5 class="card-title">{{ obj }}</h5>
             <p class="card-text">by {{ obj.author }}</p>
-          </div>
         </div>
+      </div>
       </a>

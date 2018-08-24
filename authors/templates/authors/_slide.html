@@ -1,11 +1,12 @@
 {% load static %}
 
         <a href="{{ obj.slug }},{{ obj.id }}">
-        <div class="card">
+        <div class="card author-card">
           <div class="card-bg-image" style="background-image: url('{{ obj.author_image.url }}'); background-size: cover;">
             </div>
           <div class="card-body">
             <h4 class="card-title">{{ obj.first_name }} {{ obj.last_name }}</h4>
+            <p class="card-text">{{ author.country.name }}</p>
           </div>
         </div>
       </a>

@@ -51,9 +51,10 @@ a:hover {
 }
 
 .books-jumbotron-text {
-	font-size: 25vh;
+	font-size: 10vw !important;
 	margin: auto;
 	font-family: "Libre Baskerville", serif;
+	font-size: 9em;
 }
 
 .authors-jumbotron {
@@ -114,18 +115,33 @@ a:hover {
 }
 
 /*for cards*/
-
-div.card-bg-image {
-	height: 200px;
-	width: 40%;
-	overflow: hidden;
-	border-right: 2px solid black;
-}
-
 .card {
 	transition: 1s border ease;
 	flex-direction: row;
 	margin: 20px;
+	min-width: 320px;
+}
+
+.card-block {
+	width: 100%;
+}
+
+.card-title {
+	margin-top: .75rem;
+}
+
+
+div.card-bg-image {
+	height: 220px;
+	width: 50%;
+	overflow: hidden;
+	border-right: 2px solid black;
+	float: left;
+	margin-right: 15px;
+}
+
+.author-card div.card-bg-image {
+	background-position: center;
 }
 
 .card:hover {
@@ -134,7 +150,7 @@ div.card-bg-image {
 
 .card-body {
 	max-width: 59%;
-}*/
+}
 
 section.books-breadcrumbs div.breadcrumbs-wrapper {
 	height: 10vh;
@@ -201,4 +217,14 @@ section.books-breadcrumbs div.breadcrumbs-wrapper {
 	padding-right: 5%;
 }
 
-/*slick slider */
+/* horizontal scroll*/
+div.scrolling-wrapper {
+	overflow-x: scroll;
+	overflow-y: hidden;
+	white-space: nowrap;
+}
+
+div.scrolling-wrapper div.card {
+	display: inline-flex;
+	white-space: initial;
+}

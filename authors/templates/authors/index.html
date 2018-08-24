@@ -12,7 +12,7 @@
 <section class="featured-authors">
 <div class="container-fluid">
   <h1 class="text-center mb-3">Featured</h1>
-  <div class="slick-slider">
+  <div class="scrolling-wrapper">
     {% for author in featuredauthors %} {% include "./_slide.html" with obj=author type="author" numAuthors=nauthors %} {% endfor %}
   </div>
 </div>
@@ -21,4 +21,4 @@
 <div class="container-fluid">
 	<a href="browse"><h1 class="text-center mb-3">Browse</h1></a>
 </section>
-{% endblock %}
+{% endblock %}asdf
