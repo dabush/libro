@@ -1,6 +1,8 @@
 from django.db import models
 from django_countries.fields import CountryField
 from django.urls import reverse
+from django.conf import settings
+from django.contrib.auth import get_user_model
 
 class Theme(models.Model):
 	theme_name = models.CharField(max_length=50)
@@ -73,3 +75,8 @@ class Book(models.Model):
 
 	class Meta:
 		ordering = ('book_title',)
+
+class BookLike(models.Model):
+	user = models.ForeignKey(settings.AUTH_USER_MODEL, default=1, on_delete=models.CASCADE)
+	book = models.ForeignKey(Book, on_delete=models.CASCADE)
+	created = models.DateTimeField(auto_now=True)

@@ -25,7 +25,7 @@ SECRET_KEY = 's(4s6@+^@2@f#$erl6m82=6eh3n13q0*51#jk0cn3ngsdr==a*'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['mysite.com', 'localhost', '127.0.0.1']
 
 
 SITE_ID = 1
@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'django.contrib.sitemaps',
 
     'haystack',
+    'social_django',
 ]
 
 MIDDLEWARE = [
@@ -126,6 +127,9 @@ AUTH_PASSWORD_VALIDATORS = [
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'account.authentication.EmailAuthBackend',
+    'social_core.backends.facebook.FacebookOAuth2',
+    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.google.GoogleOAuth2',
 ]
 
 
