@@ -22,6 +22,13 @@
                 <li class="nav-item">
                     <a class="nav-link active" href="#">About</a>
                 </li>
+                <li class="nav-item">
+                    {% if request.user.is_authenticated %}
+                    <a class="nav-link active" href="{% url 'logout' %}">Log Out</a>
+                    {% else %}
+                    <a class="nav-link active" href="{% url 'log in' %}">Log In</a>
+                    {% endif %}
+                </li>
             </ul>
         </div>
         </nav>

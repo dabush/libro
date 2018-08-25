@@ -20,17 +20,13 @@
   </head>
 
 <body class="log-in-page text-center">
-{% if form.errors %}
-<p>Your username and password didn't match. Please try again.</p>
-{% else %}
 <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-{% endif %}
-<form class ="form-signin" action="{% url 'login' %}" method="post">
+<form class ="form-signin" action="." method="post">
 	{{ form.as_p }}
 	{% csrf_token %}
-  <input type="hidden" name="next" value="{{ next }}"/>
 	<button class="btn btn-lg btn-primary btn-block" type="submit" value="Log in" class="form-control">Sign in</button>
 </form>
+<p><a href="{% url "password-reset" %}">Forgotten your password?</a></p>
 
   <!-- Bootstrap core JavaScript
   ================================================== -->
@@ -41,4 +37,3 @@
   <script src="{% static "carousel.js" %}"></script>
 </body>
 </html>
-
