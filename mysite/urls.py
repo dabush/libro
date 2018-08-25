@@ -30,6 +30,6 @@ urlpatterns = [
     path('books/', include('books.urls')),
     path('authors/', include('authors.urls')),
     path('admin/', admin.site.urls),
-    path('account/', include('account.urls')),
+    path('accounts/', include('account.urls')),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

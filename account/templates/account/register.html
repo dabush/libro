@@ -1,0 +1,16 @@
+{% extends "accounts_base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+{% block title %}Create an account{% endblock %}
+<h1 class="h3 mb-3 font-weight-normal">Create an account</h1>
+<p class="mb-e font-weight-normal">Sign up using the following form</p>
+<form class ="form-signin" action="." method="post">
+	{{ user_form.as_p }}
+	{% csrf_token %}
+	<button class="btn btn-lg btn-primary btn-block" type="submit" value="Create my account" class="form-control">Create my account</button>
+</form>
+
+{% endblock %}
