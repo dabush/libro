@@ -11,13 +11,13 @@
 <div class="album py-5 bg-light">
     <div class="container text-left">
             {% for author in authors %}
-                <a href="../{{ author.slug }},{{ author.id }}"><h2 class="browse-author-name">{{ author.first_name }} {{ author.last_name }}</h2></a>
+                <a href="{{ author.get_absolute_url }}"><h2 class="browse-author-name">{{ author.first_name }} {{ author.last_name }}</h2></a>
                 &nbsp;
                 <span><em>born {{author.birth_year}}</em></span>
                 <div class="browse-author-books">
                 {% for book in books %}
                 	{% if book.author == author %}
-                		<a href="../../books/{{ book.slug }},{{ book.id }}"><p>{{ book.book_title }}</p></a>&nbsp;&nbsp;
+                		<a href="{{ book.get_absolute_url }}"><p>{{ book.book_title }}</p></a>&nbsp;&nbsp;
                 	{% endif %}
                 {% endfor %}
             	</div>

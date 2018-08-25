@@ -35,8 +35,7 @@ class Author(models.Model):
 	featured_author = models.BooleanField()
 
 	def get_absolute_url(self):
-		return reverse('authors:detail')
+		return reverse('authors:detail', kwargs={'slug': self.slug, 'author_id': self.id})
 
 	def __str__(self):
-		return self.first_name + ' ' + self.last_name 
-	
+		return self.first_name + ' ' + self.last_name

@@ -1,5 +1,6 @@
 from django.db import models
 from django_countries.fields import CountryField
+from django.urls import reverse
 
 class Theme(models.Model):
 	theme_name = models.CharField(max_length=50)
@@ -63,6 +64,9 @@ class Book(models.Model):
 	book_desc = models.TextField()
 	book_country = CountryField()
 	book_featured = models.BooleanField()
+
+	def get_absolute_url(self):
+		return reverse('books:book_detail', kwargs={'slug': self.slug, 'book_id': self.id})
 
 	def __str__(self):
 		return self.book_title

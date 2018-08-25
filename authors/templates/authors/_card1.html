@@ -1,8 +1,7 @@
 {% load static %}
 
-<div class="col-sm">
-    <a href='../../books/{{ obj.slug }},{{ obj.id }}'>
-        <div class="card mb-4 box-shadow">
+    <a href='{{ obj.get_absolute_url }}'>
+        <div class="card author-card">
             <div class="card-bg-image" style="background-image: url('{% if obj.cover_image %}{{ obj.cover_image.url }}{% endif %}'); background-size: cover;">
             </div>
             <div class="card-body">
@@ -11,4 +10,3 @@
             </div>
         </div>
     </a>
-</div>
