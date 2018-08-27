@@ -66,6 +66,7 @@ class Book(models.Model):
 	book_desc = models.TextField()
 	book_country = CountryField()
 	book_featured = models.BooleanField()
+	book_liked = models.ForeignKey('BookLike', related_name="book_liked", on_delete=models.CASCADE)
 
 	def get_absolute_url(self):
 		return reverse('books:book_detail', kwargs={'slug': self.slug, 'book_id': self.id})
