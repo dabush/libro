@@ -5,6 +5,7 @@ from .models import Author, School, Region
 admin.site.register(School)
 admin.site.register(Region)
 
+
 @admin.register(Author)
 class AuthorAdmin(admin.ModelAdmin):
 	list_display = ('last_name', 'first_name', 'slug', 'featured_author')
