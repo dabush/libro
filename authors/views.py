@@ -9,6 +9,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Author
 from books.models import Book
 from common.decorators import ajax_required
+from .filters import AuthorFilter
 
 
 class AuthorPage(TemplateView):
@@ -84,3 +85,8 @@ def author_list(request):
 	if request.is_ajax():
 		return render(request, 'authors/list_ajax.html', {'section': 'authors', 'authors': authors,})
 	return render(request, 'authors/list.html', {'section': 'authors', 'authors': authors,})
+
+def filter(request):
+	author_list = Author.objects.all()
+	author_filter = AuthorFilter(request.GET, queryset=author_list)
+	return render(request, 'authors/list1.html', {'filter': author_filter})

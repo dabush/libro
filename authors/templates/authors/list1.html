@@ -16,92 +16,92 @@
         Browse by last name:
       </li>
       <li>
-        <a href="filter/?last_name=a">
+        <a href="../filter/?last_name=a">
           A
         </a>
       </li>
       <li>
-        <a href="filter/?last_name=b">
+        <a href="../filter/?last_name=b">
           B
         </a>
       </li>
       <li>
-        <a href="filter/?last_name=c">
+        <a href="../filter/?last_name=c">
           C
         </a>
       </li>
       <li>
-        <a href="filter/?last_name=d">
+        <a href="../filter/?last_name=d">
           D
         </a>
       </li>
       <li>
-        <a href="filter/?last_name=e">
+        <a href="../filter/?last_name=e">
           E
         </a>
       </li>
       <li>
-        <a href="filter/?last_name=f">
+        <a href="../filter/?last_name=f">
           F
         </a>
       </li>
       <li>
-        <a href="filter/?last_name=g">
+        <a href="../filter/?last_name=g">
           G
         </a>
       </li>
       <li>
-        <a href="filter/?last_name=h">
+        <a href="../filter/?last_name=h">
           H
         </a>
       </li>
       <li>
-        <a href="filter/?last_name=i">
+        <a href="../filter/?last_name=i">
           I
         </a>
       </li>
       <li>
-        <a href="filter/?last_name=j">
+        <a href="../filter/?last_name=j">
           J
         </a>
       </li>
       <li>
-        <a href="filter/?last_name=k">
+        <a href="../filter/?last_name=k">
           K
         </a>
       </li>
       <li>
-        <a href="filter/?last_name=l">
+        <a href="../filter/?last_name=l">
           L
         </a>
       </li>
       <li>
-        <a href="filter/?last_name=m">
+        <a href="../filter/?last_name=m">
           M
         </a>
       </li>
       <li>
-        <a href="filter/?last_name=n">
+        <a href="../filter/?last_name=n">
           N
         </a>
       </li>
       <li>
-        <a href="filter/?last_name=o">
+        <a href="../filter/?last_name=o">
           O
         </a>
       </li>
       <li>
-        <a href="filter/?last_name=p">
+        <a href="../filter/?last_name=p">
           P
         </a>
       </li>
       <li>
-        <a href="filter/?last_name=q">
+        <a href="../filter/?last_name=q">
           Q
         </a>
       </li>
       <li>
-        <a href="filter/?last_name=r">
+        <a href="../filter/?last_name=r">
           R
         </a>
       </li>
@@ -111,37 +111,37 @@
         </a>
       </li>
       <li>
-        <a href="filter/?last_name=t">
+        <a href="../filter/?last_name=t">
           T
         </a>
       </li>
       <li>
-        <a href="filter/?last_name=u">
+        <a href="../filter/?last_name=u">
           U
         </a>
       </li>
       <li>
-        <a href="filter/?last_name=v">
+        <a href="../filter/?last_name=v">
           V
         </a>
       </li>
       <li>
-        <a href="filter/?last_name=w">
+        <a href="../filter/?last_name=w">
           W
         </a>
       </li>
       <li>
-        <a href="filter/?last_name=x">
+        <a href="../filter/?last_name=x">
           X
         </a>
       </li>
       <li>
-        <a href="filter/?last_name=y">
+        <a href="../filter/?last_name=y">
           Y
         </a>
       </li>
       <li>
-        <a href="filter/?last_name=z">
+        <a href="../filter/?last_name=z">
           Z
         </a>
       </li>
@@ -149,9 +149,21 @@
   </div>
 <section class="browse-authors">
 <div class="album py-5 bg-light">
-    <div id = "author-list" class="container text-left">
-        {% include "./list_ajax.html" %}
-    </div>
+  <ul>
+  {% if filter.qs %}
+  {% for author in filter.qs %}
+<a href="{{ author.get_absolute_url }}"><h2 class="browse-author-name">{{ author.first_name }} {{ author.last_name }}</h2></a>
+&nbsp;
+<div class="browse-author-books">
+{% for book in author.book_to_author.all %}
+<a href="{{ book.get_absolute_url }}"><p>{{ book.book_title }}</p></a>&nbsp;&nbsp;
+{% endfor %}
+</div>
+  {% endfor %}
+  {% else %}
+  <h2 class="browse-author-name">No matches</h2>
+  {% endif %}
+  </ul>
 </div>
 </section>
 

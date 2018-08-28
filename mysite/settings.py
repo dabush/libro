@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'haystack',
     'social_django',
     'rest_framework',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
