@@ -3,6 +3,7 @@ from django_countries.fields import CountryField
 from django.urls import reverse
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
 
 class Theme(models.Model):
 	theme_name = models.CharField(max_length=50)
@@ -66,7 +67,12 @@ class Book(models.Model):
 	book_desc = models.TextField()
 	book_country = CountryField()
 	book_featured = models.BooleanField()
-	book_liked = models.ForeignKey('BookLike', related_name="book_liked", on_delete=models.CASCADE)
+	likes = models.ManyToManyField(User, related_name="book_likes", blank=True)
+	#book_likes = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name="book_likes")
+	#like = models.ForeignKey('BookLike', blank=True, null=True, related_name="book_liked", on_delete=models.CASCADE)
+
+	def total_likes(self):
+		return self.likes.count()
 
 	def get_absolute_url(self):
 		return reverse('books:book_detail', kwargs={'slug': self.slug, 'book_id': self.id})

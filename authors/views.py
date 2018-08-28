@@ -1,10 +1,13 @@
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import TemplateView, ListView
 from django.db.models import Count
+from django.http import JsonResponse, HttpResponse
+from django.views.decorators.http import require_POST
+from django.contrib.auth.decorators import login_required
 
 from .models import Author
 from books.models import Book
-
+from common.decorators import ajax_required
 
 
 class AuthorPage(TemplateView):
@@ -40,3 +43,22 @@ class BrowseAllAuthorsPage(ListView):
 		context['authors'] = Author.objects.all().order_by('last_name')
 		context['books'] = Book.objects.all()
 		return context
+
+@ajax_required
+@login_required
+@require_POST
+def author_like(request, slug, author_id):
+	author_id = request.POST.get('id')
+	slug = request.POST.get('slug')
+	action = request.POST.get('action')
+	if author_id and action:
+		try:
+			author = Author.objects.get(id=author_id)
+			if action == 'like':
+				author.likes.add(request.user)
+			else:
+				author.likes.remove(request.user)
+			return JsonResponse({'status':'ok'})
+		except:
+			pass
+	return JsonResponse({'status':'ko'})

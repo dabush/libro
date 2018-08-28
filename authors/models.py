@@ -1,6 +1,7 @@
 from django.db import models
 from django_countries.fields import CountryField
 from django.urls import reverse
+from django.contrib.auth.models import User
 
 class School(models.Model):
 	school_name = models.CharField(max_length=50)
@@ -33,6 +34,7 @@ class Author(models.Model):
 	author_image = models.ImageField(null=True, blank=True, upload_to='author_images')
 	slug = models.SlugField(max_length=30)
 	featured_author = models.BooleanField()
+	likes = models.ManyToManyField(User, related_name="author_likes", blank=True)
 
 	def get_absolute_url(self):
 		return reverse('authors:detail', kwargs={'slug': self.slug, 'author_id': self.id})

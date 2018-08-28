@@ -1,8 +1,15 @@
 from django.shortcuts import get_object_or_404, render
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, RedirectView
+from django.http import JsonResponse, HttpResponse
+from django.views.decorators.http import require_POST
+from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
-from .models import Book
+import simplejson as json
+
+from .models import Book, BookLike
 from authors.models import Author
+from common.decorators import ajax_required
 
 
 class BookPage(TemplateView):
@@ -33,9 +40,49 @@ class BookDetailPage(TemplateView):
 		context['author_books'] = Book.objects.all().filter(author=book.author).exclude(id=book.id)
 		return context
 
+
 class BrowseAllBooksPage(TemplateView):
 	template_name="books/browse.html"
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
 		context['books'] = Book.objects.all().order_by('book_title')
 		return context
+
+@ajax_required
+@login_required
+@require_POST
+def book_like(request, slug, book_id):
+	book_id = request.POST.get('id')
+	slug = request.POST.get('slug')
+	action = request.POST.get('action')
+	if book_id and action:
+		try:
+			book = Book.objects.get(id=book_id)
+			if action == 'like':
+				book.likes.add(request.user)
+			else:
+				book.likes.remove(request.user)
+			return JsonResponse({'status':'ok'})
+		except:
+			pass
+	return JsonResponse({'status':'ko'})
+
+@login_required
+def book_list(request):
+	books = Book.objects.all()
+	paginator = Paginator(books, 10)
+	page = request.GET.get('page')
+	try:
+		books = paginator.page(page)
+	except PageNotAnInteger:
+		#if page is not an integer deliver the first page
+		pages = paginator.page(1)
+	except EmptyPage:
+		if request.is_ajax():
+			#if the request is ajax and the page is out of range return an empty page
+			return HttpResponse('')
+		#if page is out of range deliver the last page of results
+		books = paginator.page(paginator.num_pages)
+	if request.is_ajax():
+		return render(request, 'books/list_ajax.html', {'section': 'books', 'books': books})
+	return render(request, 'books/list.html', {'section': 'books', 'books': books})

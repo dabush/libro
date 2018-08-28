@@ -25,6 +25,16 @@
 			<p class="author-name">by <a href="{{ book.author.get_absolute_url }}">{{ book.author }}</a></p>
 			<p class="pub-year">{{ book.pub_year }}</p>
 			<p class="book-desc">{{ book.book_desc }}</p>
+			{% with total_likes=book.likes.count users_like=book.likes.all %}
+			<p>{{ total_likes }} like {{ total_likes|pluralize }}</p>
+			<a href="#" data-id="{{ book.id }}" data-action="{% if request.user in users_like %}un{% endif %}like" class="like button">
+				{% if request.user not in users_like %}
+				Like
+				{% else %}
+				Unlike
+				{% endif %}
+			</a>
+			{% endwith %}
 		</div>
 		</div>
 </section>
@@ -39,4 +49,31 @@
         </div>
 </section>
 
+{% endblock %}
+
+{% block domready %}
+  $('a.like').click(function(e){
+    e.preventDefault();
+    $.post('{% url "books:like" book.slug book.id %}',
+      {
+        id: $(this).data('id'),
+        action: $(this).data('action')
+      },
+      function(data){
+        if (data['status'] == 'ok')
+        {
+          var previous_action = $('a.like').data('action');
+
+          // toggle data-action
+          $('a.like').data('action', previous_action == 'like' ? 'unlike' : 'like');
+          // toggle link text
+          $('a.like').text(previous_action == 'like' ? 'Unlike' : 'Like');
+
+          // update total likes
+          var previous_likes = parseInt($('span.count .total').text());
+          $('span.count .total').text(previous_action == 'like' ? previous_likes + 1 : previous_likes - 1);
+        }
+      }
+    );
+  });
 {% endblock %}
