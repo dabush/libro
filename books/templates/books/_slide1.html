@@ -3,8 +3,13 @@
         <a href="{{ obj.get_absolute_url }}">
         <div class="card">
               <div class="card-block">
+            {% if obj.cover_image %}
           <div class="card-bg-image" style="background-image: url('{{ obj.cover_image.url }}'); background-size: cover;">
             </div>
+            {% else %}
+            <div class="card-bg-image" style="background:black; background-size: cover;">
+            </div>
+            {% endif %}
             <h5 class="card-title">{{ obj }}</h5>
             <p class="card-text">by {{ obj.author }}</p>
         </div>

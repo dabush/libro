@@ -1,7 +1,7 @@
 from django.urls import path
 from django.conf.urls import include
 from . import views
-from .views import BookPage, BookDetailPage, BrowseAllBooksPage
+from .views import BookPage, BookDetailPage
 
 app_name = 'books'
 urlpatterns = [

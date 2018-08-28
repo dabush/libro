@@ -1,0 +1,9 @@
+{% for author in authors %}
+<a href="{{ author.get_absolute_url }}"><h2 class="browse-author-name">{{ author.first_name }} {{ author.last_name }}</h2></a>
+&nbsp;
+<div class="browse-author-books">
+{% for book in author.book_to_author.all %}
+<a href="{{ book.get_absolute_url }}"><p>{{ book.book_title }}</p></a>&nbsp;&nbsp;
+{% endfor %}
+</div>
+{% endfor %}

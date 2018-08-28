@@ -4,6 +4,7 @@ from django.db.models import Count
 from django.http import JsonResponse, HttpResponse
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from .models import Author
 from books.models import Book
@@ -62,3 +63,24 @@ def author_like(request, slug, author_id):
 		except:
 			pass
 	return JsonResponse({'status':'ko'})
+
+@login_required
+def author_list(request):
+	authors = Author.objects.all()
+	#set to 999 to deal with bug that causes repeat
+	paginator = Paginator(authors, 999)
+	page = request.GET.get('page')
+	try:
+		authors = paginator.page(page)
+	except PageNotAnInteger:
+		#if page is not an integer deliver the first page
+		pages = paginator.page(1)
+	except EmptyPage:
+		if request.is_ajax():
+			#if the request is ajax and the page is out of range return an empty page
+			return HttpResponse('')
+		#if page is out of range deliver the last page of results
+		authors = paginator.page(paginator.num_pages)
+	if request.is_ajax():
+		return render(request, 'authors/list_ajax.html', {'section': 'authors', 'authors': authors,})
+	return render(request, 'authors/list.html', {'section': 'authors', 'authors': authors,})

@@ -41,13 +41,6 @@ class BookDetailPage(TemplateView):
 		return context
 
 
-class BrowseAllBooksPage(TemplateView):
-	template_name="books/browse.html"
-	def get_context_data(self, **kwargs):
-		context = super().get_context_data(**kwargs)
-		context['books'] = Book.objects.all().order_by('book_title')
-		return context
-
 @ajax_required
 @login_required
 @require_POST
@@ -70,7 +63,8 @@ def book_like(request, slug, book_id):
 @login_required
 def book_list(request):
 	books = Book.objects.all()
-	paginator = Paginator(books, 10)
+	#set to 999 to deal with bug that causes repeat
+	paginator = Paginator(books, 999)
 	page = request.GET.get('page')
 	try:
 		books = paginator.page(page)
