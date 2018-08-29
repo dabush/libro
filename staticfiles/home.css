@@ -86,8 +86,23 @@ a:hover {
 	font-size: 1rem;
 }
 
+.book-browse-wrapper {
+	display: flex;
+	margin-top: 20px;
+	margin-bottom: 10px;
+}
+
+.book-browse-wrapper span:nth-child(2) {
+	font-size: 1.5em;
+}
+
+.browse-book-name {
+	display: inline-block;
+}
+
 .browse-author-books {
 	display: flex;
+	margin-top: 8px;
 }
 
 .browse-author-books p {
@@ -95,6 +110,7 @@ a:hover {
 	margin-bottom: 0;
 	font-family: "Libre Baskerville", serif;
 	font-size: smaller;
+	display: inline-block;
 }
 
 .browse-authors h2.browse-author-name {
@@ -102,8 +118,9 @@ a:hover {
 	margin-top: 10px;
 }
 
-.browse-authors span {
+.browse-authors span:first-child {
 	font-size: small;
+	font-family: "Libre Bakserville", serif;
 }
 
 .browse-author-books a {

@@ -23,11 +23,17 @@
 <div class="album pt-3 bg-light">
     <div class="container text-center">
         <h2 class="mb-3">Featured Authors</h2>
-        <div class="row">
+        <div class="scrolling-wrapper">
+            {% for author in featuredauthors %}
+            {% include "./_card.html" with obj=author type="author" %}
+            {% endfor %}
         </div>
         <hr />
         <h2 class="mb-3">Featured Books</h2>
-        <div class="row">
+        <div class="scrolling-wrapper">
+            {% for book in featuredbooks %}
+            {% include "./_card1.html" with obj=book type="book" %}
+            {% endfor %}
         </div>
     </div>
 </div>

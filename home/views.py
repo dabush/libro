@@ -9,8 +9,8 @@ class HomePage(TemplateView):
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
-        context['authors'] = Author.objects.all()
-        context['books'] = Book.objects.all()
+        context['featuredauthors'] = Author.objects.filter(featured_author=True)
+        context['featuredbooks'] = Book.objects.filter(book_featured=True)
         return context
 
 def index(request):

@@ -1,0 +1,9 @@
+    <a href='{{ author.slug }},{{ author.id }}'>
+        <div class="card mb-3 box-shadow">
+            <div class="card-bg-image" style="background-image: url('{% if obj.author_image %}{{ obj.author_image.url }}{% endif %}'); background-size: cover;">
+            </div>
+            <div class="card-body">
+                <h4 class="card-text">{{ obj.first_name }} {{ obj.last_name }}</h4>
+            </div>
+        </div>
+    </a>
