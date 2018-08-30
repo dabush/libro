@@ -19,6 +19,7 @@ from django.contrib import admin
 from django.urls import include, path
 from django.contrib.sitemaps.views import sitemap
 from authors.sitemaps import AuthorSiteMap, BookSiteMap
+from .routers import router
 
 sitemaps = {
     'authors': AuthorSiteMap,
@@ -32,5 +33,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('account.urls')),
     path('social-auth/', include('social_django.urls', namespace='social')),
-    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap')
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
+    path('api/', include(router.urls)),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
