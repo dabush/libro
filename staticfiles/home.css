@@ -290,3 +290,20 @@ ul.last-name-list li:first-child {
 	margin-left: 0;
 	padding-right: 20px;
 }
+
+/*book search page*/
+[v-cloak] {
+  display: none;
+}
+
+section.browse-books form#main {
+	position: relative;
+}
+
+section.browse-books .row {
+	width: 100%;
+}
+
+section.browse-books .col-sm-4 {
+	min-height: 25vh;
+}

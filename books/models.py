@@ -68,8 +68,6 @@ class Book(models.Model):
 	book_country = CountryField()
 	book_featured = models.BooleanField()
 	likes = models.ManyToManyField(User, related_name="book_likes", blank=True)
-	#book_likes = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name="book_likes")
-	#like = models.ForeignKey('BookLike', blank=True, null=True, related_name="book_liked", on_delete=models.CASCADE)
 
 	def total_likes(self):
 		return self.likes.count()
