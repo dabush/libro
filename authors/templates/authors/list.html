@@ -1,181 +1,166 @@
 {% extends "base.html" %}
-
 {% load static %}
-
 {% block content %}
-
-<section class="jumbotron">
-		<div class="row text-left author-row">
-			<span>Explore Books</span>
-		</div>
-</section>
-<div class="authors-browse-row">
-  <div class="action-group">
-    <ul class="last-name-list">
-      <li>
-        Browse by last name:
-      </li>
-      <li>
-        <a href="filter/?last_name=a">
-          A
-        </a>
-      </li>
-      <li>
-        <a href="filter/?last_name=b">
-          B
-        </a>
-      </li>
-      <li>
-        <a href="filter/?last_name=c">
-          C
-        </a>
-      </li>
-      <li>
-        <a href="filter/?last_name=d">
-          D
-        </a>
-      </li>
-      <li>
-        <a href="filter/?last_name=e">
-          E
-        </a>
-      </li>
-      <li>
-        <a href="filter/?last_name=f">
-          F
-        </a>
-      </li>
-      <li>
-        <a href="filter/?last_name=g">
-          G
-        </a>
-      </li>
-      <li>
-        <a href="filter/?last_name=h">
-          H
-        </a>
-      </li>
-      <li>
-        <a href="filter/?last_name=i">
-          I
-        </a>
-      </li>
-      <li>
-        <a href="filter/?last_name=j">
-          J
-        </a>
-      </li>
-      <li>
-        <a href="filter/?last_name=k">
-          K
-        </a>
-      </li>
-      <li>
-        <a href="filter/?last_name=l">
-          L
-        </a>
-      </li>
-      <li>
-        <a href="filter/?last_name=m">
-          M
-        </a>
-      </li>
-      <li>
-        <a href="filter/?last_name=n">
-          N
-        </a>
-      </li>
-      <li>
-        <a href="filter/?last_name=o">
-          O
-        </a>
-      </li>
-      <li>
-        <a href="filter/?last_name=p">
-          P
-        </a>
-      </li>
-      <li>
-        <a href="filter/?last_name=q">
-          Q
-        </a>
-      </li>
-      <li>
-        <a href="filter/?last_name=r">
-          R
-        </a>
-      </li>
-      <li>
-        <a href="filter/?last_name=s">
-          S
-        </a>
-      </li>
-      <li>
-        <a href="filter/?last_name=t">
-          T
-        </a>
-      </li>
-      <li>
-        <a href="filter/?last_name=u">
-          U
-        </a>
-      </li>
-      <li>
-        <a href="filter/?last_name=v">
-          V
-        </a>
-      </li>
-      <li>
-        <a href="filter/?last_name=w">
-          W
-        </a>
-      </li>
-      <li>
-        <a href="filter/?last_name=x">
-          X
-        </a>
-      </li>
-      <li>
-        <a href="filter/?last_name=y">
-          Y
-        </a>
-      </li>
-      <li>
-        <a href="filter/?last_name=z">
-          Z
-        </a>
-      </li>
-    </ul>
-  </div>
-<section class="browse-authors">
-<div class="album py-5 bg-light">
-    <div id = "author-list" class="container text-left">
-        {% include "./list_ajax.html" %}
+  <section class="jumbotron">
+    <div class="row text-left author-row">
+      <span>Explore Books</span>
     </div>
-</div>
-</section>
-
-{% endblock %}
-
-{% block domready %}
-  var page = 1;
-  var empty_page = false;
-  var block_request = false;
-
-  $(window).scroll(function() {
-    var margin = $(document).height() - $(window).height() - 200;
-    if  ($(window).scrollTop() > margin && empty_page == false && block_request == false) {
-     block_request = true;
-      page += 1;
-      $.get('?page=' + page, function(data) {
-       if(data == '') {
-          empty_page = true;
-        }
-        else {
-          block_request = false;
-          $('#author-list').append(data);
-        }
-      });
-    }
-  });
-{% endblock %}
+  </section>
+  <div class="authors-browse-row">
+    <div class="action-group">
+      <ul class="last-name-list">
+        <li>
+          Browse by last name:
+        </li>
+        <li>
+          <a href="filter/?last_name=a">
+            A
+          </a>
+        </li>
+        <li>
+          <a href="filter/?last_name=b">
+            B
+          </a>
+        </li>
+        <li>
+          <a href="filter/?last_name=c">
+            C
+          </a>
+        </li>
+        <li>
+          <a href="filter/?last_name=d">
+            D
+          </a>
+        </li>
+        <li>
+          <a href="filter/?last_name=e">
+            E
+          </a>
+        </li>
+        <li>
+          <a href="filter/?last_name=f">
+            F
+          </a>
+        </li>
+        <li>
+          <a href="filter/?last_name=g">
+            G
+          </a>
+        </li>
+        <li>
+          <a href="filter/?last_name=h">
+            H
+          </a>
+        </li>
+        <li>
+          <a href="filter/?last_name=i">
+            I
+          </a>
+        </li>
+        <li>
+          <a href="filter/?last_name=j">
+            J
+          </a>
+        </li>
+        <li>
+          <a href="filter/?last_name=k">
+            K
+          </a>
+        </li>
+        <li>
+          <a href="filter/?last_name=l">
+            L
+          </a>
+        </li>
+        <li>
+          <a href="filter/?last_name=m">
+            M
+          </a>
+        </li>
+        <li>
+          <a href="filter/?last_name=n">
+            N
+          </a>
+        </li>
+        <li>
+          <a href="filter/?last_name=o">
+            O
+          </a>
+        </li>
+        <li>
+          <a href="filter/?last_name=p">
+            P
+          </a>
+        </li>
+        <li>
+          <a href="filter/?last_name=q">
+            Q
+          </a>
+        </li>
+        <li>
+          <a href="filter/?last_name=r">
+            R
+          </a>
+        </li>
+        <li>
+          <a href="filter/?last_name=s">
+            S
+          </a>
+        </li>
+        <li>
+          <a href="filter/?last_name=t">
+            T
+          </a>
+        </li>
+        <li>
+          <a href="filter/?last_name=u">
+            U
+          </a>
+        </li>
+        <li>
+          <a href="filter/?last_name=v">
+            V
+          </a>
+        </li>
+        <li>
+          <a href="filter/?last_name=w">
+            W
+          </a>
+        </li>
+        <li>
+          <a href="filter/?last_name=x">
+            X
+          </a>
+        </li>
+        <li>
+          <a href="filter/?last_name=y">
+            Y
+          </a>
+        </li>
+        <li>
+          <a href="filter/?last_name=z">
+            Z
+          </a>
+        </li>
+      </ul>
+    </div>
+    <section class="browse-authors">
+      <div class="album py-5 bg-light">
+        <div id = "main" class="container text-left">
+          <p>Selected Letter: <% selectedLetter || "None" %></p>
+          <select v-model="selectedLetter">
+            <option :value="undefined">None</option>
+            <option v-for="a in alphabet" :value="a"><%a%></option>
+          </select>
+          <ul>
+            <li v-for="author in AuthorsList"><%author%></li>
+          </ul>
+          <p v-if="!AuthorsList.length">No names for that letter</p>
+          <div v-for="author in AuthorsList | letterFilter('c')"><% author %></div>
+        </div>
+      </div>
+    </section>
+  {% endblock %}
+  {% block scripts %}
+    <script src="{% static 'authorfiltervue.js' %}"></script>
+  {% endblock%}

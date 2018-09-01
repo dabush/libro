@@ -1,9 +1,0 @@
-{% for book in books %}
-<div class="book-browse-wrapper">
-<a href="{{ book.get_absolute_url }}"><h2 class="browse-book-name">{{ book.book_title }}</h2><span>,</span></a>
-&nbsp;
-<div class="browse-author-books">
-<a href="{{ book.author.get_absolute_url }}"><span>by&nbsp;</span><p>{{ book.author }}</p></a>
-</div>
-</div>
-{% endfor %}

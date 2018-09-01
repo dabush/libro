@@ -12,6 +12,10 @@ a:hover {
 	text-decoration: none;
 }
 
+.jumbotron {
+	margin-bottom: 0;
+}
+
 .libro-jumbotron {
 	height: 35vh;
 	padding-top: 0;
@@ -298,6 +302,7 @@ ul.last-name-list li:first-child {
 
 section.browse-books form#main {
 	position: relative;
+	padding-top: 2rem;
 }
 
 section.browse-books .row {
@@ -306,4 +311,21 @@ section.browse-books .row {
 
 section.browse-books .col-sm-4 {
 	min-height: 25vh;
+}
+
+section.browse-books .col-sm-8 {
+	position: relative;
+	top: -40px;
+}
+
+section.browse-books input {
+	margin-left: 10%;
+}
+
+section.browse-books ul {
+	list-style: none;
+}
+
+section.browse-books h2 {
+	display: inline-flex;
 }
