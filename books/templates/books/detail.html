@@ -11,6 +11,15 @@
 		</a>
 	</div>
 </section>
+<section class="jumbotron jumbotron-fluid libro-jumbotron book-detail-jumbotron">
+	<div class="lines-wrapper">
+		<div class="left-quotes" style="background-image: url({% static 'leftquotes.png' %});">
+		</div>
+	<div class="first-lines">
+		{{ book.first_lines|truncatewords:30}}
+	</div>
+	</div>
+</section>
 <section class="book-details">
 		<div class="row book-row">
 		<div class="col-4">

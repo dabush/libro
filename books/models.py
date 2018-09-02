@@ -59,6 +59,7 @@ class Book(models.Model):
 	author = models.ForeignKey('authors.Author', on_delete=models.CASCADE, related_name="book_to_author")
 	cover_image = models.ImageField(null=True, blank=False, upload_to='book_images')
 	slug = models.SlugField(max_length=30)
+	first_lines = models.TextField(blank=True)
 	themes = models.ManyToManyField(Theme, blank=True)
 	settings = models.ManyToManyField(Setting, blank=True)
 	genres = models.ManyToManyField(Genre, blank=True)

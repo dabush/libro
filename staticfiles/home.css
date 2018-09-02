@@ -78,6 +78,32 @@ a:hover {
 	font-size: 9em;
 }
 
+.book-detail-jumbotron {
+	background: #8F0000;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.book-detail-jumbotron div.lines-wrapper {
+	width: 75%;
+	display: flex;
+	position: relative;
+}
+
+.book-detail-jumbotron div.lines-wrapper div.left-quotes {
+	height: 100px;
+    min-width: 150px;
+    background-size: cover;
+    margin-right: 20px;
+}
+
+.book-detail-jumbotron div.first-lines {
+	color: #ffffff;
+	font-family: "Libre Baskerville", serif;
+	font-size: 1.5rem;
+}
+
 .authors-jumbotron {
 	background: #8F0000
 }
