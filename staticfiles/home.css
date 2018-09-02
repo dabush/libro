@@ -4,12 +4,16 @@
 
 /*site-wide*/
 a {
-	color: #E81C23;
+	color: #8F0000;
 }
 
 a:hover {
 	color: #680D10;
 	text-decoration: none;
+}
+
+.jumbotron {
+	margin-bottom: 0;
 }
 
 .libro-jumbotron {
@@ -36,7 +40,7 @@ a:hover {
 }
 
 .home-jumbotron {
-	background: #000000;
+	background: #8F0000;
 }
 
 .libro-jumbotron .home-image {
@@ -47,7 +51,24 @@ a:hover {
 }
 
 .books-jumbotron {
-	background: #000000;
+	background: #8F0000;
+}
+
+.books-jumbotron:before {
+	content: "";
+    border-left: 25px solid white;
+    position: absolute;
+    left: 25%;
+    bottom: 0;
+    height: 100%;
+}
+
+.books-jumbotron:after {
+	content: "";
+    border-bottom: 10px solid white;
+    width: calc(100% - 200px);
+    position: absolute;
+    bottom: 10%;
 }
 
 .books-jumbotron-text {
@@ -58,7 +79,24 @@ a:hover {
 }
 
 .authors-jumbotron {
-	background: #000000;
+	background: #8F0000
+}
+
+.authors-jumbotron:before {
+	content: "";
+    border-left: 25px solid white;
+    position: absolute;
+    left: 25%;
+    bottom: 0;
+    height: 100%;
+}
+
+.authors-jumbotron:after {
+	content: "";
+    border-bottom: 10px solid white;
+    width: calc(100% - 200px);
+    position: absolute;
+    bottom: 10%;
 }
 
 .author-detail-jumbotron {
@@ -119,8 +157,10 @@ a:hover {
 }
 
 .browse-authors span:first-child {
-	font-size: small;
+	font-size: 2.5rem;
 	font-family: "Libre Bakserville", serif;
+	margin-right: 20px;
+	margin-left: 2rem;
 }
 
 .browse-author-books a {
@@ -155,9 +195,6 @@ div.card-bg-image {
 	border-right: 2px solid black;
 	float: left;
 	margin-right: 15px;
-}
-
-.author-card div.card-bg-image {
 	background-position: center;
 }
 
@@ -289,4 +326,58 @@ ul.last-name-list li {
 ul.last-name-list li:first-child {
 	margin-left: 0;
 	padding-right: 20px;
+}
+
+/*book search page*/
+[v-cloak] {
+  display: none;
+}
+
+section.browse-books form#main {
+	position: relative;
+	padding-top: 2rem;
+}
+
+section.browse-books .row {
+	width: 100%;
+}
+
+section.browse-books .col-sm-4 {
+	min-height: 25vh;
+}
+
+section.browse-books .col-sm-8 {
+	position: relative;
+	top: -40px;
+}
+
+section.browse-books input {
+	margin-left: 10%;
+}
+
+section.browse-books ul {
+	list-style: none;
+}
+
+section.browse-books h2 {
+	display: inline-flex;
+}
+
+.sort-orders {
+	margin-bottom: 2rem;
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+
+.sort-orders a {
+  color: #E81C23;
+  padding: 10px 10px;
+  margin: 0 10px 0 0;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.sort-orders a.active {
+  background: #E81C23;
 }

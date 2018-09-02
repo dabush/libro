@@ -1,43 +1,33 @@
 {% extends "base.html" %}
-
 {% load static %}
-
 {% block content %}
-
-<section class="jumbotron">
-		<div class="row text-left author-row">
-			<span>Explore Books</span>
-		</div>
-</section>
-<section class="browse-books">
-<div class="album py-5 bg-light">
-    <div id = "book-list" class="container text-left">
-        {% include "./list_ajax.html" %}
+  <section class="jumbotron">
+    <div class="row text-left author-row">
+      <span>Explore Books</span>
     </div>
-</div>
-</section>
-
+  </section>
+  <section class="browse-books album bg-light">
+      <form class="form-inline" id="main" v-cloak>
+        <!-- Create a binding between the searchString model and the text field -->
+        <div class="row">
+          <input class="form-control mr-sm-2" type="text" v-model="searchString" placeholder="Enter a book title" />
+        </div>
+        <div class="col-sm-4">
+        </div>
+        <div class="col-sm-8">
+          <ul>
+            <!-- Render a li element for every entry in the computed filteredArticles array. -->
+            
+            <li v-for="book in filteredData">
+              <a v-bind:href="book.absolute_url"><h2><% book.book_title %>,&nbsp;</h2></a><span>by</span>
+              <h2>&nbsp;<%book.author%><span style="float:right;">&nbsp;(<%book.pub_year%>)</span></h2>
+              
+            </li>
+          </ul>
+        </div>
+      </form>
+  </section>
 {% endblock %}
-
-{% block domready %}
-  var page = 1;
-  var empty_page = false;
-  var block_request = false;
-
-  $(window).scroll(function() {
-    var margin = $(document).height() - $(window).height() - 200;
-    if  ($(window).scrollTop() > margin && empty_page == false && block_request == false) {
-     block_request = true;
-      page += 1;
-      $.get('?page=' + page, function(data) {
-       if(data == '') {
-          empty_page = true;
-        }
-        else {
-          block_request = false;
-          $('#book-list').append(data);
-        }
-      });
-    }
-  });
-{% endblock %}
+{% block scripts %}
+  <script src="{% static 'booklistvue.js' %}"></script>
+{% endblock%}
