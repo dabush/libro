@@ -9,4 +9,4 @@ class AuthorSerializer(serializers.ModelSerializer):
 	country = CountryField(country_dict=True)
 	class Meta:
 		model = Author
-		fields = ('book_to_author', 'absolute_url', 'first_name', 'last_name', 'country')
+		fields = ('book_to_author', 'absolute_url', 'first_name', 'last_name', 'full_name', 'country')

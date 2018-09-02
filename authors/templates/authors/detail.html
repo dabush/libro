@@ -2,9 +2,18 @@
 {% load static %}
 
 {% block content %}
+<section class="books-breadcrumbs">
+  <div class="breadcrumbs-wrapper">
+    <a href="../../authors">
+      <span>
+        <i class="fas fa-chevron-left"></i>&nbsp;&nbsp;&nbsp;&nbsp;Authors
+      </span>
+    </a>
+  </div>
+</section>
 <section class="jumbotron jumbotron-fluid author-detail-jumbotron">
 	<div class="row">
-		<div class="author-image col-4" style="background-image: url('{{ author.author_image.url }}');">
+		<div class="author-image col-4" style="background-image: url('{% if author.author_image %}{{ author.author_image.url }}{% endif %}');">
 
 		</div>
 		<div class="display-3 col-8">

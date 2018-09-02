@@ -5,158 +5,16 @@
     <div class="row text-left author-row">
       <span>Explore Books</span>
     </div>
-  </section>
-  <div class="authors-browse-row">
-    <div class="action-group">
-      <ul class="last-name-list">
-        <li>
-          Browse by last name:
-        </li>
-        <li>
-          <a href="filter/?last_name=a">
-            A
-          </a>
-        </li>
-        <li>
-          <a href="filter/?last_name=b">
-            B
-          </a>
-        </li>
-        <li>
-          <a href="filter/?last_name=c">
-            C
-          </a>
-        </li>
-        <li>
-          <a href="filter/?last_name=d">
-            D
-          </a>
-        </li>
-        <li>
-          <a href="filter/?last_name=e">
-            E
-          </a>
-        </li>
-        <li>
-          <a href="filter/?last_name=f">
-            F
-          </a>
-        </li>
-        <li>
-          <a href="filter/?last_name=g">
-            G
-          </a>
-        </li>
-        <li>
-          <a href="filter/?last_name=h">
-            H
-          </a>
-        </li>
-        <li>
-          <a href="filter/?last_name=i">
-            I
-          </a>
-        </li>
-        <li>
-          <a href="filter/?last_name=j">
-            J
-          </a>
-        </li>
-        <li>
-          <a href="filter/?last_name=k">
-            K
-          </a>
-        </li>
-        <li>
-          <a href="filter/?last_name=l">
-            L
-          </a>
-        </li>
-        <li>
-          <a href="filter/?last_name=m">
-            M
-          </a>
-        </li>
-        <li>
-          <a href="filter/?last_name=n">
-            N
-          </a>
-        </li>
-        <li>
-          <a href="filter/?last_name=o">
-            O
-          </a>
-        </li>
-        <li>
-          <a href="filter/?last_name=p">
-            P
-          </a>
-        </li>
-        <li>
-          <a href="filter/?last_name=q">
-            Q
-          </a>
-        </li>
-        <li>
-          <a href="filter/?last_name=r">
-            R
-          </a>
-        </li>
-        <li>
-          <a href="filter/?last_name=s">
-            S
-          </a>
-        </li>
-        <li>
-          <a href="filter/?last_name=t">
-            T
-          </a>
-        </li>
-        <li>
-          <a href="filter/?last_name=u">
-            U
-          </a>
-        </li>
-        <li>
-          <a href="filter/?last_name=v">
-            V
-          </a>
-        </li>
-        <li>
-          <a href="filter/?last_name=w">
-            W
-          </a>
-        </li>
-        <li>
-          <a href="filter/?last_name=x">
-            X
-          </a>
-        </li>
-        <li>
-          <a href="filter/?last_name=y">
-            Y
-          </a>
-        </li>
-        <li>
-          <a href="filter/?last_name=z">
-            Z
-          </a>
-        </li>
-      </ul>
-    </div>
+  </section>    
     <section class="browse-authors">
       <div class="album py-5 bg-light">
-        <div id = "main" class="container text-left">
-          <p>Selected Letter: <% selectedLetter || "None" %></p>
-          <select v-model="selectedLetter">
-            <option :value="undefined">None</option>
-            <option v-for="a in alphabet" :value="a"><%a%></option>
-          </select>
-          <ul>
-            <li v-for="author in AuthorsList"><%author%></li>
-          </ul>
-          <p v-if="!AuthorsList.length">No names for that letter</p>
-          <div v-for="author in AuthorsList | letterFilter('c')"><% author %></div>
+        <div id="app">
+          <div class="sort-orders">
+            <a v-for="sortkey in Object.keys(orderedListOptions)" v-on:click="sortOrder = sortkey" v-bind:class="{active: sortOrder == sortkey}"><%sortkey%></a>
+          </div>
+          <div v-for="(item, index) in sort(sortOrder)" v-id="index" class="author-list">
+            <a v-bind:href="item.absolute_url"><span class="author-name"><% item.full_name %></span></a><span class="author-books" v-for="book in item.book_to_author"><% book %>&nbsp;&nbsp;&nbsp;</span>
+          </div>
         </div>
       </div>
     </section>

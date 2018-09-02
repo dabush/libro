@@ -25,6 +25,7 @@ class Region(models.Model):
 class Author(models.Model):
 	first_name = models.CharField(max_length=50)
 	last_name = models.CharField(max_length=50)
+	full_name = models.CharField(max_length=100)
 	birth_year = models.IntegerField()
 	bio = models.TextField()
 	country = CountryField()
