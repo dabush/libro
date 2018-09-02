@@ -8,5 +8,6 @@ urlpatterns = [
     path('', BookPage.as_view(), name='home'),
     path('<slug:slug>,<int:book_id>/', BookDetailPage.as_view(), name='book_detail'),
     path('<slug:slug>,<int:book_id>/like/', views.book_like, name='like'),
+    path('<slug:slug>,<int:book_id>/rate/', views.add_rating, name='rate'),
     path('browse/', views.book_list, name='list'),
 ]

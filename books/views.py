@@ -1,13 +1,14 @@
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import TemplateView, RedirectView
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 import simplejson as json
 
-from .models import Book, BookLike
+from .models import Book, Rating
+from .forms import RatingForm
 from authors.models import Author
 from common.decorators import ajax_required
 
@@ -59,6 +60,26 @@ def book_like(request, slug, book_id):
 		except:
 			pass
 	return JsonResponse({'status':'ko'})
+
+def add_rating(request, slug, book_id):
+    slug = request.POST.get('slug')
+    book = get_object_or_404(Book, pk=book_id)
+    form = RatingForm(request.POST)
+    if form.is_valid():
+        user_rating = form.cleaned_data['user_rating']
+        user = form.cleaned_data['user']
+        rating = Rating()
+        rating.book = book
+        rating.user_name = form.cleaned_data['user']
+        rating.user_rating = user_rating
+        rating.created = datetime.datetime.now()
+        rating.save()
+        # Always return an HttpResponseRedirect after successfully dealing
+        # with POST data. This prevents data from being posted twice if a
+        # user hits the Back button.
+        return HttpResponseRedirect(reverse('books:detail.html', args=(book.id,)))
+
+    return render(request, 'books/detail.html', {'book': book, 'form': form})
 
 @login_required
 def book_list(request):

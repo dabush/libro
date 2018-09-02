@@ -57,6 +57,13 @@
             {% endfor %}
         </div>
 </section>
+<form action="{% url 'books:rate' book.slug book.id %}" method="post">
+	<label for="book-rating">Add your rating</label>
+	<input id="book-rating" type="radio">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="OK" />
+</form>
 
 {% endblock %}
 

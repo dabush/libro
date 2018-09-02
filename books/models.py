@@ -5,6 +5,8 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 
+import numpy as np
+
 class Theme(models.Model):
 	theme_name = models.CharField(max_length=50)
 
@@ -70,6 +72,10 @@ class Book(models.Model):
 	book_featured = models.BooleanField()
 	likes = models.ManyToManyField(User, related_name="book_likes", blank=True)
 
+	def average_rating(self):
+		all_ratings = map(lambda x: x.rating, self.rating_set.all())
+		return np.mean(all_ratings)
+
 	def total_likes(self):
 		return self.likes.count()
 
@@ -82,7 +88,20 @@ class Book(models.Model):
 	class Meta:
 		ordering = ('book_title',)
 
-class BookLike(models.Model):
+class Rating(models.Model):
+	RATING_CHOICES = (
+		(1, '1'),
+		(2, '2'),
+		(3, '3'),
+		(4, '4'),
+		(5, '5'),
+		(6, '6'),
+		(7, '7'),
+		(8, '8'),
+		(9, '9'),
+		(10, '10'),
+	)
+	user_rating = models.IntegerField(choices=RATING_CHOICES)
 	user = models.ForeignKey(settings.AUTH_USER_MODEL, default=1, on_delete=models.CASCADE)
 	book = models.ForeignKey(Book, on_delete=models.CASCADE)
 	created = models.DateTimeField(auto_now=True)
