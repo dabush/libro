@@ -82,7 +82,26 @@ class Book(models.Model):
 	class Meta:
 		ordering = ('book_title',)
 
-class BookLike(models.Model):
-	user = models.ForeignKey(settings.AUTH_USER_MODEL, default=1, on_delete=models.CASCADE)
+class Rating(models.Model):
+	RATING_CHOICES = (
+		(1, '1',),
+		(2, '2',),
+		(3, '3',),
+		(4, '4',),
+		(5, '5',),
+		(6, '6',),
+		(7, '7',),
+		(8, '8',),
+		(9, '9',),
+		(10, '10',),
+	)
+	value = models.SmallIntegerField(choices=RATING_CHOICES)
+	user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 	book = models.ForeignKey(Book, on_delete=models.CASCADE)
-	created = models.DateTimeField(auto_now=True)
+	rated_on = models.DateTimeField(auto_now=True)
+	
+	def __str__(self):
+		return '%s %s' % (self.book, self.user)
+
+	class Meta:
+	 	unique_together = ('user', 'book')

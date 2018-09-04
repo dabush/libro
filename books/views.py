@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, render
-from django.views.generic import TemplateView, RedirectView
+from django.views.generic import TemplateView, RedirectView, FormView
 from django.http import JsonResponse, HttpResponse
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
@@ -7,7 +7,9 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 import simplejson as json
 
-from .models import Book, BookLike
+from .models import Book, Rating
+from .forms import RatingForm
+from .mixins import AjaxFormMixin
 from authors.models import Author
 from common.decorators import ajax_required
 
@@ -22,9 +24,9 @@ class BookPage(TemplateView):
 		return context
 
 def index(request):
-    latest_book_list = Book.objects.order_by('-pub_date')[:5]
-    context = {'latest_book_list': latest_book_list}
-    return render(request, 'books/index.html', context)
+	latest_book_list = Book.objects.order_by('-pub_date')[:5]
+	context = {'latest_book_list': latest_book_list}
+	return render(request, 'books/index.html', context)
 
 def detail(request, book_id):
 	book = get_object_or_404(Book, pk=book_id)
@@ -80,3 +82,9 @@ def book_list(request):
 	if request.is_ajax():
 		return render(request, 'books/list_ajax.html', {'section': 'books', 'books': books})
 	return render(request, 'books/list.html', {'section': 'books', 'books': books})
+
+
+class RatingFormView(AjaxFormMixin, FormView):
+	form_class = RatingForm
+	template_name  = 'books/_rate.html'
+	success_url = '/'
