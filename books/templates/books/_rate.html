@@ -1,5 +1,5 @@
-<form class='rating-form' method='POST' action='{{ request.build_absolute_uri|safe }}' data-url='{{ request.build_absolute_uri|safe }}'>
+<form class='rating-form' method='POST' action='{{ rating_form_url }}' data-url='{{ rating_form_url }}'>
 	{% csrf_token %}
-	{{form.as_p|safe}}
+	{{ rate_form.as_p|safe}}
 	<button class="btn btn-primary" type='submit'>Submit</button>
 </form>

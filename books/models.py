@@ -82,6 +82,14 @@ class Book(models.Model):
 	class Meta:
 		ordering = ('book_title',)
 
+class RatingManager(models.Manager):
+
+	def get_rating_or_unsaved_blank_rating(self, book, user):
+		try:
+			return Rating.objects.get(book=book, user=user)
+		except Rating.DoesNotExist:
+			return Rating(book=book, user=user)
+
 class Rating(models.Model):
 	RATING_CHOICES = (
 		(1, '1',),
@@ -99,6 +107,8 @@ class Rating(models.Model):
 	user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 	book = models.ForeignKey(Book, on_delete=models.CASCADE)
 	rated_on = models.DateTimeField(auto_now=True)
+
+	objects = RatingManager()
 	
 	def __str__(self):
 		return '%s %s' % (self.book, self.user)

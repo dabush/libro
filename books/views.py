@@ -1,6 +1,8 @@
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import TemplateView, RedirectView, FormView
 from django.http import JsonResponse, HttpResponse
+from django.urls import reverse
+from django.core.exceptions import PermissionDenied
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -38,6 +40,14 @@ class BookDetailPage(TemplateView):
 	def get_context_data(self, **kwargs):
 		book = Book.objects.get(pk=self.kwargs['book_id'])
 		context = super().get_context_data(**kwargs)
+		if self.request.user.is_authenticated:
+			rating = Rating.objects.get_rating_or_unsaved_blank_rating(book=book, user=self.request.user)
+			if rating.id:
+				rating_form_url = reverse('books:update_rating', kwargs={'slug': rating.book.slug, 'book_id': rating.book.id, 'pk': rating.id})
+			else:
+				rating_form_url = reverse('books:rate', kwargs={'slug': rating.book.slug, 'book_id': rating.book.id})
+		context['rate_form'] = RatingForm
+		context['rating_form_url'] = rating_form_url
 		context['book'] = Book.objects.get(pk=self.kwargs['book_id'])
 		context['author_books'] = Book.objects.all().filter(author=book.author).exclude(id=book.id)
 		return context
@@ -85,6 +95,25 @@ def book_list(request):
 
 
 class RatingFormView(AjaxFormMixin, FormView):
+	def get_initial(self):
+		initial = super().get_initial()
+		initial['user'] = self.request.user.id
+		initial['book'] = self.kwargs['book_id']
+		return initial
+
 	form_class = RatingForm
 	template_name  = 'books/_rate.html'
 	success_url = '/'
+
+class UpdateRatingFormView(AjaxFormMixin, FormView):
+	form_class = RatingForm
+	template_name = 'books/_rate.html'
+	success_url = '/'
+	queryset = Rating.objects.all()
+
+	def get_object(self, queryset=None):
+		rating = super().get_object(queryset)
+		user = self.request.user
+		if rating.user != user:
+			raise PermissionDenied('Cannot change another user\'s vote.')
+		return vote
