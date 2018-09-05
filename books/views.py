@@ -41,10 +41,12 @@ class BookDetailPage(TemplateView):
 	def get_context_data(self, **kwargs):
 		book = Book.objects.get(pk=self.kwargs['book_id'])
 		context = super().get_context_data(**kwargs)
+		rating_form_url = ''
 		if self.request.user.is_authenticated:
 			rating = Rating.objects.get_rating_or_unsaved_blank_rating(book=book, user=self.request.user)
 			if rating.id:
 				rating_form_url = reverse('books:update_rating', kwargs={'slug': rating.book.slug, 'book_id': rating.book.id, 'pk': rating.id})
+				context['rating'] = rating
 			else:
 				rating_form_url = reverse('books:rate', kwargs={'slug': rating.book.slug, 'book_id': rating.book.id})
 		context['rate_form'] = RatingForm
@@ -109,12 +111,14 @@ class RatingFormView(AjaxFormMixin, FormView):
 class UpdateRatingFormView(AjaxFormMixin, UpdateView):
 	form_class = RatingForm
 	template_name = 'books/_rate.html'
-	success_url = '/'
-	queryset = Rating.objects.all()
-
-	def get_object(self, queryset=None):
-		rating = super().get_object(queryset)
-		user = self.request.user
-		if rating.user != user:
-			raise PermissionDenied('Cannot change another user\'s vote.')
-		return rating
+	model = Rating
+	# success_url = '/'
+	# queryset = Rating.objects.all()
+	# def get_object(self, queryset=None):
+	# 	rating = Rating.objects.get(pk=self.kwargs['pk'])
+	# 	value = rating.value
+	# 	user = self.request.user
+	# 	if rating.user != user:
+	# 		raise PermissionDenied('Cannot change another user\'s vote.')
+	# 	return rating
+	# 	return value
