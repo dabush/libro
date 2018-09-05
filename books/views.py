@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404, render
+from django.views.generic.edit import UpdateView
 from django.views.generic import TemplateView, RedirectView, FormView
 from django.http import JsonResponse, HttpResponse
 from django.urls import reverse
@@ -105,7 +106,7 @@ class RatingFormView(AjaxFormMixin, FormView):
 	template_name  = 'books/_rate.html'
 	success_url = '/'
 
-class UpdateRatingFormView(AjaxFormMixin, FormView):
+class UpdateRatingFormView(AjaxFormMixin, UpdateView):
 	form_class = RatingForm
 	template_name = 'books/_rate.html'
 	success_url = '/'
@@ -116,4 +117,4 @@ class UpdateRatingFormView(AjaxFormMixin, FormView):
 		user = self.request.user
 		if rating.user != user:
 			raise PermissionDenied('Cannot change another user\'s vote.')
-		return vote
+		return rating
