@@ -7,8 +7,12 @@ class RatingForm(ModelForm):
 
 	user = forms.ModelChoiceField(widget=forms.HiddenInput, queryset=get_user_model().objects.all(), disabled=True)
 	book = forms.ModelChoiceField(widget=forms.HiddenInput, queryset=Book.objects.all(), disabled=True)
-	value = forms.ChoiceField(label='Rate', widget=forms.RadioSelect, choices=Rating.RATING_CHOICES)
+	value = forms.ChoiceField(label='Rate this book', widget=forms.Select, choices=Rating.RATING_CHOICES)
 
 	class Meta:
 		model = Rating
 		fields = ['value', 'user', 'book']
+
+	def __init__(self, *args, **kwargs):
+		super(RatingForm, self).__init__(*args, **kwargs)
+		self.fields['value'].widget.attrs.update({'id': 'rate-book'})

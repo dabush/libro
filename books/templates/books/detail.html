@@ -63,6 +63,17 @@
 
 {% endblock %}
 
+{% block scripts %}
+<script src="{% static 'jquery-bar-rating/dist/jquery.barrating.min.js' %}"></script>
+<script>
+	$(function() {
+      $('#rate-book').barrating({
+        theme: 'css-stars'
+      });
+   });
+</script>
+{% endblock %}
+
 {% block domready %}
   $('a.like').click(function(e){
     e.preventDefault();
