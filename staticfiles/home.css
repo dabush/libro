@@ -449,6 +449,14 @@ section.browse-books h2 {
   }
 }
 
+.rating-wrapper {
+	display: flex;
+}
+
+.rating-wrapper span {
+	font-size: 1.5rem;
+}
+
 .rating-wrapper label {
 	font-size: 1.5rem;
 	margin-right: 15px;

@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404, render
+from django.db.models import Avg
 from django.views.generic.edit import UpdateView
 from django.views.generic import TemplateView, RedirectView, FormView
 from django.http import JsonResponse, HttpResponse
@@ -51,6 +52,7 @@ class BookDetailPage(TemplateView):
 				rating_form_url = reverse('books:rate', kwargs={'slug': rating.book.slug, 'book_id': rating.book.id})
 		context['rate_form'] = RatingForm
 		context['rating_form_url'] = rating_form_url
+		context['average_rating'] = Rating.objects.filter(book=book).aggregate(Avg('value'))
 		context['book'] = Book.objects.get(pk=self.kwargs['book_id'])
 		context['author_books'] = Book.objects.all().filter(author=book.author).exclude(id=book.id)
 		return context
