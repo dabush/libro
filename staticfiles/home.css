@@ -448,3 +448,12 @@ section.browse-books h2 {
     color: black;
   }
 }
+
+.rating-wrapper label {
+	font-size: 1.5rem;
+	margin-right: 15px;
+}
+
+.rating-wrapper p {
+	display: flex;
+}

@@ -55,26 +55,6 @@ class BookDetailPage(TemplateView):
 		context['author_books'] = Book.objects.all().filter(author=book.author).exclude(id=book.id)
 		return context
 
-
-@ajax_required
-@login_required
-@require_POST
-def book_like(request, slug, book_id):
-	book_id = request.POST.get('id')
-	slug = request.POST.get('slug')
-	action = request.POST.get('action')
-	if book_id and action:
-		try:
-			book = Book.objects.get(id=book_id)
-			if action == 'like':
-				book.likes.add(request.user)
-			else:
-				book.likes.remove(request.user)
-			return JsonResponse({'status':'ok'})
-		except:
-			pass
-	return JsonResponse({'status':'ko'})
-
 @login_required
 def book_list(request):
 	books = Book.objects.all()
