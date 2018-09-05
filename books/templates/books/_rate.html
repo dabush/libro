@@ -1,13 +1,4 @@
 <form class='rating-form' method='POST' action='{{ rating_form_url }}' data-url='{{ rating_form_url }}'>
 	{% csrf_token %}
 	{{ rate_form.as_p|safe}}
-	<button class="btn btn-primary" type='submit'>Submit</button>
 </form>
-<script>
-SelectElement("rating-select", {{ rating.value }})
-function SelectElement(id, valueToSelect) {    
-    var element = document.getElementById(id);
-    element.value = valueToSelect;
-    element.value.setAttribute('selected', 'selected');
-}
-	</script>

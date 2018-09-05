@@ -112,7 +112,7 @@ class UpdateRatingFormView(AjaxFormMixin, UpdateView):
 	form_class = RatingForm
 	template_name = 'books/_rate.html'
 	model = Rating
-	# success_url = '/'
+	success_url = '/'
 	# queryset = Rating.objects.all()
 	# def get_object(self, queryset=None):
 	# 	rating = Rating.objects.get(pk=self.kwargs['pk'])
