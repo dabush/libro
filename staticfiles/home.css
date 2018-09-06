@@ -252,6 +252,10 @@ div.list-card:before {
     height: 100%;
 }
 
+div.list-card:hover {
+	border: none;
+}
+
 div.entry-year {
 	font-size: 4rem;
 	color: #8F0000;

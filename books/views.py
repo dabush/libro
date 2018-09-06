@@ -126,8 +126,7 @@ class GenericList(TemplateView):
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
 		book_list = BookList.objects.get(slug=self.kwargs['slug'])
-		context['list_entries'] = ListEntry.objects.filter(book_list=book_list)
+		context['list_entries'] = ListEntry.objects.filter(book_list=book_list).order_by('-year')
 		context['kind'] = self.kwargs['kind']
 		context['list'] = BookList.objects.get(slug=self.kwargs['slug'])
-		context['list_books'] = Book.objects.filter(in_list__book_list=book_list)
 		return context
