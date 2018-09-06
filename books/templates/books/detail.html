@@ -32,7 +32,7 @@
 				<h2 class="text-black book-subtitle">{{ book.book_subtitle }}</h2>
 				<p class="author-name">by <a href="{{ book.author.get_absolute_url }}">{{ book.author }}</a></p>
 				<div class="rating-wrapper">
-					<span>{{ average_rating.value__avg|floatformat }}/10&nbsp;|&nbsp;</span>
+					<span>{% if average_rating %}{{ average_rating.value__avg|floatformat }}/10&nbsp;|&nbsp;</span>{% endif %}
 					{% include "./_rate.html" with rating=rating rate_form=rate_form rating_form_url=rating_form_url book=book %}
 				</div>
 				<p class="pub-year">{{ book.pub_year }}</p>

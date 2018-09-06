@@ -6,6 +6,9 @@ from django.contrib.auth.decorators import login_required
 from .forms import LoginForm, UserRegistrationForm, UserEditForm, ProfileEditForm
 from .models import Profile
 
+from books.models import Book, Rating
+from authors.models import Author
+
 # Create your views here.
 def user_login(request):
 	if request.method == 'POST':
@@ -29,7 +32,9 @@ def user_login(request):
 
 @login_required
 def dashboard(request):
-	return render(request, 'account/dashboard.html', {'section': dashboard})
+	liked_authors = request.user.author_likes.all()
+	user_ratings = Rating.objects.filter(user=request.user)
+	return render(request, 'account/dashboard.html', {'section': dashboard, 'user_ratings': user_ratings, 'liked_authors': liked_authors,})
 
 def register(request):
 	if request.method == 'POST':
