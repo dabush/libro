@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+	<section class="books-breadcrumbs">
+		<div class="breadcrumbs-wrapper">
+			<a href="../../books">
+				<span>
+					<i class="fas fa-chevron-left"></i>&nbsp;&nbsp;&nbsp;&nbsp;Books
+				</span>
+			</a>
+		</div>
+	</section>
+	<section class="jumbotron jumbotron-fluid libro-jumbotron book-detail-jumbotron">
+		<div class="lines-wrapper">
+			<div class="left-quotes" style="background-image: url({% static 'leftquotes.png' %})">
+				{% for item in list_books %}
+				<p>{{ item.book_title }}<p>
+					{%  endfor %}
+			</div>
+		</div>
+	</section>
+{% endblock %}

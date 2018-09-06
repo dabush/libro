@@ -68,10 +68,7 @@ class Book(models.Model):
 	book_desc = models.TextField()
 	book_country = CountryField()
 	book_featured = models.BooleanField()
-	likes = models.ManyToManyField(User, related_name="book_likes", blank=True)
-
-	def total_likes(self):
-		return self.likes.count()
+	lists = models.ManyToManyField('BookList', through='ListEntry', related_name='book_lists')
 
 	def get_absolute_url(self):
 		return reverse('books:book_detail', kwargs={'slug': self.slug, 'book_id': self.id})
@@ -115,3 +112,17 @@ class Rating(models.Model):
 
 	class Meta:
 	 	unique_together = ('user', 'book')
+
+class BookList(models.Model):
+	name = models.CharField(max_length=200)
+	slug = models.SlugField(max_length=50)
+
+	def __str__(self):
+		return self.name
+
+class ListEntry(models.Model):
+	book_list = models.ForeignKey(BookList, related_name='in_list', on_delete=models.CASCADE)
+	book = models.ForeignKey(Book, related_name='in_list', on_delete=models.CASCADE)
+
+	def __str__(self):
+		return '%s in list %s' % (self.book, self.book_list)

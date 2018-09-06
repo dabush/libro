@@ -11,7 +11,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 import simplejson as json
 
-from .models import Book, Rating
+from .models import Book, Rating, BookList
 from .forms import RatingForm
 from .mixins import AjaxFormMixin
 from authors.models import Author
@@ -104,3 +104,12 @@ class UpdateRatingFormView(AjaxFormMixin, UpdateView):
 	# 		raise PermissionDenied('Cannot change another user\'s vote.')
 	# 	return rating
 	# 	return value
+
+class GenericList(TemplateView):
+	template_name = 'books/generic_list.html'
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		book_list = BookList.objects.get(slug=self.kwargs['slug'])
+		context['list'] = BookList.objects.get(slug=self.kwargs['slug'])
+		context['list_books'] = Book.objects.filter(in_list__book_list=book_list).values()
+		return context
