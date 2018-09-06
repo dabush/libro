@@ -14,9 +14,12 @@
 		<div class="lines-wrapper">
 			<div class="left-quotes" style="background-image: url({% static 'leftquotes.png' %})">
 			</div>
-							{% for item in list_books %}
-				<p>{{ item.book_title }}<p>
-					{%  endfor %}
 		</div>
 	</section>
+	{% for list in award_lists %}
+	<a href="{{ list.get_absolute_url }}"><p>{{ list.name }}</p></a>
+	{% endfor %}
+	{% for list in editorial_lists %}
+	<a href="{{ list.get_absolute_url }}"><p>{{ list.name }}</p></a>
+	{% endfor %}
 {% endblock %}

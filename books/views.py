@@ -105,6 +105,20 @@ class UpdateRatingFormView(AjaxFormMixin, UpdateView):
 	# 	return rating
 	# 	return value
 
+class AllLists(TemplateView):
+	template_name = 'books/all_lists.html'
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['award_lists'] = BookList.objects.filter(kind='AWARDS')
+		context['editorial_lists'] = BookList.objects.filter(kind='EDITORIAL')
+		return context
+
+class ListsOfKind(TemplateView):
+	template_name = 'books/lists_of_kind.html'
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		return context
+
 class GenericList(TemplateView):
 	template_name = 'books/generic_list.html'
 	def get_context_data(self, **kwargs):

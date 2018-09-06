@@ -114,8 +114,18 @@ class Rating(models.Model):
 	 	unique_together = ('user', 'book')
 
 class BookList(models.Model):
+	awards = 'Awards'
+	editorial = 'Editorial'
+	LIST_KINDS = (
+		(awards, 'Awards',),
+		(editorial, 'Editorial',),
+	)
+	kind = models.CharField(max_length=20, choices=LIST_KINDS)
 	name = models.CharField(max_length=200)
 	slug = models.SlugField(max_length=50)
+
+	def get_absolute_url(self):
+		return reverse('books:generic_list', kwargs={'kind': self.kind, 'slug': self.slug, 'booklist_id': self.id})
 
 	def __str__(self):
 		return self.name
