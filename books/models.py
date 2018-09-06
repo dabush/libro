@@ -114,11 +114,11 @@ class Rating(models.Model):
 	 	unique_together = ('user', 'book')
 
 class BookList(models.Model):
-	awards = 'Awards'
-	editorial = 'Editorial'
+	awards = 'awards'
+	editorial = 'editorial'
 	LIST_KINDS = (
-		(awards, 'Awards',),
-		(editorial, 'Editorial',),
+		(awards, 'awards',),
+		(editorial, 'editorial',),
 	)
 	kind = models.CharField(max_length=20, choices=LIST_KINDS)
 	name = models.CharField(max_length=200)
@@ -133,6 +133,7 @@ class BookList(models.Model):
 class ListEntry(models.Model):
 	book_list = models.ForeignKey(BookList, related_name='in_list', on_delete=models.CASCADE)
 	book = models.ForeignKey(Book, related_name='in_list', on_delete=models.CASCADE)
+	year = models.IntegerField()
 
 	def __str__(self):
-		return '%s in list %s' % (self.book, self.book_list)
+		return '%s in list %s for year%s' % (self.book, self.book_list, self.year)

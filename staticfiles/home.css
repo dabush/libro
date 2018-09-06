@@ -232,6 +232,36 @@ div.card-bg-image {
 	max-width: 59%;
 }
 
+div.entry-wrapper {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+div.list-card {
+	width: 75%;
+	border: none;
+}
+
+div.list-card:before {
+	content: "";
+	border-left: 10px solid #8F0000;
+    position: absolute;
+    bottom: 0;
+    left: -25px;
+    height: 100%;
+}
+
+div.entry-year {
+	font-size: 4rem;
+	color: #8F0000;
+	margin-right: 20px;
+}
+
+div.list-card-bg-image {
+	width: 25%;
+}
+
 section.books-breadcrumbs div.breadcrumbs-wrapper {
 	height: 10vh;
 	display: flex;

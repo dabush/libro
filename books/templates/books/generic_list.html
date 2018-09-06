@@ -3,20 +3,22 @@
 {% block content %}
 	<section class="books-breadcrumbs">
 		<div class="breadcrumbs-wrapper">
-			<a href="../../books">
+			<a href="../../{{ kind }}">
 				<span>
-					<i class="fas fa-chevron-left"></i>&nbsp;&nbsp;&nbsp;&nbsp;Books
+					<i class="fas fa-chevron-left"></i>&nbsp;&nbsp;&nbsp;&nbsp;{{ kind|title }} Lists
 				</span>
 			</a>
 		</div>
 	</section>
 	<section class="jumbotron jumbotron-fluid libro-jumbotron book-detail-jumbotron">
 		<div class="lines-wrapper">
-			<div class="left-quotes" style="background-image: url({% static 'leftquotes.png' %})">
-			</div>
-							{% for item in list_books %}
-				<p>{{ item.book_title }}<p>
+			<div class="left-quotes" style="background-image: url({% static 'leftquotes.png' %})"></div>{{ list.name }}</div>
+
+	</section>
+	<div>
+				
+							{% for entry in list_entries %}
+				{% include "./_listcard.html" with obj=entry type="book" %}
 					{%  endfor %}
 		</div>
-	</section>
 {% endblock %}

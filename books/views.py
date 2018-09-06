@@ -11,7 +11,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 import simplejson as json
 
-from .models import Book, Rating, BookList
+from .models import Book, Rating, BookList, ListEntry
 from .forms import RatingForm
 from .mixins import AjaxFormMixin
 from authors.models import Author
@@ -109,14 +109,16 @@ class AllLists(TemplateView):
 	template_name = 'books/all_lists.html'
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
-		context['award_lists'] = BookList.objects.filter(kind='AWARDS')
-		context['editorial_lists'] = BookList.objects.filter(kind='EDITORIAL')
+		context['award_lists'] = BookList.objects.filter(kind='awards')
+		context['editorial_lists'] = BookList.objects.filter(kind='editorial')
 		return context
 
 class ListsOfKind(TemplateView):
 	template_name = 'books/lists_of_kind.html'
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
+		context['kind'] = self.kwargs['kind']
+		context['lists_of_kind'] = BookList.objects.filter(kind=self.kwargs['kind'])
 		return context
 
 class GenericList(TemplateView):
@@ -124,6 +126,8 @@ class GenericList(TemplateView):
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
 		book_list = BookList.objects.get(slug=self.kwargs['slug'])
+		context['list_entries'] = ListEntry.objects.filter(book_list=book_list)
+		context['kind'] = self.kwargs['kind']
 		context['list'] = BookList.objects.get(slug=self.kwargs['slug'])
-		context['list_books'] = Book.objects.filter(in_list__book_list=book_list).values()
+		context['list_books'] = Book.objects.filter(in_list__book_list=book_list)
 		return context

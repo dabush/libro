@@ -16,9 +16,11 @@
 			</div>
 		</div>
 	</section>
+	<a href="awards"><h1>Award Lists</h1></a>
 	{% for list in award_lists %}
 	<a href="{{ list.get_absolute_url }}"><p>{{ list.name }}</p></a>
 	{% endfor %}
+	<a href="editorial"><h1>Editorial lists</h1></a>
 	{% for list in editorial_lists %}
 	<a href="{{ list.get_absolute_url }}"><p>{{ list.name }}</p></a>
 	{% endfor %}
