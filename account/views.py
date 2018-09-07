@@ -1,11 +1,15 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.contrib import messages
+from django.urls import reverse
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-from .forms import LoginForm, UserRegistrationForm, UserEditForm, ProfileEditForm
-from .models import Profile
+from django.views.generic import TemplateView, FormView
+from .forms import LoginForm, UserRegistrationForm, UserEditForm, ProfileEditForm, UserListCreateForm, UserEntryAddForm
+from .models import Profile, UserList, UserListEntry
 
+
+from books.mixins import AjaxFormMixin
 from books.models import Book, Rating
 from authors.models import Author
 
@@ -34,7 +38,10 @@ def user_login(request):
 def dashboard(request):
 	liked_authors = request.user.author_likes.all()
 	user_ratings = Rating.objects.filter(user=request.user)
-	return render(request, 'account/dashboard.html', {'section': dashboard, 'user_ratings': user_ratings, 'liked_authors': liked_authors,})
+	user_lists = UserList.objects.filter(user=request.user)
+	new_user_list = UserListCreateForm
+	form_url = reverse('accounts:create_user_list')
+	return render(request, 'account/dashboard.html', {'section': dashboard, 'user_ratings': user_ratings, 'liked_authors': liked_authors, 'new_user_list': new_user_list, 'form_url': form_url})
 
 def register(request):
 	if request.method == 'POST':
@@ -67,3 +74,13 @@ def edit(request):
 		user_form = UserEditForm(instance=request.user)
 		profile_form = ProfileEditForm(instance=request.user.profile)
 	return render(request, 'account/edit.html', {'user_form': user_form, 'profile_form': profile_form })
+
+class UserListFormView(AjaxFormMixin, FormView):
+	def get_initial(self):
+		initial = super().get_initial()
+		initial['user'] = self.request.user.id
+		return initial
+
+	form_class = UserListCreateForm
+	template_name  = 'account/_list_create.html'
+	success_url = '/'

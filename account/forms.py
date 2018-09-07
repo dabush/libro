@@ -35,9 +35,18 @@ class ProfileEditForm(forms.ModelForm):
 class UserListCreateForm(forms.ModelForm):
 	user = forms.ModelChoiceField(widget=forms.HiddenInput, queryset=get_user_model().objects.all(), disabled=True)
 	name = forms.CharField(max_length=150)
-	list_desc = forms.TextField(max_length=500)
+	list_desc = forms.CharField(max_length=500, widget=forms.Textarea)
 	list_image = forms.ImageField(required=False)
 
 	class Meta:
 		model = UserList
 		fields = ['user', 'name', 'list_desc', 'list_image']
+
+class UserEntryAddForm(forms.ModelForm):
+	user = forms.ModelChoiceField(widget=forms.HiddenInput, queryset=get_user_model().objects.all(), disabled=True)
+	book = forms.ModelChoiceField(widget=forms.HiddenInput, queryset=Book.objects.all(), disabled=True)
+	user_list = forms.ModelChoiceField(widget=forms.Select, queryset=UserList.objects.all(), empty_label=None)
+
+	class Meta:
+		model = UserListEntry
+		fields = ['user', 'book', 'user_list']

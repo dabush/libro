@@ -5,7 +5,7 @@
 	<section class="jumbotron">
 		<div class="row text-left author-row">
 			<h1>Dashboard</h1>
-			<p>Welcome to your dashboard. You can <a href="{% url 'edit' %}">edit your profile</a> or <a href="{% url 'password_change' %}">change your password</a>.</p>
+			<p>Welcome to your dashboard. You can <a href="{% url 'accounts:edit' %}">edit your profile</a> or <a href="{% url 'accounts:password_change' %}">change your password</a>.</p>
 		</div>
 	</section>
 	<section class="album py-5 bg-light">
@@ -13,15 +13,18 @@
 			<h1>Your rated books</h1>
 			{% for rating in user_ratings %}
 				<p>{{ rating.value }}: {{ rating.book }}</p>
-				{% endfor %}
-			</div>
-		</section>
-		<section class="album py-5 bg-light">
+			{% endfor %}
+		</div>
+	</section>
+	<section class="album py-5 bg-light">
 		<div>
 			<h1>Your liked authors</h1>
 			{% for author in liked_authors %}
 				<p>{{ author.first_name }} {{ author.last_name }}</p>
-				{% endfor %}
-			</div>
-		</section>
-	{% endblock %}
+			{% endfor %}
+		</div>
+		<div>
+			{% include './_list_create.html' %}
+		</div>
+	</section>
+{% endblock %}
