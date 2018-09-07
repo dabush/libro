@@ -12,6 +12,11 @@ a:hover {
 	text-decoration: none;
 }
 
+a.site-name img {
+	margin-right: 5px;
+	border-radius: 10%;
+}
+
 .libre {
 	font-family: "Libre Baskerville", serif;
 }

@@ -1,32 +1,32 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-	<section class="books-breadcrumbs">
-		<div class="breadcrumbs-wrapper">
-			<a href="../../books">
-				<span>
-					<i class="fas fa-chevron-left"></i>&nbsp;&nbsp;&nbsp;&nbsp;Books
-				</span>
-			</a>
+	<section class="jumbotron jumbotron-fluid libro-jumbotron list-detail-jumbotron">
+		<div class="lines-wrapper">
+			<div class="left-quotes" style="background-image: url({% static 'leftquotes.png' %})">
+			</div>
+				<div class="first-lines">
+					Many people, myself among them, feel better at the mere sight of a book.
+				</div>
+			</div>
+			<h4 class="libre text-white quote-attr">
+			– Jane Smiley
+			</h4>
+</section>
+<div class="container list-container">
+	<div class="row">
+		<div class="col">
+			<a href="awards"><h1>Award Lists</h1></a>
+			{% for list in award_lists %}
+				<a href="{{ list.get_absolute_url }}"><p>{{ list.name }}</p></a>
+			{% endfor %}
 		</div>
-	</section>
-	<section class="jumbotron jumbotron-fluid libro-jumbotron book-detail-jumbotron">
-			<h1 class="text-white books-jumbotron-text">Lists</h1>
-	</section>
-	<div class="container list-container">
-		<div class="row">
-			<div class="col">
-		<a href="awards"><h1>Award Lists</h1></a>
-		{% for list in award_lists %}
-			<a href="{{ list.get_absolute_url }}"><p>{{ list.name }}</p></a>
-		{% endfor %}
+		<div class="col">
+			<a href="editorial"><h1>Editorial lists</h1></a>
+			{% for list in editorial_lists %}
+				<a href="{{ list.get_absolute_url }}"><p>{{ list.name }}</p></a>
+			{% endfor %}
+		</div>
 	</div>
-	<div class="col">
-		<a href="editorial"><h1>Editorial lists</h1></a>
-		{% for list in editorial_lists %}
-			<a href="{{ list.get_absolute_url }}"><p>{{ list.name }}</p></a>
-		{% endfor %}
-	</div>
-	</div>
-	</div>
+</div>
 {% endblock %}

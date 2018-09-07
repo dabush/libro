@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import Profile
+from django.contrib.auth import get_user_model
+from .models import Profile, UserList, UserListEntry
+from books.models import Book
 
 class LoginForm(forms.Form):
 	username = forms.CharField()
@@ -29,3 +31,13 @@ class ProfileEditForm(forms.ModelForm):
 	class Meta:
 		model = Profile
 		fields = ('date_of_birth', 'photo')
+
+class UserListCreateForm(forms.ModelForm):
+	user = forms.ModelChoiceField(widget=forms.HiddenInput, queryset=get_user_model().objects.all(), disabled=True)
+	name = forms.CharField(max_length=150)
+	list_desc = forms.TextField(max_length=500)
+	list_image = forms.ImageField(required=False)
+
+	class Meta:
+		model = UserList
+		fields = ['user', 'name', 'list_desc', 'list_image']
