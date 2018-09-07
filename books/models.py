@@ -123,6 +123,8 @@ class BookList(models.Model):
 	kind = models.CharField(max_length=20, choices=LIST_KINDS)
 	name = models.CharField(max_length=200)
 	slug = models.SlugField(max_length=50)
+	list_desc = models.TextField()
+	list_image = models.ImageField(null=True, blank=True, upload_to='list_images')
 
 	def get_absolute_url(self):
 		return reverse('books:generic_list', kwargs={'kind': self.kind, 'slug': self.slug, 'booklist_id': self.id})

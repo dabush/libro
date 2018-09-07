@@ -12,6 +12,10 @@ a:hover {
 	text-decoration: none;
 }
 
+.libre {
+	font-family: "Libre Baskerville", serif;
+}
+
 .jumbotron {
 	margin-bottom: 0;
 }
@@ -85,23 +89,42 @@ a:hover {
 	align-items: center;
 }
 
-.book-detail-jumbotron div.lines-wrapper {
+div.lines-wrapper {
 	width: 75%;
 	display: flex;
 	position: relative;
+	justify-content: center;
+	align-items: center;
+	margin: 0 auto;
+	top: 25%;
+	transform: translateY(-25%);
+	-webkit-transform: translateY(-25%);
 }
 
-.book-detail-jumbotron div.lines-wrapper div.left-quotes {
+.quote-attr {
+	float: right;
+	margin-right: 15%;
+	position: relative;
+	top: 25%;
+	transform: translateY(-25%);
+	-webkit-transform: translateY(-25%);
+}
+
+div.lines-wrapper div.left-quotes {
 	height: 100px;
     min-width: 150px;
     background-size: cover;
     margin-right: 20px;
 }
 
-.book-detail-jumbotron div.first-lines {
+div.first-lines {
 	color: #ffffff;
 	font-family: "Libre Baskerville", serif;
 	font-size: 1.5rem;
+}
+
+.book-detail-jumbotron .col-sm {
+	padding: 0;
 }
 
 .authors-jumbotron {
@@ -239,7 +262,7 @@ div.entry-wrapper {
 }
 
 div.list-card {
-	width: 75%;
+	width: 67%;
 	border: none;
 }
 
@@ -329,6 +352,10 @@ section.books-breadcrumbs div.breadcrumbs-wrapper {
 
 .book-details div.display-3 {
 	padding-right: 5%;
+}
+
+.list-detail-jumbotron {
+	background: #8F0000;
 }
 
 /* horizontal scroll*/

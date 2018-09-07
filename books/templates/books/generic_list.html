@@ -11,14 +11,17 @@
 		</div>
 	</section>
 	<section class="jumbotron jumbotron-fluid libro-jumbotron book-detail-jumbotron">
-		<div class="lines-wrapper">
-			<div class="left-quotes" style="background-image: url({% static 'leftquotes.png' %})"></div>{{ list.name }}</div>
-
+		<div class="col"><h1 class="libre text-white text-center">{{ list.name }}</h1></div>
+		<div class="col-sm">
+			{% if list.list_image.url %}<div class="img-fluid home-image" style = "background-image: url({{ list.list_image.url }}); background-size: cover; background-position:center;" >
+			</div>
+			{% endif %}
+		</div>
 	</section>
 	<div>
-				
-							{% for entry in list_entries %}
-				{% include "./_listcard.html" with obj=entry type="book" %}
-					{%  endfor %}
+		
+		{% for entry in list_entries %}
+			{% include "./_listcard.html" with obj=entry type="book" %}
+			{%  endfor %}
 		</div>
-{% endblock %}
+	{% endblock %}

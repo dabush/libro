@@ -10,11 +10,27 @@
 			</a>
 		</div>
 	</section>
-	<section class="jumbotron jumbotron-fluid libro-jumbotron book-detail-jumbotron">
+	<section class="jumbotron jumbotron-fluid libro-jumbotron list-detail-jumbotron">
 		<div class="lines-wrapper">
 			<div class="left-quotes" style="background-image: url({% static 'leftquotes.png' %})">
 			</div>
+			{% if kind == 'awards' %}
+			<div class="first-lines">
+				For the awarding of the Grillparzer Prize of the Academy of Sciences in Vienna I had to buy a suit, as I had suddenly realized two hours before the presentation that I couldn't appear to this doubtless extraordinary ceremony in trousers and a pullover...
+			</div>
 		</div>
+					<h4 class="libre text-white quote-attr">
+				--Thomas Bernhard
+			</h4>
+			{% else %}
+			<div class="first-lines">
+				I believe that the trade of critic, in literature, music, and the drama, is the most degraded of all trades, and that it has no real value--certainly no large value... However, let it go. It is the will of God that we must have critics, and missionaries, and congressmen, and humorists, and we must bear the burden.
+			</div>
+		</div>
+					<h4 class="libre text-white quote-attr">
+				--Mark Twain
+			</h4>
+			{% endif %}
 	</section>
 	<h1>{{ kind }}</h1>
 	{% for list in lists_of_kind %}
