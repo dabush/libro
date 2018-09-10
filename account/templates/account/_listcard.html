@@ -1,0 +1,13 @@
+{% load static %}
+<div class="entry-wrapper">
+		{% include './_listentry_delete.html' with entry=entry userlist=userlist %}
+<div class="card list-card mb-3 box-shadow">
+    <div class="list-card-bg-image" style="background-image: url('{% if obj.book.cover_image %}{{ obj.book.cover_image.url }}{% endif %}'); background-size: cover; background-position: center;"></div>
+<div class="card-body">
+    <a href='{{ obj.book.get_absolute_url }}'><h4>{{obj.book.book_title}}</h4></a>
+    <p class="card-text">by {{ obj.book.author }}</p>
+    <p>{{ obj.book.book_desc|truncatewords:30 }}</p>
+    <p>{{ entry.id }}</p>
+</div>
+</div>
+</div>

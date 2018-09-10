@@ -1,9 +1,10 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.contrib import messages
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
+from django.views.generic.edit import CreateView, DeleteView
 from django.views.generic import TemplateView, FormView
 from .forms import LoginForm, UserRegistrationForm, UserEditForm, ProfileEditForm, UserListCreateForm, UserEntryAddForm
 from .models import Profile, UserList, UserListEntry
@@ -41,7 +42,7 @@ def dashboard(request):
 	user_lists = UserList.objects.filter(user=request.user)
 	new_user_list = UserListCreateForm
 	form_url = reverse('accounts:create_user_list')
-	return render(request, 'account/dashboard.html', {'section': dashboard, 'user_ratings': user_ratings, 'liked_authors': liked_authors, 'new_user_list': new_user_list, 'form_url': form_url})
+	return render(request, 'account/dashboard.html', {'section': dashboard, 'user_ratings': user_ratings, 'user_lists': user_lists, 'liked_authors': liked_authors, 'new_user_list': new_user_list, 'form_url': form_url})
 
 def register(request):
 	if request.method == 'POST':
@@ -84,3 +85,18 @@ class UserListFormView(AjaxFormMixin, FormView):
 	form_class = UserListCreateForm
 	template_name  = 'account/_list_create.html'
 	success_url = '/'
+
+class UserListView(TemplateView):
+	template_name = 'account/list.html'
+	def get_context_data(self, **kwargs):
+		# Call the base implementation first to get a context
+		context = super().get_context_data(**kwargs)
+		userlist = UserList.objects.get(id=self.kwargs['userlist_id'])
+		context['userlist'] = userlist
+		context['list_entries'] = UserListEntry.objects.filter(user_list=userlist)
+		return context
+
+class UserListEntryDeleteView(AjaxFormMixin, DeleteView):
+	model = UserListEntry
+	template_name = 'account/_listentry_delete.html'
+	success_url = reverse_lazy('accounts:dashboard')

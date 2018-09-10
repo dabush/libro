@@ -23,8 +23,22 @@
 				<p>{{ author.first_name }} {{ author.last_name }}</p>
 			{% endfor %}
 		</div>
+		{% if user_lists %}
+		<div>
+			<h1>Your Lists</h1>
+			{% for list in user_lists %}
+			<a href="{{ list.get_absolute_url }}"><ul>{{ list.name }}</ul></a>
+			{% for book in list.book.all %}
+			<a href="{{ book.get_absolute_url }}"><li>{{ book }}</li></a>
+			{% endfor %}
+			{% endfor %}
+		</div>
+		{% endif %}
 		<div>
 			{% include './_list_create.html' %}
 		</div>
 	</section>
+{% endblock %}
+{% block scripts %}
+<script src='{% static 'userlist_ajax.js' %}'></script>
 {% endblock %}

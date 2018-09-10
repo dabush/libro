@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+	<section class="books-breadcrumbs">
+		<div class="breadcrumbs-wrapper">
+			<a href="../../accounts">
+				<span>
+					<i class="fas fa-chevron-left"></i>&nbsp;&nbsp;&nbsp;&nbsp;Dashboard
+				</span>
+			</a>
+		</div>
+	</section>
+	<section class="jumbotron jumbotron-fluid libro-jumbotron book-detail-jumbotron">
+		<div class="col"><h1 class="libre text-white text-center">{{ userlist.name }}</h1></div>
+		<div class="col-sm">
+			{% if userlist.list_image %}<div class="img-fluid home-image" style = "background-image: url({{ userlist.list_image.url }}); background-size: cover; background-position:center;" >
+			</div>
+		{% endif %}
+	</div>
+</section>
+<div>
+	{% if not list_entries %}
+		<h2 class='text-center'>This list is empty. Go find some <a href="/books">books</a>!</h2>
+	{% else %}
+		{% for entry in list_entries %}
+			{% include "./_listcard.html" with obj=entry userlist=userlist type="book" %}
+			{%  endfor %}
+		{% endif %}
+	</div>
+{% endblock %}
+{% block scripts %}
+	<script src='{% static 'entry_deleteajax.js' %}'></script>
+{% endblock %}

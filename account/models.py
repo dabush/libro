@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.urls import reverse
 
 from books.models import Book
 
@@ -19,16 +20,17 @@ class UserList(models.Model):
 	list_desc = models.TextField()
 	list_image = models.ImageField(null=True, blank=True, upload_to='list_images')
 
+	def get_absolute_url(self):
+		return reverse('accounts:user_list_view', kwargs={'userlist_id': self.id})
+
 	def __str__(self):
 		return self.name
 
 class UserListEntry(models.Model):
 	user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-	user_list = models.ForeignKey(UserList, related_name='userlist_author', on_delete=models.CASCADE)
+	user_list = models.ForeignKey(UserList, related_name='userlist_contents', on_delete=models.CASCADE)
 	book = models.ForeignKey('books.Book', related_name='in_userlist', on_delete=models.CASCADE)
 	created_on = models.DateTimeField(auto_now_add=True)
 
 	def __str__(self):
 		return '%s in %s\'s list %s' % (self.book, self.user, self.user_list)
-
-

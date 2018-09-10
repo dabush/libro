@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404, render
 from django.db.models import Avg
-from django.views.generic.edit import UpdateView
+from django.views.generic.edit import UpdateView, CreateView
 from django.views.generic import TemplateView, RedirectView, FormView
 from django.http import JsonResponse, HttpResponse
 from django.urls import reverse
@@ -13,6 +13,8 @@ import simplejson as json
 
 from .models import Book, Rating, BookList, ListEntry
 from .forms import RatingForm
+from account.models import UserListEntry
+from account.forms import UserEntryAddForm
 from .mixins import AjaxFormMixin
 from authors.models import Author
 from common.decorators import ajax_required
@@ -42,6 +44,7 @@ class BookDetailPage(TemplateView):
 	def get_context_data(self, **kwargs):
 		book = Book.objects.get(pk=self.kwargs['book_id'])
 		context = super().get_context_data(**kwargs)
+		listentry_form_url = ''
 		rating_form_url = ''
 		if self.request.user.is_authenticated:
 			rating = Rating.objects.get_rating_or_unsaved_blank_rating(book=book, user=self.request.user)
@@ -55,6 +58,8 @@ class BookDetailPage(TemplateView):
 		context['average_rating'] = Rating.objects.filter(book=book).aggregate(Avg('value'))
 		context['book'] = Book.objects.get(pk=self.kwargs['book_id'])
 		context['author_books'] = Book.objects.all().filter(author=book.author).exclude(id=book.id)
+		context['listentry_form_url'] = reverse('books:user_list_add', kwargs={'slug': self.kwargs['slug'], 'book_id': self.kwargs['book_id']})
+		context['userlist_entry_form'] = UserEntryAddForm
 		return context
 
 @login_required
@@ -130,3 +135,15 @@ class GenericList(TemplateView):
 		context['kind'] = self.kwargs['kind']
 		context['list'] = BookList.objects.get(slug=self.kwargs['slug'])
 		return context
+
+class UserListEntryView(AjaxFormMixin, CreateView):
+	def get_initial(self):
+		initial = super().get_initial()
+		initial['user'] = self.request.user.id
+		initial['book'] = self.kwargs['book_id']
+		return initial
+
+	model = UserListEntry
+	form_class = UserEntryAddForm
+	template_name = 'books/_list_add.html'
+	success_url = '/'

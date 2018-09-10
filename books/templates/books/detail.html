@@ -39,6 +39,9 @@
 				<p class="book-desc">{{ book.book_desc }}</p>
 			</div>
 		</div>
+		<div>
+			{% include './_list_add.html' with listentry_form_url=listentry_form_url userlist_entry_form=userlist_entry_form %}
+		</div>
 	</section>
 	<section class="album py-5 bg-light">
 		<div class="text-center">
@@ -70,4 +73,6 @@
 	});
 	});
 	</script>
+	 <script src="{% static 'rating_ajax.js' %}"></script>
+	 <script src="{% static 'userlist_entry_ajax.js' %}"></script>
 {% endblock %}
