@@ -438,7 +438,8 @@ ul.last-name-list li:first-child {
 	padding-right: 20px;
 }
 
-h2.list-wrapper {
+#delete-list {
+	
 }
 
 /*book search page*/
@@ -567,6 +568,22 @@ button.delete-button:hover {
 	cursor: pointer;
 }
 
+button.add-button {
+	background: none;
+	border: none;
+	color: #8F0000;
+	font-size: 1.5rem;
+	margin-left: 15px;
+	position: relative;
+	top: -7px;
+}
+
+button.add-button:hover {
+	color: #680D10;
+	text-decoration: none;
+	cursor: pointer;
+}
+
 /*styles for our dashboard*/
 section.dashboard-jumbotron {
 	width: 100%;
@@ -600,4 +617,21 @@ div.dashboard-container .btn-primary {
 
 div.dashboard-container .btn-primary:hover {
 	background-color: #680D10 !important;
+}
+
+div.list-add-wrapper {
+	font-size: 1.5rem;
+}
+
+div.list-add-wrapper .form-control {
+	margin-left: 10px;
+}
+
+div.likes-wrapper {
+	font-size: 1.5rem;
+	display: flex;
+}
+
+div.likes-wrapper a {
+	margin-left: 15px;
 }

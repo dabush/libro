@@ -34,3 +34,6 @@ class UserListEntry(models.Model):
 
 	def __str__(self):
 		return '%s in %s\'s list %s' % (self.book, self.user, self.user_list)
+
+	class Meta:
+	 	unique_together = ('user_list', 'book')

@@ -23,6 +23,7 @@ $(document).ready(function() {
         	console.log(jqXHR)
         	console.log(textStatus)
         	console.log(errorThrown)
+        	alert("This book could not be added. Is it already in your list?")
     }
 	})
 })

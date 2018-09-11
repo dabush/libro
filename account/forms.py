@@ -45,7 +45,7 @@ class UserListCreateForm(forms.ModelForm):
 class UserEntryAddForm(forms.ModelForm):
 	user = forms.ModelChoiceField(widget=forms.HiddenInput, queryset=get_user_model().objects.all(), disabled=True)
 	book = forms.ModelChoiceField(widget=forms.HiddenInput, queryset=Book.objects.all(), disabled=True)
-	user_list = forms.ModelChoiceField(widget=forms.Select, queryset=UserList.objects.all(), empty_label=None)
+	user_list = forms.ModelChoiceField(label=False, widget=forms.Select(attrs={'class': 'form-control form-control-sm'}), queryset=UserList.objects.all(), empty_label=None)
 
 	class Meta:
 		model = UserListEntry

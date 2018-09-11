@@ -36,9 +36,37 @@ class Author(models.Model):
 	slug = models.SlugField(max_length=30)
 	featured_author = models.BooleanField()
 	likes = models.ManyToManyField(User, related_name="author_likes", blank=True)
+	lists = models.ManyToManyField('AuthorList', through='AuthorListEntry', related_name='author_lists')
 
 	def get_absolute_url(self):
 		return reverse('authors:detail', kwargs={'slug': self.slug, 'author_id': self.id})
 
 	def __str__(self):
 		return self.first_name + ' ' + self.last_name
+
+class AuthorList(models.Model):
+	awards = 'awards'
+	editorial = 'editorial'
+	LIST_KINDS = (
+		(awards, 'awards',),
+		(editorial, 'editorial',),
+	)
+	kind = models.CharField(max_length=20, choices=LIST_KINDS)
+	name = models.CharField(max_length=200)
+	slug = models.SlugField(max_length=50)
+	list_desc = models.TextField()
+	list_image = models.ImageField(null=True, blank=True, upload_to='list_images')
+
+	def get_absolute_url(self):
+		return reverse('books:generic_list', kwargs={'kind': self.kind, 'slug': self.slug, 'booklist_id': self.id})
+
+	def __str__(self):
+		return self.name
+
+class AuthorListEntry(models.Model):
+	author_list = models.ForeignKey(AuthorList, related_name='in_list', on_delete=models.CASCADE)
+	author = models.ForeignKey(Author, related_name='in_list', on_delete=models.CASCADE)
+	year = models.IntegerField()
+
+	def __str__(self):
+		return '%s in list %s for year%s' % (self.book, self.book_list, self.year)
