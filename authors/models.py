@@ -58,7 +58,7 @@ class AuthorList(models.Model):
 	list_image = models.ImageField(null=True, blank=True, upload_to='list_images')
 
 	def get_absolute_url(self):
-		return reverse('books:generic_list', kwargs={'kind': self.kind, 'slug': self.slug, 'booklist_id': self.id})
+		return reverse('authors:generic_author_list', kwargs={'kind': self.kind, 'slug': self.slug, 'authorlist_id': self.id})
 
 	def __str__(self):
 		return self.name
@@ -69,4 +69,4 @@ class AuthorListEntry(models.Model):
 	year = models.IntegerField()
 
 	def __str__(self):
-		return '%s in list %s for year%s' % (self.book, self.book_list, self.year)
+		return '%s in list %s for year%s' % (self.author, self.author_list, self.year)
