@@ -38,11 +38,12 @@ def user_login(request):
 @login_required
 def dashboard(request):
 	liked_authors = request.user.author_likes.all()
+	user = request.user
 	user_ratings = Rating.objects.filter(user=request.user).order_by('-value')
 	user_lists = UserList.objects.filter(user=request.user)
 	new_user_list = UserListCreateForm
 	form_url = reverse('accounts:create_user_list')
-	return render(request, 'account/dashboard.html', {'section': dashboard, 'user_ratings': user_ratings, 'user_lists': user_lists, 'liked_authors': liked_authors, 'new_user_list': new_user_list, 'form_url': form_url})
+	return render(request, 'account/dashboard.html', {'user': user, 'section': dashboard, 'user_ratings': user_ratings, 'user_lists': user_lists, 'liked_authors': liked_authors, 'new_user_list': new_user_list, 'form_url': form_url})
 
 def register(request):
 	if request.method == 'POST':

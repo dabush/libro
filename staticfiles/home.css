@@ -322,7 +322,7 @@ section.books-breadcrumbs div.breadcrumbs-wrapper {
 	background-size: cover;
 	height: 550px;
 	width: 85%;
-	margin: auto;
+	margin: 25px auto;
 }
 
 .book-details p.publisher {
@@ -410,7 +410,7 @@ body.log-in-page{
 
 form.form-signin {
 	width: 100%;
-    max-width: 330px;
+    max-width: 340px;
     padding: 15px;
     margin: 0 auto;
 }
@@ -634,4 +634,22 @@ div.likes-wrapper {
 
 div.likes-wrapper a {
 	margin-left: 15px;
+}
+
+body.log-in-page div.site-logo {
+	font-family: "Libre Baskerville", serif;
+	color: #8F0000;
+	font-size: 2.5rem;
+	margin-bottom: 2rem;
+}
+
+body.log-in-page div.site-logo img {
+	border-radius: 5%;
+	margin-right: 15px;
+}
+
+h1.username {
+	font-size: 6rem;
+	font-family: "Libre Baskerville", serif;
+	margin-left: 25px;
 }

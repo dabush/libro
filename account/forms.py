@@ -47,6 +47,10 @@ class UserEntryAddForm(forms.ModelForm):
 	book = forms.ModelChoiceField(widget=forms.HiddenInput, queryset=Book.objects.all(), disabled=True)
 	user_list = forms.ModelChoiceField(label=False, widget=forms.Select(attrs={'class': 'form-control form-control-sm'}), queryset=UserList.objects.all(), empty_label=None)
 
+	def __init__(self, user, *args, **kwargs):
+		super(UserEntryAddForm, self).__init__(*args, **kwargs)
+		self.fields['user_list'].queryset = UserList.objects.filter(user=user)
+
 	class Meta:
 		model = UserListEntry
 		fields = ['user', 'book', 'user_list']

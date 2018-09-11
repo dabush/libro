@@ -8,6 +8,7 @@ from django.core.exceptions import PermissionDenied
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 import simplejson as json
 
@@ -59,7 +60,7 @@ class BookDetailPage(TemplateView):
 		context['book'] = Book.objects.get(pk=self.kwargs['book_id'])
 		context['author_books'] = Book.objects.all().filter(author=book.author).exclude(id=book.id)
 		context['listentry_form_url'] = reverse('books:user_list_add', kwargs={'slug': self.kwargs['slug'], 'book_id': self.kwargs['book_id']})
-		context['userlist_entry_form'] = UserEntryAddForm
+		context['userlist_entry_form'] = UserEntryAddForm(self.request.user)
 		return context
 
 @login_required
@@ -136,7 +137,12 @@ class GenericList(TemplateView):
 		context['list'] = BookList.objects.get(slug=self.kwargs['slug'])
 		return context
 
-class UserListEntryView(AjaxFormMixin, CreateView):
+class UserListEntryView(LoginRequiredMixin, AjaxFormMixin, CreateView):
+	def get_form_kwargs(self):
+		kwargs = super(UserListEntryView, self).get_form_kwargs()
+		kwargs['user'] = self.request.user
+		return kwargs
+
 	def get_initial(self):
 		initial = super().get_initial()
 		initial['user'] = self.request.user.id

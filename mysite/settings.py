@@ -30,9 +30,9 @@ ALLOWED_HOSTS = ['mysite.com', 'localhost', '127.0.0.1']
 
 SITE_ID = 1
 
-LOGIN_REDIRECT_URL = 'dashboard'
-LOGIN_URL = 'login'
-LOGOUT_URL = 'logout'
+LOGIN_REDIRECT_URL = 'accounts:dashboard'
+LOGIN_URL = 'accounts:login'
+LOGOUT_URL = 'accounts:logout'
 
 
 # Application definition
