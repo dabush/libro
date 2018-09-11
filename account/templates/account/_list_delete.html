@@ -1,0 +1,3 @@
+<div><form id='delete-entry' method='post' action='{{ userlist.id }}/{{ entry.pk }}/delete' data-url='{{ userlist.id }}/{{ entry.id }}/delete'>{% csrf_token %}
+	<button title='delete this entry' form='delete-entry' type='submit' value='submit' class='delete-button'><i class="fas fa-times"></i></button>
+</form></div>

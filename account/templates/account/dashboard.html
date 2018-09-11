@@ -2,43 +2,56 @@
 {% load static %}
 {% block title %}Dashboard{% endblock %}
 {% block content %}
-	<section class="jumbotron">
-		<div class="row text-left author-row">
-			<h1>Dashboard</h1>
-			<p>Welcome to your dashboard. You can <a href="{% url 'accounts:edit' %}">edit your profile</a> or <a href="{% url 'accounts:password_change' %}">change your password</a>.</p>
+	<div class="container-fluid dashboard-container">
+		<div class="row">
+			<section class="jumbotron dashboard-jumbotron">
+				<div class="row text-center author-row">
+					<h1>Dashboard</h1>
+					<p>Welcome to your dashboard. You can <a href="{% url 'accounts:edit' %}">edit your profile</a> or <a href="{% url 'accounts:password_change' %}">change your password</a>.</p>
+				</div>
+			</section>
+			<div class="row">
+				<div id="app">
+					<b-card no-body>
+					<b-tabs pills card vertical>
+					<b-tab title="Books You've Rated" active>
+					<h1>Your rated books</h1>
+					{% for rating in user_ratings %}
+						<p><a href="{{rating.book.get_absolute_url}}">{{ rating.book }}</a>: {{ rating.value }}/10</p>
+					{% endfor %}
+					</b-tab>
+					<b-tab title="Authors You've Liked">
+					<h1>Your liked authors</h1>
+					{% for author in liked_authors %}
+						<a href="{{author.get_absolute_url}}"><p>{{ author.first_name }} {{ author.last_name }}</p></a>
+					{% endfor %}
+					</b-tab>
+					<b-tab title="Your Lists">
+					{% if user_lists %}
+						<div>
+							<h1>Your Lists</h1>
+							{% for list in user_lists %}
+								<a href="{{ list.get_absolute_url }}"><p>{{ list.name }}:</p></a>
+								{% for book in list.book.all %}
+									<a href="{{ book.get_absolute_url }}"><span>{{ book }}</span></a>
+								{% endfor %}
+							{% endfor %}
+						</div>
+					{% endif %}
+					</b-tab>
+					<b-tab title="Create a New List" active>
+					{% include './_list_create.html' %}
+					</b-tab>
+					<b-tab title="Edit Your Password" active>
+					</b-tab>
+					</b-tabs>
+					</b-card>
+				</div>
+			</div>
 		</div>
-	</section>
-	<section class="album py-5 bg-light">
-		<div>
-			<h1>Your rated books</h1>
-			{% for rating in user_ratings %}
-				<p>{{ rating.value }}: {{ rating.book }}</p>
-			{% endfor %}
-		</div>
-	</section>
-	<section class="album py-5 bg-light">
-		<div>
-			<h1>Your liked authors</h1>
-			{% for author in liked_authors %}
-				<p>{{ author.first_name }} {{ author.last_name }}</p>
-			{% endfor %}
-		</div>
-		{% if user_lists %}
-		<div>
-			<h1>Your Lists</h1>
-			{% for list in user_lists %}
-			<a href="{{ list.get_absolute_url }}"><ul>{{ list.name }}</ul></a>
-			{% for book in list.book.all %}
-			<a href="{{ book.get_absolute_url }}"><li>{{ book }}</li></a>
-			{% endfor %}
-			{% endfor %}
-		</div>
-		{% endif %}
-		<div>
-			{% include './_list_create.html' %}
-		</div>
-	</section>
+	</div>
 {% endblock %}
 {% block scripts %}
-<script src='{% static 'userlist_ajax.js' %}'></script>
+<!-- 	<script src='{% static 'userlist_ajax.js' %}'></script> -->
+	<script src='{% static 'dashboard.js' %}'></script>
 {% endblock %}

@@ -84,7 +84,7 @@ class UserListFormView(AjaxFormMixin, FormView):
 
 	form_class = UserListCreateForm
 	template_name  = 'account/_list_create.html'
-	success_url = '/'
+	success_url = '/accounts/'
 
 class UserListView(TemplateView):
 	template_name = 'account/list.html'
@@ -99,4 +99,9 @@ class UserListView(TemplateView):
 class UserListEntryDeleteView(AjaxFormMixin, DeleteView):
 	model = UserListEntry
 	template_name = 'account/_listentry_delete.html'
+	success_url = reverse_lazy('accounts:dashboard')
+
+class UserListDeleteView(AjaxFormMixin, DeleteView):
+	model = UserList
+	template_name = 'account/_list_delete.html'
 	success_url = reverse_lazy('accounts:dashboard')

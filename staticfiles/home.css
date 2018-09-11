@@ -549,3 +549,38 @@ button.delete-button:hover {
 	text-decoration: none;
 	cursor: pointer;
 }
+
+/*styles for our dashboard*/
+section.dashboard-jumbotron {
+	width: 100%;
+}
+
+div.dashboard-container div.row {
+	width: 100%;
+}
+
+div.dashboard-container div#app {
+	width: 100%;
+}
+
+div.dashboard-container div.card {
+	border: none;
+	min-height: 50vh;
+}
+
+div.dashboard-container div.card:hover {
+	border: none;
+}
+
+div.dashboard-container .nav-link.active {
+	background-color: #8F0000 !important;
+}
+
+div.dashboard-container .btn-primary {
+	background-color: #8F0000 !important;
+	border-color: #8F0000 !important;
+}
+
+div.dashboard-container .btn-primary:hover {
+	background-color: #680D10 !important;
+}
