@@ -34,9 +34,9 @@ class ProfileEditForm(forms.ModelForm):
 
 class UserListCreateForm(forms.ModelForm):
 	user = forms.ModelChoiceField(widget=forms.HiddenInput, queryset=get_user_model().objects.all(), disabled=True)
-	name = forms.CharField(max_length=150)
-	list_desc = forms.CharField(max_length=500, widget=forms.Textarea)
-	list_image = forms.ImageField(required=False)
+	name = forms.CharField(label='A name for your list' , max_length=150, widget=forms.TextInput(attrs={'class': 'form-control form-control-lg', 'placeholder': 'Books Nietzsche would approve of..'}))
+	list_desc = forms.CharField(label='A description of your list',max_length=500, widget=forms.Textarea(attrs={'class': 'form-control'}))
+	list_image = forms.ImageField(label='A picture for your list', required=False, widget=forms.FileInput(attrs={'class': 'form-control-file'}))
 
 	class Meta:
 		model = UserList

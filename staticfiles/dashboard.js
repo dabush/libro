@@ -1,5 +1,9 @@
 $(document).ready(function() {
-	var $myForm = $("#delete-entry")
+	var app = new Vue({
+  		el: '#app',
+  		data: {}
+	})
+	var $myForm = $("#userlist-form")
 	$myForm.submit(function(event) {
 		event.preventDefault()
 		var $formData = $(this).serialize()
@@ -15,13 +19,13 @@ $(document).ready(function() {
         	console.log(data)
         	console.log(textStatus)
         	console.log(jqXHR)
-        	$("#result").html('<div class="alert alert-dark"><button type="button" class="close">×</button>Entry deleted</div>');
+        	$("#result").html('<div class="alert alert-dark"><button type="button" class="close">×</button>List added</div>');
         	window.setTimeout(function() {
                 $(".alert").fadeTo(500, 0).slideUp(500, function(){
                     $(this).remove(); 
                 });
             }, 5000);
-          	$('.alert .close').on("click", function(e){
+          $('.alert .close').on("click", function(e){
                 $(this).parent().fadeTo(500, 0).slideUp(500);
              });
         	$myForm[0].reset(); // reset form data
@@ -33,8 +37,4 @@ $(document).ready(function() {
         	console.log(errorThrown)
     }
 	})
-})
-
-$(document).on('click', '.confirm-delete', function(){
-    return confirm('Are you sure you want to delete this?');
 })

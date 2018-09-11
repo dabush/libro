@@ -12,46 +12,48 @@
 			</section>
 			<div class="row">
 				<div id="app">
-					<b-card no-body>
-					<b-tabs pills card vertical>
-					<b-tab title="Books You've Rated" active>
-					<h1>Your rated books</h1>
-					{% for rating in user_ratings %}
-						<p><a href="{{rating.book.get_absolute_url}}">{{ rating.book }}</a>: {{ rating.value }}/10</p>
-					{% endfor %}
-					</b-tab>
-					<b-tab title="Authors You've Liked">
-					<h1>Your liked authors</h1>
-					{% for author in liked_authors %}
-						<a href="{{author.get_absolute_url}}"><p>{{ author.first_name }} {{ author.last_name }}</p></a>
-					{% endfor %}
-					</b-tab>
-					<b-tab title="Your Lists">
-					{% if user_lists %}
-						<div>
-							<h1>Your Lists</h1>
-							{% for list in user_lists %}
-								<a href="{{ list.get_absolute_url }}"><p>{{ list.name }}:</p></a>
-								{% for book in list.book.all %}
-									<a href="{{ book.get_absolute_url }}"><span>{{ book }}</span></a>
+					<div v-cloak>
+						<b-card no-body>
+						<b-tabs pills card vertical>
+						<b-tab title="Books You've Rated" active>
+						<h1>Your rated books</h1>
+						{% for rating in user_ratings %}
+							<p>{{ rating.value }}/10: <a href="{{rating.book.get_absolute_url}}">{{ rating.book }}</a>, by {{ rating.book.author }}</p>
+						{% endfor %}
+						</b-tab>
+						<b-tab title="Authors You've Liked">
+						<h1>Your liked authors</h1>
+						{% for author in liked_authors %}
+							<a href="{{author.get_absolute_url}}"><p>{{ author.first_name }} {{ author.last_name }}</p></a>
+						{% endfor %}
+						</b-tab>
+						<b-tab title="Your Lists">
+						{% if user_lists %}
+							<div>
+								<h1>Your Lists</h1>
+								{% for list in user_lists %}
+									<a href="{{ list.get_absolute_url }}"><h2 class="list-wrapper">{{ list.name }}:</h2></a>
+									{% for book in list.book.all %}
+										<span>{{ book }}&nbsp;&nbsp;&nbsp;</span>
+									{% endfor %}
 								{% endfor %}
-							{% endfor %}
-						</div>
-					{% endif %}
-					</b-tab>
-					<b-tab title="Create a New List" active>
-					{% include './_list_create.html' %}
-					</b-tab>
-					<b-tab title="Edit Your Password" active>
-					</b-tab>
-					</b-tabs>
-					</b-card>
+							</div>
+						{% endif %}
+						</b-tab>
+						<b-tab title="Create a New List">
+						{% include './_list_create.html' %}
+						</b-tab>
+						<b-tab title="Edit Your Password">
+						</b-tab>
+						</b-tabs>
+						</b-card>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 {% endblock %}
 {% block scripts %}
-<!-- 	<script src='{% static 'userlist_ajax.js' %}'></script> -->
+	<!-- 	<script src='{% static 'userlist_ajax.js' %}'></script> -->
 	<script src='{% static 'dashboard.js' %}'></script>
 {% endblock %}

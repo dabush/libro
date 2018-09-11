@@ -38,7 +38,7 @@ def user_login(request):
 @login_required
 def dashboard(request):
 	liked_authors = request.user.author_likes.all()
-	user_ratings = Rating.objects.filter(user=request.user)
+	user_ratings = Rating.objects.filter(user=request.user).order_by('-value')
 	user_lists = UserList.objects.filter(user=request.user)
 	new_user_list = UserListCreateForm
 	form_url = reverse('accounts:create_user_list')
@@ -94,6 +94,7 @@ class UserListView(TemplateView):
 		userlist = UserList.objects.get(id=self.kwargs['userlist_id'])
 		context['userlist'] = userlist
 		context['list_entries'] = UserListEntry.objects.filter(user_list=userlist)
+		context['delete_url'] = reverse('accounts:delete_user_list', kwargs={'pk': userlist.id })
 		return context
 
 class UserListEntryDeleteView(AjaxFormMixin, DeleteView):

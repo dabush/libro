@@ -339,6 +339,7 @@ section.books-breadcrumbs div.breadcrumbs-wrapper {
 .book-details h1.book-title {
 	font-size: 1em;
 	font-family: "Libre Baskerville", serif;
+	margin-top: 15px;
 }
 
 .book-details h2.book-subtitle {
@@ -365,6 +366,19 @@ section.books-breadcrumbs div.breadcrumbs-wrapper {
 
 .list-detail-jumbotron {
 	background: #8F0000;
+}
+
+section.entries {
+	min-height: 50vh;
+	position: relative;
+}
+
+section.entries h2.empty-list {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	-webkit-transform: translate(-50%, -50%);
 }
 
 /* horizontal scroll*/
@@ -422,6 +436,9 @@ ul.last-name-list li {
 ul.last-name-list li:first-child {
 	margin-left: 0;
 	padding-right: 20px;
+}
+
+h2.list-wrapper {
 }
 
 /*book search page*/
