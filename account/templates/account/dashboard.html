@@ -25,6 +25,7 @@
 					{% else %}
 						{% for rating in user_ratings %}
 							<p>{{ rating.value }}/10: <a href="{{rating.book.get_absolute_url}}">{{ rating.book }}</a>, by {{ rating.book.author }}</p>
+							{% include 'books/_rating_delete.html' %}
 						{% endfor %}
 					{% endif %}
 					</b-tab>

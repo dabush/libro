@@ -1,14 +1,14 @@
 from django.shortcuts import get_object_or_404, render
 from django.db.models import Avg
-from django.views.generic.edit import UpdateView, CreateView
+from django.views.generic.edit import UpdateView, CreateView, DeleteView
 from django.views.generic import TemplateView, RedirectView, FormView
 from django.http import JsonResponse, HttpResponse
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.core.exceptions import PermissionDenied
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 import simplejson as json
 
@@ -45,10 +45,13 @@ class BookDetailPage(TemplateView):
 	def get_context_data(self, **kwargs):
 		book = Book.objects.get(pk=self.kwargs['book_id'])
 		context = super().get_context_data(**kwargs)
+		userlist_entry_form = UserEntryAddForm
 		listentry_form_url = ''
 		rating_form_url = ''
 		if self.request.user.is_authenticated:
+			listentry_form_url = reverse('books:user_list_add', kwargs={'slug': self.kwargs['slug'], 'book_id': self.kwargs['book_id']})
 			rating = Rating.objects.get_rating_or_unsaved_blank_rating(book=book, user=self.request.user)
+			userlist_entry_form = UserEntryAddForm(self.request.user)
 			if rating.id:
 				rating_form_url = reverse('books:update_rating', kwargs={'slug': rating.book.slug, 'book_id': rating.book.id, 'pk': rating.id})
 				context['rating'] = rating
@@ -59,8 +62,8 @@ class BookDetailPage(TemplateView):
 		context['average_rating'] = Rating.objects.filter(book=book).aggregate(Avg('value'))
 		context['book'] = Book.objects.get(pk=self.kwargs['book_id'])
 		context['author_books'] = Book.objects.all().filter(author=book.author).exclude(id=book.id)
-		context['listentry_form_url'] = reverse('books:user_list_add', kwargs={'slug': self.kwargs['slug'], 'book_id': self.kwargs['book_id']})
-		context['userlist_entry_form'] = UserEntryAddForm(self.request.user)
+		context['listentry_form_url'] = listentry_form_url
+		context['userlist_entry_form'] = userlist_entry_form
 		return context
 
 @login_required
@@ -96,20 +99,24 @@ class RatingFormView(AjaxFormMixin, FormView):
 	template_name  = 'books/_rate.html'
 	success_url = '/'
 
-class UpdateRatingFormView(AjaxFormMixin, UpdateView):
+class UpdateRatingFormView(UserPassesTestMixin, AjaxFormMixin, UpdateView):
 	form_class = RatingForm
 	template_name = 'books/_rate.html'
 	model = Rating
 	success_url = '/'
-	# queryset = Rating.objects.all()
-	# def get_object(self, queryset=None):
-	# 	rating = Rating.objects.get(pk=self.kwargs['pk'])
-	# 	value = rating.value
-	# 	user = self.request.user
-	# 	if rating.user != user:
-	# 		raise PermissionDenied('Cannot change another user\'s vote.')
-	# 	return rating
-	# 	return value
+
+	def test_func(self):
+		self.object = self.get_object()
+		return self.request.user == self.object.user
+
+class DeleteRatingView(UserPassesTestMixin, AjaxFormMixin, DeleteView):
+	model = Rating
+	template_name = 'books/_rating_delete.html'
+	success_url = reverse_lazy('accounts:dashboard')
+
+	def test_func(self):
+		self.object = self.get_object()
+		return self.request.user == self.object.user
 
 class AllLists(TemplateView):
 	template_name = 'books/all_lists.html'

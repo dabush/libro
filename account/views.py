@@ -6,9 +6,10 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import CreateView, DeleteView
 from django.views.generic import TemplateView, FormView
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+
 from .forms import LoginForm, UserRegistrationForm, UserEditForm, ProfileEditForm, UserListCreateForm, UserEntryAddForm
 from .models import Profile, UserList, UserListEntry
-
 
 from books.mixins import AjaxFormMixin
 from books.models import Book, Rating
@@ -98,12 +99,20 @@ class UserListView(TemplateView):
 		context['delete_url'] = reverse('accounts:delete_user_list', kwargs={'pk': userlist.id })
 		return context
 
-class UserListEntryDeleteView(AjaxFormMixin, DeleteView):
+class UserListEntryDeleteView(AjaxFormMixin, UserPassesTestMixin, DeleteView):
 	model = UserListEntry
 	template_name = 'account/_listentry_delete.html'
 	success_url = reverse_lazy('accounts:dashboard')
 
-class UserListDeleteView(AjaxFormMixin, DeleteView):
+	def test_func(self):
+		self.object = self.get_object()
+		return self.request.user == self.object.user
+
+class UserListDeleteView(AjaxFormMixin, UserPassesTestMixin, DeleteView):
 	model = UserList
 	template_name = 'account/_list_delete.html'
 	success_url = reverse_lazy('accounts:dashboard')
+
+	def test_func(self):
+		self.object = self.get_object()
+		return self.request.user == self.object.user

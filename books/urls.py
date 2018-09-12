@@ -1,7 +1,7 @@
 from django.urls import path
 from django.conf.urls import include
 from . import views
-from .views import BookPage, BookDetailPage, RatingFormView, UpdateRatingFormView, AllLists, ListsOfKind, GenericList, UserListEntryView
+from .views import BookPage, BookDetailPage, RatingFormView, UpdateRatingFormView, DeleteRatingView, AllLists, ListsOfKind, GenericList, UserListEntryView
 
 app_name = 'books'
 urlpatterns = [
@@ -9,6 +9,7 @@ urlpatterns = [
     path('<slug:slug>,<int:book_id>/', BookDetailPage.as_view(), name='book_detail'),
     path('<slug:slug>,<int:book_id>/rate/', RatingFormView.as_view(), name='rate'),
     path('<slug:slug>,<int:book_id>/rate/<int:pk>', UpdateRatingFormView.as_view(), name='update_rating'),
+    path('<slug:slug>,<int:book_id>/rate/<int:pk>/delete/', DeleteRatingView.as_view(), name='delete_rating'),
     path('browse/', views.book_list, name='list'),
     path('lists/', AllLists.as_view(), name='all_lists'),
     path('lists/<str:kind>/', ListsOfKind.as_view(), name='lists_of_kind'),
