@@ -46,7 +46,7 @@
 					{% else %}
 						<div>
 							{% for list in user_lists %}
-								<a href="{{ list.get_absolute_url }}"><h2 class="list-wrapper">{{ list.name }}:</h2></a>
+								<a href="{{ list.get_absolute_url }}"><h2 class="list-wrapper">{% if list.public == False %}<i class="fas fa-eye-slash"></i>{% endif %}{{ list.name }}:</h2></a>
 								{% if not list.book.all %}
 								<p>You haven't add anything to this list yet.</p>
 								{% else %}
