@@ -10,6 +10,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 from .forms import LoginForm, UserRegistrationForm, UserEditForm, ProfileEditForm, UserListCreateForm, UserEntryAddForm
 from .models import Profile, UserList, UserListEntry
+# from .mixins import PermissionMixin
 
 from books.mixins import AjaxFormMixin
 from books.models import Book, Rating

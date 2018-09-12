@@ -1,6 +1,8 @@
 {% load static %}
 <div class="entry-wrapper">
+	{% if userlist.user == user %}
 		{% include './_listentry_delete.html' with entry=entry userlist=userlist %}
+		{% endif %}
 <div class="card list-card mb-3 box-shadow">
     <div class="list-card-bg-image" style="background-image: url('{% if obj.book.cover_image %}{{ obj.book.cover_image.url }}{% endif %}'); background-size: cover; background-position: center;"></div>
 <div class="card-body">
