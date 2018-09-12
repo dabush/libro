@@ -34,14 +34,14 @@ class ProfileEditForm(forms.ModelForm):
 
 class UserListCreateForm(forms.ModelForm):
 	user = forms.ModelChoiceField(widget=forms.HiddenInput, queryset=get_user_model().objects.all(), disabled=True)
-	public = forms.BooleanField(label='Would you like this list to be public?', required=False)
+	not_public = forms.BooleanField(label='Would you like this list to be private?', required=False)
 	name = forms.CharField(label='A name for your list' , max_length=150, widget=forms.TextInput(attrs={'class': 'form-control form-control-lg', 'placeholder': 'Books Nietzsche would approve of..'}))
 	list_desc = forms.CharField(label='A description of your list',max_length=500, widget=forms.Textarea(attrs={'class': 'form-control'}))
 	list_image = forms.ImageField(label='A picture for your list', required=False, widget=forms.FileInput(attrs={'class': 'form-control-file'}))
 
 	class Meta:
 		model = UserList
-		fields = ['user', 'name', 'public', 'list_desc', 'list_image']
+		fields = ['user', 'name', 'not_public', 'list_desc', 'list_image']
 
 class UserEntryAddForm(forms.ModelForm):
 	user = forms.ModelChoiceField(widget=forms.HiddenInput, queryset=get_user_model().objects.all(), disabled=True)

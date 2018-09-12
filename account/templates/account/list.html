@@ -11,7 +11,10 @@
 		</div>
 	</section>
 	<section class="jumbotron jumbotron-fluid libro-jumbotron book-detail-jumbotron">
+				{% if userlist.user == user %}
 				{% include "./_list_delete.html" with userlist=userlist delete_url=delete_url %}
+				{% include "./_list_edit.html" with userlist=userlist form=edit_form %}
+				{% endif %}
 		<div class="col"><h1 class="libre text-white text-center">{{ userlist.name }}</h1></div>
 		<div class="col-sm">
 			{% if userlist.list_image %}<div class="img-fluid home-image" style = "background-image: url({{ userlist.list_image.url }}); background-size: cover; background-position:center;" >
@@ -35,4 +38,5 @@
 {% endblock %}
 {% block scripts %}
 	<script src='{% static 'entry_deleteajax.js' %}'></script>
+	<script src='{% static 'entry_edit_ajax.js' %}'></script>
 {% endblock %}

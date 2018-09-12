@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-from django.views.generic.edit import CreateView, DeleteView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic import TemplateView, FormView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
@@ -97,6 +97,7 @@ class UserListView(TemplateView):
 		context['userlist'] = userlist
 		context['list_entries'] = UserListEntry.objects.filter(user_list=userlist)
 		context['delete_url'] = reverse('accounts:delete_user_list', kwargs={'pk': userlist.id })
+		context['edit_form'] = UserListCreateForm
 		return context
 
 class UserListEntryDeleteView(AjaxFormMixin, UserPassesTestMixin, DeleteView):
@@ -107,6 +108,23 @@ class UserListEntryDeleteView(AjaxFormMixin, UserPassesTestMixin, DeleteView):
 	def test_func(self):
 		self.object = self.get_object()
 		return self.request.user == self.object.user
+
+class UserListUpdateView(AjaxFormMixin, UserPassesTestMixin, UpdateView):
+
+	def test_func(self):
+		self.object = self.get_object()
+		return self.request.user == self.object.user
+
+	def get_initial(self):
+	#Return the initial data to use for forms on this view.
+		return self.initial.copy()
+
+	model = UserList
+	fields = ('name', 'not_public', 'list_desc', 'list_image',)
+	template_name = 'account/_list_edit.html'
+	userlist_id_url_kwarg = 'userlist_id'
+	context_object_name = 'userlist'
+
 
 class UserListDeleteView(AjaxFormMixin, UserPassesTestMixin, DeleteView):
 	model = UserList

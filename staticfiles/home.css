@@ -554,6 +554,11 @@ section.browse-books h2 {
 	display: flex;
 }
 
+.dashboard-container .rating-wrapper {
+	justify-content: left;
+	align-items: center;
+}
+
 button.delete-button {
 	background: none;
 	border: none;
@@ -566,6 +571,12 @@ button.delete-button:hover {
 	color: #680D10;
 	text-decoration: none;
 	cursor: pointer;
+}
+
+form#delete-rating button.delete-button {
+	font-size: 2rem;
+	position: relative;
+	top: -8px;
 }
 
 button.add-button {
@@ -652,4 +663,18 @@ h1.username {
 	font-size: 6rem;
 	font-family: "Libre Baskerville", serif;
 	margin-left: 25px;
+}
+
+h2.list-wrapper i {
+	margin-right: 10px;
+}
+
+div.edit-modal button.btn:first-child {
+	background: none;
+	border: none;
+	font-size: 2rem;
+}
+
+div.edit-modal footer {
+	display: none;
 }

@@ -24,8 +24,8 @@
 						<p>You haven't rated any books yet.</p>
 					{% else %}
 						{% for rating in user_ratings %}
-							<p>{{ rating.value }}/10: <a href="{{rating.book.get_absolute_url}}">{{ rating.book }}</a>, by {{ rating.book.author }}</p>
-							{% include 'books/_rating_delete.html' %}
+							<div class="rating-wrapper"><p>{{ rating.value }}/10: <a href="{{rating.book.get_absolute_url}}">{{ rating.book }}</a>, by {{ rating.book.author }}</p>
+							{% include 'books/_rating_delete.html' %}</div>
 						{% endfor %}
 					{% endif %}
 					</b-tab>
@@ -46,7 +46,7 @@
 					{% else %}
 						<div>
 							{% for list in user_lists %}
-								<a href="{{ list.get_absolute_url }}"><h2 class="list-wrapper">{% if list.public == False %}<i class="fas fa-eye-slash"></i>{% endif %}{{ list.name }}:</h2></a>
+								<a href="{{ list.get_absolute_url }}"><h2 class="list-wrapper">{% if list.not_public == True %}<i title="This list is private." class="fas fa-eye-slash"></i>{% endif %}{{ list.name }}:</h2></a>
 								{% if not list.book.all %}
 								<p>You haven't add anything to this list yet.</p>
 								{% else %}
