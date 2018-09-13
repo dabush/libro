@@ -1,0 +1,16 @@
+{% extends "accounts_base.html" %}
+
+{% load static %}
+
+{% block content %}
+<div class="col">
+	<div class="site-logo"><img src="{% static 'sitelogo.png' %}" height=75 width=75>LibroDB</div>
+<h1>We couldn't find what you were looking for.</h1>
+<h3>Take me back to the <a href="/">homepage</a></h3>
+{% if not request.user.is_authenticated %}
+<h3>Let me <a href="/accounts/login">log in</a></h3>
+{% endif %}
+</div>
+
+
+{% endblock %}

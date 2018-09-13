@@ -17,4 +17,5 @@ class PrivatePermissionMixin(ViewPermissionsMixin):
 	def has_permissions(self):
 		# here you will have access to both
 		# self.get_object() and self.request.user
-		return self.request.user == self.get_object().user
+		if not self.get_object().not_public == True:
+			return self.request.user == self.request.user
