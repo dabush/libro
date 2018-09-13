@@ -2,8 +2,10 @@
 
         <a href="{{ obj.get_absolute_url }}">
         <div class="card author-card">
+          {% if obj.author_image %}
           <div class="card-bg-image" style="background-image: url('{{ obj.author_image.url }}'); background-size: cover;">
             </div>
+            {% endif %}
           <div class="card-body">
             <h4 class="card-title">{{ obj.first_name }} {{ obj.last_name }}</h4>
             <p class="card-text">{{ obj.country.name }}</p>

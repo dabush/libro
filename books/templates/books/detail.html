@@ -1,79 +1,78 @@
 {% extends "base.html" %}
 {% load static %}
-
 {% block content %}
-<section class="books-breadcrumbs">
-	<div class="breadcrumbs-wrapper">
-		<a href="../../books">
-			<span>
-				<i class="fas fa-chevron-left"></i>&nbsp;&nbsp;&nbsp;&nbsp;Books
-			</span>
-		</a>
-	</div>
-</section>
-<section class="book-details">
-		<div class="row book-row">
-		<div class="col-4">
-		<div class ="cover-image" style="background-image: url('{{ book.cover_image.url }}');">
-		</div>
-		<p class="publisher"><span>{{ book.publisher }}</span></p>
-		<p class="book-country"><span>{{ book.book_country.name }}</span></p>
-		</div>
-		<div class="display-3 col-8">
-			<h1 class="text-black book-title">{{book.book_title}}</h1>
-			<h2 class="text-black book-subtitle">{{ book.book_subtitle }}</h2>
-			<p class="author-name">by <a href="{{ book.author.get_absolute_url }}">{{ book.author }}</a></p>
-			<p class="pub-year">{{ book.pub_year }}</p>
-			<p class="book-desc">{{ book.book_desc }}</p>
-			{% with total_likes=book.likes.count users_like=book.likes.all %}
-			<p>{{ total_likes }} like {{ total_likes|pluralize }}</p>
-			<a href="#" data-id="{{ book.id }}" data-action="{% if request.user in users_like %}un{% endif %}like" class="like button">
-				{% if request.user not in users_like %}
-				Like
-				{% else %}
-				Unlike
-				{% endif %}
+	<section class="books-breadcrumbs">
+		<div class="breadcrumbs-wrapper">
+			<a href="../../books">
+				<span>
+					<i class="fas fa-chevron-left"></i>&nbsp;&nbsp;&nbsp;&nbsp;Books
+				</span>
 			</a>
-			{% endwith %}
 		</div>
+	</section>
+	<section class="jumbotron jumbotron-fluid libro-jumbotron book-detail-jumbotron">
+		<div class="lines-wrapper">
+			<div class="left-quotes" style="background-image: url({% static 'leftquotes.png' %});">
+			</div>
+			<div class="first-lines">
+				{{ book.first_lines|truncatewords:30}}
+			</div>
 		</div>
-</section>
-<section class="album py-5 bg-light">
-	<div class="text-center">
-		<h1>Other books by {{ book.author }}</h1>
-	</div>
-	<div class = "scrolling-wrapper">
-            {% for books in author_books %}
-                {% include "./_slide1.html" with obj=books type="book" %}
-            {% endfor %}
-        </div>
-</section>
-
+	</section>
+	<section class="book-details">
+		<div class="row book-row">
+			<div class="col-4">
+				<div class ="cover-image" style="background-image: url('{{ book.cover_image.url }}');">
+				</div>
+				<p class="publisher"><span>{{ book.publisher }}</span></p>
+				<p class="book-country"><span>{{ book.book_country.name }}</span></p>
+			</div>
+			<div class="display-3 col-8">
+				<h1 class="text-black book-title">{{book.book_title}}</h1>
+				<h2 class="text-black book-subtitle">{{ book.book_subtitle }}</h2>
+				<p class="author-name">by <a href="{{ book.author.get_absolute_url }}">{{ book.author }}</a></p>
+				<p class="pub-year">{{ book.pub_year }}</p>
+				<div class="rating-wrapper">
+					<span>{% if average_rating %}{{ average_rating.value__avg|floatformat }}/10&nbsp;|&nbsp;</span>{% endif %}
+					{% include "./_rate.html" with rating=rating rate_form=rate_form rating_form_url=rating_form_url book=book %}
+				</div>
+				<div class="list-add-wrapper">
+					{% include './_list_add.html' with listentry_form_url=listentry_form_url userlist_entry_form=userlist_entry_form %}
+				</div>
+				<p class="book-desc">{{ book.book_desc }}</p>
+			</div>
+		</div>
+	</section>
+	<section class="album py-5 bg-light">
+		<div class="text-center">
+			<h1>Other books by {{ book.author }}</h1>
+		</div>
+		<div class = "scrolling-wrapper">
+			{% for books in author_books %}
+				{% include "./_slide1.html" with obj=books type="book" %}
+			{% endfor %}
+		</div>
+	</section>
 {% endblock %}
-
-{% block domready %}
-  $('a.like').click(function(e){
-    e.preventDefault();
-    $.post('{% url "books:like" book.slug book.id %}',
-      {
-        id: $(this).data('id'),
-        action: $(this).data('action')
-      },
-      function(data){
-        if (data['status'] == 'ok')
-        {
-          var previous_action = $('a.like').data('action');
-
-          // toggle data-action
-          $('a.like').data('action', previous_action == 'like' ? 'unlike' : 'like');
-          // toggle link text
-          $('a.like').text(previous_action == 'like' ? 'Unlike' : 'Like');
-
-          // update total likes
-          var previous_likes = parseInt($('span.count .total').text());
-          $('span.count .total').text(previous_action == 'like' ? previous_likes + 1 : previous_likes - 1);
-        }
-      }
-    );
-  });
+{% block scripts %}
+	<script src="{% static 'barrating/jquery.barrating.js' %}"></script>
+	<script>
+	$(function() {
+			var initVal = {% if rating %} {{ rating.value }} {% else %} 7 {% endif %}
+		$('#rating-select').barrating({
+	theme: 'css-stars',
+	initialRating: initVal,
+	onSelect: function(value, text, event) {
+			if (typeof(event) !== 'undefined') {
+				$("form").submit();
+			} else {
+			// rating was selected programmatically
+			// by calling `set` method
+			}
+			}
+	});
+	});
+	</script>
+	<script src="{% static 'rating_ajax.js' %}"></script>
+	<script src="{% static 'userlist_entry_ajax.js' %}"></script>
 {% endblock %}

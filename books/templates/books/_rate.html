@@ -1,0 +1,4 @@
+<form class='rating-form' method='POST' action='{{ rating_form_url }}' data-url='{{ rating_form_url }}'>
+	{% csrf_token %}
+	{{ rate_form.as_p|safe}}
+</form>

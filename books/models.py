@@ -59,6 +59,7 @@ class Book(models.Model):
 	author = models.ForeignKey('authors.Author', on_delete=models.CASCADE, related_name="book_to_author")
 	cover_image = models.ImageField(null=True, blank=False, upload_to='book_images')
 	slug = models.SlugField(max_length=30)
+	first_lines = models.TextField(blank=True)
 	themes = models.ManyToManyField(Theme, blank=True)
 	settings = models.ManyToManyField(Setting, blank=True)
 	genres = models.ManyToManyField(Genre, blank=True)
@@ -67,12 +68,7 @@ class Book(models.Model):
 	book_desc = models.TextField()
 	book_country = CountryField()
 	book_featured = models.BooleanField()
-	likes = models.ManyToManyField(User, related_name="book_likes", blank=True)
-	#book_likes = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name="book_likes")
-	#like = models.ForeignKey('BookLike', blank=True, null=True, related_name="book_liked", on_delete=models.CASCADE)
-
-	def total_likes(self):
-		return self.likes.count()
+	lists = models.ManyToManyField('BookList', through='ListEntry', related_name='book_lists')
 
 	def get_absolute_url(self):
 		return reverse('books:book_detail', kwargs={'slug': self.slug, 'book_id': self.id})
@@ -83,7 +79,63 @@ class Book(models.Model):
 	class Meta:
 		ordering = ('book_title',)
 
-class BookLike(models.Model):
-	user = models.ForeignKey(settings.AUTH_USER_MODEL, default=1, on_delete=models.CASCADE)
+class RatingManager(models.Manager):
+
+	def get_rating_or_unsaved_blank_rating(self, book, user):
+		try:
+			return Rating.objects.get(book=book, user=user)
+		except Rating.DoesNotExist:
+			return Rating(book=book, user=user)
+
+class Rating(models.Model):
+	RATING_CHOICES = (
+		(1, '1',),
+		(2, '2',),
+		(3, '3',),
+		(4, '4',),
+		(5, '5',),
+		(6, '6',),
+		(7, '7',),
+		(8, '8',),
+		(9, '9',),
+		(10, '10',),
+	)
+	value = models.SmallIntegerField(choices=RATING_CHOICES)
+	user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 	book = models.ForeignKey(Book, on_delete=models.CASCADE)
-	created = models.DateTimeField(auto_now=True)
+	rated_on = models.DateTimeField(auto_now=True)
+
+	objects = RatingManager()
+	
+	def __str__(self):
+		return '%s %s' % (self.book, self.user)
+
+	class Meta:
+	 	unique_together = ('user', 'book')
+
+class BookList(models.Model):
+	awards = 'awards'
+	editorial = 'editorial'
+	LIST_KINDS = (
+		(awards, 'awards',),
+		(editorial, 'editorial',),
+	)
+	kind = models.CharField(max_length=20, choices=LIST_KINDS)
+	name = models.CharField(max_length=200)
+	slug = models.SlugField(max_length=50)
+	list_desc = models.TextField()
+	list_image = models.ImageField(null=True, blank=True, upload_to='list_images')
+
+	def get_absolute_url(self):
+		return reverse('books:generic_list', kwargs={'kind': self.kind, 'slug': self.slug, 'booklist_id': self.id})
+
+	def __str__(self):
+		return self.name
+
+class ListEntry(models.Model):
+	book_list = models.ForeignKey(BookList, related_name='in_list', on_delete=models.CASCADE)
+	book = models.ForeignKey(Book, related_name='in_list', on_delete=models.CASCADE)
+	year = models.IntegerField()
+
+	def __str__(self):
+		return '%s in list %s for year%s' % (self.book, self.book_list, self.year)

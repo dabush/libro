@@ -1,0 +1,7 @@
+<div id="result"></div>
+<h1>Create a new list</h1>
+<form id='userlist-form' method='POST' action='{{ form_url }}' data-url='{{ form_url }}'>
+	{% csrf_token %}
+	{{ new_user_list.as_p|safe}}
+</form>
+<button type="submit" form = 'userlist-form' value='submit' class = 'btn btn-primary'>Submit</button>

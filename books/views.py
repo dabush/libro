@@ -1,13 +1,21 @@
 from django.shortcuts import get_object_or_404, render
-from django.views.generic import TemplateView, RedirectView
+from django.db.models import Avg
+from django.views.generic.edit import UpdateView, CreateView
+from django.views.generic import TemplateView, RedirectView, FormView
 from django.http import JsonResponse, HttpResponse
+from django.urls import reverse
+from django.core.exceptions import PermissionDenied
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 import simplejson as json
 
-from .models import Book, BookLike
+from .models import Book, Rating, BookList, ListEntry
+from .forms import RatingForm
+from account.models import UserListEntry
+from account.forms import UserEntryAddForm
+from .mixins import AjaxFormMixin
 from authors.models import Author
 from common.decorators import ajax_required
 
@@ -22,9 +30,9 @@ class BookPage(TemplateView):
 		return context
 
 def index(request):
-    latest_book_list = Book.objects.order_by('-pub_date')[:5]
-    context = {'latest_book_list': latest_book_list}
-    return render(request, 'books/index.html', context)
+	latest_book_list = Book.objects.order_by('-pub_date')[:5]
+	context = {'latest_book_list': latest_book_list}
+	return render(request, 'books/index.html', context)
 
 def detail(request, book_id):
 	book = get_object_or_404(Book, pk=book_id)
@@ -36,29 +44,23 @@ class BookDetailPage(TemplateView):
 	def get_context_data(self, **kwargs):
 		book = Book.objects.get(pk=self.kwargs['book_id'])
 		context = super().get_context_data(**kwargs)
+		listentry_form_url = ''
+		rating_form_url = ''
+		if self.request.user.is_authenticated:
+			rating = Rating.objects.get_rating_or_unsaved_blank_rating(book=book, user=self.request.user)
+			if rating.id:
+				rating_form_url = reverse('books:update_rating', kwargs={'slug': rating.book.slug, 'book_id': rating.book.id, 'pk': rating.id})
+				context['rating'] = rating
+			else:
+				rating_form_url = reverse('books:rate', kwargs={'slug': rating.book.slug, 'book_id': rating.book.id})
+		context['rate_form'] = RatingForm
+		context['rating_form_url'] = rating_form_url
+		context['average_rating'] = Rating.objects.filter(book=book).aggregate(Avg('value'))
 		context['book'] = Book.objects.get(pk=self.kwargs['book_id'])
 		context['author_books'] = Book.objects.all().filter(author=book.author).exclude(id=book.id)
+		context['listentry_form_url'] = reverse('books:user_list_add', kwargs={'slug': self.kwargs['slug'], 'book_id': self.kwargs['book_id']})
+		context['userlist_entry_form'] = UserEntryAddForm
 		return context
-
-
-@ajax_required
-@login_required
-@require_POST
-def book_like(request, slug, book_id):
-	book_id = request.POST.get('id')
-	slug = request.POST.get('slug')
-	action = request.POST.get('action')
-	if book_id and action:
-		try:
-			book = Book.objects.get(id=book_id)
-			if action == 'like':
-				book.likes.add(request.user)
-			else:
-				book.likes.remove(request.user)
-			return JsonResponse({'status':'ok'})
-		except:
-			pass
-	return JsonResponse({'status':'ko'})
 
 @login_required
 def book_list(request):
@@ -80,3 +82,68 @@ def book_list(request):
 	if request.is_ajax():
 		return render(request, 'books/list_ajax.html', {'section': 'books', 'books': books})
 	return render(request, 'books/list.html', {'section': 'books', 'books': books})
+
+
+class RatingFormView(AjaxFormMixin, FormView):
+	def get_initial(self):
+		initial = super().get_initial()
+		initial['user'] = self.request.user.id
+		initial['book'] = self.kwargs['book_id']
+		return initial
+
+	form_class = RatingForm
+	template_name  = 'books/_rate.html'
+	success_url = '/'
+
+class UpdateRatingFormView(AjaxFormMixin, UpdateView):
+	form_class = RatingForm
+	template_name = 'books/_rate.html'
+	model = Rating
+	success_url = '/'
+	# queryset = Rating.objects.all()
+	# def get_object(self, queryset=None):
+	# 	rating = Rating.objects.get(pk=self.kwargs['pk'])
+	# 	value = rating.value
+	# 	user = self.request.user
+	# 	if rating.user != user:
+	# 		raise PermissionDenied('Cannot change another user\'s vote.')
+	# 	return rating
+	# 	return value
+
+class AllLists(TemplateView):
+	template_name = 'books/all_lists.html'
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['award_lists'] = BookList.objects.filter(kind='awards')
+		context['editorial_lists'] = BookList.objects.filter(kind='editorial')
+		return context
+
+class ListsOfKind(TemplateView):
+	template_name = 'books/lists_of_kind.html'
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['kind'] = self.kwargs['kind']
+		context['lists_of_kind'] = BookList.objects.filter(kind=self.kwargs['kind'])
+		return context
+
+class GenericList(TemplateView):
+	template_name = 'books/generic_list.html'
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		book_list = BookList.objects.get(slug=self.kwargs['slug'])
+		context['list_entries'] = ListEntry.objects.filter(book_list=book_list).order_by('-year')
+		context['kind'] = self.kwargs['kind']
+		context['list'] = BookList.objects.get(slug=self.kwargs['slug'])
+		return context
+
+class UserListEntryView(AjaxFormMixin, CreateView):
+	def get_initial(self):
+		initial = super().get_initial()
+		initial['user'] = self.request.user.id
+		initial['book'] = self.kwargs['book_id']
+		return initial
+
+	model = UserListEntry
+	form_class = UserEntryAddForm
+	template_name = 'books/_list_add.html'
+	success_url = '/'

@@ -4,12 +4,29 @@
 
 /*site-wide*/
 a {
-	color: #E81C23;
+	color: #8F0000;
 }
 
 a:hover {
 	color: #680D10;
 	text-decoration: none;
+}
+
+a.site-name img {
+	margin-right: 5px;
+	border-radius: 10%;
+}
+
+.libre {
+	font-family: "Libre Baskerville", serif;
+}
+
+#navbarText {
+	justify-content: flex-end;
+}
+
+.jumbotron {
+	margin-bottom: 0;
 }
 
 .libro-jumbotron {
@@ -36,7 +53,7 @@ a:hover {
 }
 
 .home-jumbotron {
-	background: #000000;
+	background: #8F0000;
 }
 
 .libro-jumbotron .home-image {
@@ -47,7 +64,24 @@ a:hover {
 }
 
 .books-jumbotron {
-	background: #000000;
+	background: #8F0000;
+}
+
+.books-jumbotron:before {
+	content: "";
+    border-left: 25px solid white;
+    position: absolute;
+    left: 25%;
+    bottom: 0;
+    height: 100%;
+}
+
+.books-jumbotron:after {
+	content: "";
+    border-bottom: 10px solid white;
+    width: calc(100% - 200px);
+    position: absolute;
+    bottom: 10%;
 }
 
 .books-jumbotron-text {
@@ -57,8 +91,70 @@ a:hover {
 	font-size: 9em;
 }
 
+.book-detail-jumbotron {
+	background: #8F0000;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+div.lines-wrapper {
+	width: 75%;
+	display: flex;
+	position: relative;
+	justify-content: center;
+	align-items: center;
+	margin: 0 auto;
+	top: 25%;
+	transform: translateY(-25%);
+	-webkit-transform: translateY(-25%);
+}
+
+.quote-attr {
+	float: right;
+	margin-right: 15%;
+	position: relative;
+	top: 25%;
+	transform: translateY(-25%);
+	-webkit-transform: translateY(-25%);
+}
+
+div.lines-wrapper div.left-quotes {
+	height: 100px;
+    min-width: 150px;
+    background-size: cover;
+    margin-right: 20px;
+}
+
+div.first-lines {
+	color: #ffffff;
+	font-family: "Libre Baskerville", serif;
+	font-size: 1.5rem;
+}
+
+.book-detail-jumbotron .col-sm {
+	padding: 0;
+}
+
 .authors-jumbotron {
-	background: #000000;
+	background: #8F0000
+}
+
+.authors-jumbotron:before {
+	content: "";
+    border-left: 25px solid white;
+    position: absolute;
+    left: 25%;
+    bottom: 0;
+    height: 100%;
+}
+
+.authors-jumbotron:after {
+	content: "";
+    border-bottom: 10px solid white;
+    width: calc(100% - 200px);
+    position: absolute;
+    bottom: 10%;
 }
 
 .author-detail-jumbotron {
@@ -119,8 +215,10 @@ a:hover {
 }
 
 .browse-authors span:first-child {
-	font-size: small;
+	font-size: 2.5rem;
 	font-family: "Libre Bakserville", serif;
+	margin-right: 20px;
+	margin-left: 2rem;
 }
 
 .browse-author-books a {
@@ -155,9 +253,6 @@ div.card-bg-image {
 	border-right: 2px solid black;
 	float: left;
 	margin-right: 15px;
-}
-
-.author-card div.card-bg-image {
 	background-position: center;
 }
 
@@ -167,6 +262,40 @@ div.card-bg-image {
 
 .card-body {
 	max-width: 59%;
+}
+
+div.entry-wrapper {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+div.list-card {
+	width: 67%;
+	border: none;
+}
+
+div.list-card:before {
+	content: "";
+	border-left: 10px solid #8F0000;
+    position: absolute;
+    bottom: 0;
+    left: -25px;
+    height: 100%;
+}
+
+div.list-card:hover {
+	border: none;
+}
+
+div.entry-year {
+	font-size: 4rem;
+	color: #8F0000;
+	margin-right: 20px;
+}
+
+div.list-card-bg-image {
+	width: 25%;
 }
 
 section.books-breadcrumbs div.breadcrumbs-wrapper {
@@ -210,6 +339,7 @@ section.books-breadcrumbs div.breadcrumbs-wrapper {
 .book-details h1.book-title {
 	font-size: 1em;
 	font-family: "Libre Baskerville", serif;
+	margin-top: 15px;
 }
 
 .book-details h2.book-subtitle {
@@ -232,6 +362,23 @@ section.books-breadcrumbs div.breadcrumbs-wrapper {
 
 .book-details div.display-3 {
 	padding-right: 5%;
+}
+
+.list-detail-jumbotron {
+	background: #8F0000;
+}
+
+section.entries {
+	min-height: 50vh;
+	position: relative;
+}
+
+section.entries h2.empty-list {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	-webkit-transform: translate(-50%, -50%);
 }
 
 /* horizontal scroll*/
@@ -289,4 +436,202 @@ ul.last-name-list li {
 ul.last-name-list li:first-child {
 	margin-left: 0;
 	padding-right: 20px;
+}
+
+#delete-list {
+	
+}
+
+/*book search page*/
+[v-cloak] {
+  display: none;
+}
+
+section.browse-books form#main {
+	position: relative;
+	padding-top: 2rem;
+}
+
+section.browse-books .row {
+	width: 100%;
+}
+
+section.browse-books .col-sm-4 {
+	min-height: 25vh;
+}
+
+section.browse-books .col-sm-8 {
+	position: relative;
+	top: -40px;
+}
+
+section.browse-books input {
+	margin-left: 10%;
+}
+
+section.browse-books ul {
+	list-style: none;
+}
+
+section.browse-books h2 {
+	display: inline-flex;
+}
+
+.sort-orders {
+	margin-bottom: 2rem;
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+
+.sort-orders a {
+  color: #E81C23;
+  padding: 10px 10px;
+  margin: 0 10px 0 0;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.sort-orders a.active {
+  background: #E81C23;
+}
+
+/*star ratings*/
+.br-theme-css-stars .br-widget {
+  height: 28px;
+  white-space: nowrap;
+}
+.br-theme-css-stars .br-widget a {
+  text-decoration: none;
+  height: 18px;
+  width: 18px;
+  float: left;
+  font-size: 23px;
+  margin-right: 5px;
+}
+.br-theme-css-stars .br-widget a:after {
+  content: "\2605";
+  color: #d2d2d2;
+}
+.br-theme-css-stars .br-widget a.br-active:after {
+  color: #EDB867;
+}
+.br-theme-css-stars .br-widget a.br-selected:after {
+  color: #EDB867;
+}
+.br-theme-css-stars .br-widget .br-current-rating {
+  display: none;
+}
+.br-theme-css-stars .br-readonly a {
+  cursor: default;
+}
+@media print {
+  .br-theme-css-stars .br-widget a:after {
+    content: "\2606";
+    color: black;
+  }
+  .br-theme-css-stars .br-widget a.br-active:after,
+  .br-theme-css-stars .br-widget a.br-selected:after {
+    content: "\2605";
+    color: black;
+  }
+}
+
+.rating-wrapper {
+	display: flex;
+}
+
+.rating-wrapper span {
+	font-size: 1.5rem;
+}
+
+.rating-wrapper label {
+	font-size: 1.5rem;
+	margin-right: 15px;
+}
+
+.rating-wrapper p {
+	display: flex;
+}
+
+button.delete-button {
+	background: none;
+	border: none;
+	color: #8F0000;
+	font-size: 2.5rem;
+	margin-right: 25px;
+}
+
+button.delete-button:hover {
+	color: #680D10;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+button.add-button {
+	background: none;
+	border: none;
+	color: #8F0000;
+	font-size: 1.5rem;
+	margin-left: 15px;
+	position: relative;
+	top: -7px;
+}
+
+button.add-button:hover {
+	color: #680D10;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+/*styles for our dashboard*/
+section.dashboard-jumbotron {
+	width: 100%;
+}
+
+div.dashboard-container div.row {
+	width: 100%;
+}
+
+div.dashboard-container div#app {
+	width: 100%;
+}
+
+div.dashboard-container div.card {
+	border: none;
+	min-height: 50vh;
+}
+
+div.dashboard-container div.card:hover {
+	border: none;
+}
+
+div.dashboard-container .nav-link.active {
+	background-color: #8F0000 !important;
+}
+
+div.dashboard-container .btn-primary {
+	background-color: #8F0000 !important;
+	border-color: #8F0000 !important;
+}
+
+div.dashboard-container .btn-primary:hover {
+	background-color: #680D10 !important;
+}
+
+div.list-add-wrapper {
+	font-size: 1.5rem;
+}
+
+div.list-add-wrapper .form-control {
+	margin-left: 10px;
+}
+
+div.likes-wrapper {
+	font-size: 1.5rem;
+	display: flex;
+}
+
+div.likes-wrapper a {
+	margin-left: 15px;
 }

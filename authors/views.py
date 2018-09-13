@@ -6,7 +6,7 @@ from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
-from .models import Author
+from .models import Author, AuthorList, AuthorListEntry
 from books.models import Book
 from common.decorators import ajax_required
 from .filters import AuthorFilter
@@ -90,3 +90,29 @@ def filter(request):
 	author_list = Author.objects.all()
 	author_filter = AuthorFilter(request.GET, queryset=author_list)
 	return render(request, 'authors/list1.html', {'filter': author_filter})
+
+class AllLists(TemplateView):
+	template_name = 'authors/all_lists.html'
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['award_lists'] = AuthorList.objects.filter(kind='awards')
+		context['editorial_lists'] = AuthorList.objects.filter(kind='editorial')
+		return context
+
+class AuthorListsOfKind(TemplateView):
+	template_name = 'authors/lists_of_kind.html'
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['kind'] = self.kwargs['kind']
+		context['lists_of_kind'] = AuthorList.objects.filter(kind=self.kwargs['kind'])
+		return context
+
+class GenericAuthorList(TemplateView):
+	template_name = 'authors/generic_list.html'
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		author_list = AuthorList.objects.get(slug=self.kwargs['slug'])
+		context['list_entries'] = AuthorListEntry.objects.filter(author_list=author_list).order_by('-year')
+		context['kind'] = self.kwargs['kind']
+		context['list'] = AuthorList.objects.get(slug=self.kwargs['slug'])
+		return context

@@ -1,83 +1,86 @@
 {% extends "base.html" %}
 {% load static %}
-
 {% block content %}
-<section class="jumbotron jumbotron-fluid author-detail-jumbotron">
-	<div class="row">
-		<div class="author-image col-4" style="background-image: url('{{ author.author_image.url }}');">
-
-		</div>
-		<div class="display-3 col-8">
-			<h1 class = "text-dark author-name">{{author.first_name}} {{author.last_name}}</h1>
-			<h2 class = "text-dark author-country">{{ author.country.name }}</h2>
-			<h2 class = "text-dark author-birth">Born {{ author.birth_year }}</h2>
-			<p class= "text-dark author-bio">{{ author.bio }}</p>
-            {% with total_likes=author.likes.count users_like=author.likes.all %}
-            <p>{{ total_likes }} like {{ total_likes|pluralize }}</p>
-            <a href="#" data-id="{{ author.id }}" data-action="{% if request.user in users_like %}un{% endif %}like" class="like button">
-                {% if request.user not in users_like %}
-                Like
-                {% else %}
-                Unlike
-                {% endif %}
-            </a>
-            {% endwith %}
-		</div>
-	</div>
+  <section class="books-breadcrumbs">
+    <div class="breadcrumbs-wrapper">
+      <a href="../../authors">
+        <span>
+          <i class="fas fa-chevron-left"></i>&nbsp;&nbsp;&nbsp;&nbsp;Authors
+        </span>
+      </a>
+    </div>
+  </section>
+  <section class="jumbotron jumbotron-fluid author-detail-jumbotron">
+    <div class="row">{% if author.author_image %}
+      <div class="author-image col-4" style="background-image: url('{{ author.author_image.url }}');">
+      </div>{% endif %}
+      <div class="display-3 col-8">
+        <h1 class = "text-dark author-name">{{author.first_name}} {{author.last_name}}</h1>
+        <h2 class = "text-dark author-country">{{ author.country.name }}</h2>
+        <h2 class = "text-dark author-birth">Born {{ author.birth_year }}</h2>
+        <div class="likes-wrapper">
+          {% with total_likes=author.likes.count users_like=author.likes.all %}
+          <p>{{ total_likes }} like{{ total_likes|pluralize }}</p>
+          <a href="#" data-id="{{ author.id }}" data-action="{% if request.user in users_like %}un{% endif %}like" class="like button">
+          {% if request.user not in users_like %}
+            Like
+          {% else %}
+            Unlike
+          {% endif %}
+        </a>
+      {% endwith %}
+    </div>
+    <p class= "text-dark author-bio">{{ author.bio }}</p>
+  </div>
+</div>
 </section>
 <div class="album py-5 bg-light">
-    <div class="container-fluid text-center">
-        <div class="row">
-        	<div class="scrolling-wrapper">
-            {% for book in books %}
-                {% include "./_card1.html" with obj=book type="book" %}
-            {% endfor %}
-        </div>
-        </div>
+<div class="container-fluid text-center">
+  <div class="row">
+    <div class="scrolling-wrapper">
+      {% for book in books %}
+        {% include "./_card1.html" with obj=book type="book" %}
+      {% endfor %}
     </div>
+  </div>
+</div>
 </div>
 {% if same_country %}
 <div class="album py-5 bg-light">
-    <div class="container">
-    	<div class="text-center">
-    		<h1>Other authors from {{ author.country.name }}</h1>
-    	</div>
-        <div class="row">
-            {% for authors in same_country %}
-                {% include "./_slide1.html" with obj=authors type="author" %}
-            {% endfor %}
-        </div>
+  <div class="container">
+    <div class="text-center">
+      <h1>Other authors from {{ author.country.name }}</h1>
     </div>
+    <div class="row">
+      {% for authors in same_country %}
+        {% include "./_slide1.html" with obj=authors type="author" %}
+      {% endfor %}
+    </div>
+  </div>
 </div>
 {% endif %}
-
-
 {% endblock %}
-
-
 {% block domready %}
-  $('a.like').click(function(e){
-    e.preventDefault();
-    $.post('{% url "authors:like" author.slug author.id %}',
-      {
-        id: $(this).data('id'),
-        action: $(this).data('action')
-      },
-      function(data){
-        if (data['status'] == 'ok')
-        {
-          var previous_action = $('a.like').data('action');
-
-          // toggle data-action
-          $('a.like').data('action', previous_action == 'like' ? 'unlike' : 'like');
-          // toggle link text
-          $('a.like').text(previous_action == 'like' ? 'Unlike' : 'Like');
-
-          // update total likes
-          var previous_likes = parseInt($('span.count .total').text());
-          $('span.count .total').text(previous_action == 'like' ? previous_likes + 1 : previous_likes - 1);
-        }
-      }
-    );
-  });
+$('a.like').click(function(e){
+e.preventDefault();
+$.post('{% url "authors:like" author.slug author.id %}',
+{
+id: $(this).data('id'),
+action: $(this).data('action')
+},
+function(data){
+if (data['status'] == 'ok')
+{
+var previous_action = $('a.like').data('action');
+// toggle data-action
+$('a.like').data('action', previous_action == 'like' ? 'unlike' : 'like');
+// toggle link text
+$('a.like').text(previous_action == 'like' ? 'Unlike' : 'Like');
+// update total likes
+var previous_likes = parseInt($('span.count .total').text());
+$('span.count .total').text(previous_action == 'like' ? previous_likes + 1 : previous_likes - 1);
+}
+}
+);
+});
 {% endblock %}

@@ -1,0 +1,3 @@
+<form id='delete-list' method='post' action='{{ delete_url }}' data-url='{{ delete_url }}'>{% csrf_token %}
+	<button title='Delete this list' form='delete-list' type='submit' value='submit' class='delete-button'><i class="far fa-trash-alt confirm-delete" style="color: white;"></i></button>
+</form>

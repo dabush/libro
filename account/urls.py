@@ -1,7 +1,9 @@
 from django.urls import path, include
 from . import views
+from .views import UserListFormView, UserListView, UserListEntryDeleteView, UserListDeleteView
 from django.contrib.auth import views as auth_views
 
+app_name = 'accounts'
 urlpatterns = [
 	#path('login/', auth_views.LoginView.as_view(), name='login'),
 	#path('logout/', auth_views.LogoutView.as_view(), name='logout'),
@@ -15,4 +17,8 @@ urlpatterns = [
 	path('', include('django.contrib.auth.urls')),
 	path('register/', views.register, name='register'),
 	path('edit/', views.edit, name='edit'),
+	path('create-list/', UserListFormView.as_view(), name='create_user_list'),
+	path('<int:pk>/delete-list/', UserListDeleteView.as_view(), name='delete_user_list'),
+	path('lists/<int:userlist_id>', UserListView.as_view(), name='user_list_view'),
+	path('lists/<int:userlist_id>/<int:pk>/delete', UserListEntryDeleteView.as_view(), name='user_list_entry_delete_view'),
 ]
