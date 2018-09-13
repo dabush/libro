@@ -19,7 +19,7 @@ urlpatterns = [
 	path('edit/', views.edit, name='edit'),
 	path('create-list/', UserListFormView.as_view(), name='create_user_list'),
 	path('<int:pk>/delete-list/', UserListDeleteView.as_view(), name='delete_user_list'),
-	path('lists/<int:userlist_id>', UserListView.as_view(), name='user_list_view'),
+	path('lists/<int:pk>', UserListView.as_view(), name='user_list_view'),
 	path('lists/<int:pk>/edit', UserListUpdateView.as_view(), name='user_list_update'),
 	path('lists/<int:userlist_id>/<int:pk>/delete', UserListEntryDeleteView.as_view(), name='user_list_entry_delete_view'),
 ]

@@ -5,12 +5,12 @@ from django.urls import reverse, reverse_lazy
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
-from django.views.generic import TemplateView, FormView
+from django.views.generic import TemplateView, FormView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 from .forms import LoginForm, UserRegistrationForm, UserEditForm, ProfileEditForm, UserListCreateForm, UserEntryAddForm
 from .models import Profile, UserList, UserListEntry
-# from .mixins import PermissionMixin
+from .mixins import PrivatePermissionMixin
 
 from books.mixins import AjaxFormMixin
 from books.models import Book, Rating
@@ -89,12 +89,13 @@ class UserListFormView(AjaxFormMixin, FormView):
 	template_name  = 'account/_list_create.html'
 	success_url = '/accounts/'
 
-class UserListView(TemplateView):
+class UserListView(PrivatePermissionMixin, DetailView):
+	model = UserList
 	template_name = 'account/list.html'
 	def get_context_data(self, **kwargs):
 		# Call the base implementation first to get a context
 		context = super().get_context_data(**kwargs)
-		userlist = UserList.objects.get(id=self.kwargs['userlist_id'])
+		userlist = UserList.objects.get(pk=self.kwargs['pk'])
 		context['userlist'] = userlist
 		context['list_entries'] = UserListEntry.objects.filter(user_list=userlist)
 		context['delete_url'] = reverse('accounts:delete_user_list', kwargs={'pk': userlist.id })
