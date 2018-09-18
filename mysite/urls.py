@@ -29,6 +29,7 @@ sitemaps = {
 
 urlpatterns = [
     path('', include('home.urls')),
+    path('', include('django.contrib.auth.urls')),
     path('books/', include('books.urls')),
     path('authors/', include('authors.urls')),
     path('admin/', admin.site.urls),
