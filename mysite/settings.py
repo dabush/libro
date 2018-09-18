@@ -31,9 +31,9 @@ ALLOWED_HOSTS = ['165.227.23.126', 'localhost',]
 
 SITE_ID = 1
 
-LOGIN_REDIRECT_URL = 'dashboard'
-LOGIN_URL = 'login'
-LOGOUT_URL = 'logout'
+LOGIN_REDIRECT_URL = 'accounts:dashboard'
+LOGIN_URL = 'accounts:login'
+LOGOUT_URL = 'accounts:logout'
 
 
 # Application definition
