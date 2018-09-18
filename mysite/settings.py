@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+from decouple import config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,19 +21,19 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 's(4s6@+^@2@f#$erl6m82=6eh3n13q0*51#jk0cn3ngsdr==a*'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', cast=bool)
 
-ALLOWED_HOSTS = ['mysite.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['165.227.23.126', 'localhost',]
 
 
 SITE_ID = 1
 
-LOGIN_REDIRECT_URL = 'accounts:dashboard'
-LOGIN_URL = 'accounts:login'
-LOGOUT_URL = 'accounts:logout'
+LOGIN_REDIRECT_URL = 'dashboard'
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
 
 
 # Application definition
@@ -52,10 +53,10 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.sitemaps',
 
-    'haystack',
     'social_django',
     'rest_framework',
     'django_filters',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -92,13 +93,7 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',)
 }
 
-#Haystack search through Whoosh
-HAYSTACK_CONNECTIONS = {
-    'default': {
-        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
-        'PATH': os.path.join(os.path.dirname(__file__), 'whoosh_index'),
-    },
-}
+
 
 
 # Database
@@ -106,8 +101,12 @@ HAYSTACK_CONNECTIONS = {
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': config('DB_NAME'),
+	'USER': config('DB_USER'),
+	'PASSWORD': config('DB_PASSWORD'),
+	'HOST': config('DB_HOST'),
+	'PORT': '',
     }
 }
 
@@ -156,8 +155,26 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
-STATICFILES_DIRS = ["staticfiles",]
-STATIC_URL = '/static/'
+AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+AWS_QUERYSTRING_AUTH = False
+AWS_LOCATION = 'static'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'mysite/media')
-MEDIA_URL = '/media/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+STATIC_ROOT = 'staticfiles'
+STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+MEDIA_URL = STATIC_URL + 'media/'
+ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATICFILES_FINDERS = (
+'django.contrib.staticfiles.finders.FileSystemFinder',
+'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+)
