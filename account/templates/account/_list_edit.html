@@ -1,0 +1,26 @@
+<div id="app" class="edit-modal">
+	<div v-cloak>
+  <b-btn v-b-modal="'myModal'"><i><i title="Edit this list" class="fas fa-edit"></i></i></b-btn>
+<b-modal id="myModal" centered>
+    <h1>Edit your list</h1>
+<form id='userlist-edit-form' method='POST' action='{% url 'accounts:user_list_update' pk=userlist.id %}' data-url='{% url 'accounts:user_list_update' pk=userlist.id %}'>
+	{% csrf_token %}
+	<p><input type="text" name="name" value="{{ userlist.name }}" maxlength="150" required="required" id="id_name" class="form-control form-control-lg"></p>
+	<p>
+		<label for="id_not_public">Would you like this list to be private?</label>
+		<input type="checkbox" name="not_public" id="id_not_public" {% if userlist.not_public == True %}checked{% endif %}>
+	</p>
+	<p>
+		<label for="id_list_desc">A description of your list:</label>
+		<textarea name="list_desc" cols="40" rows="10" maxlength="500" required="required" id="id_list_desc" class="form-control">{{ userlist.list_desc }}</textarea>
+	</p>
+	<p>
+		<label for="id_list_image">Want to update the picture?</label>
+		<input type="file" name="list_image" accept="image/*" id="id_list_image" class="form-control-file">
+		<input type="hidden" name="user" disabled="disabled" id="id_user">
+	</p>
+</form>
+<button type="submit" form = 'userlist-edit-form' value='submit' class = 'btn btn-dark'>Submit</button>
+  </b-modal>
+</div>
+</div>

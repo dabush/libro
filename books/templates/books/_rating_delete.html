@@ -1,0 +1,3 @@
+<form id='delete-rating' method='post' action='{% url 'books:delete_rating' slug=rating.book.slug book_id=rating.book.id pk=rating.id %}' data-url='{% url 'books:delete_rating' slug=rating.book.slug book_id=rating.book.id pk=rating.id %}'>{% csrf_token %}
+	<button title='Delete this rating' form='delete-rating' type='submit' value='submit' class='delete-button'><i class="far fa-trash-alt confirm-delete" style="color: #8F0000;"></i></button>
+</form>

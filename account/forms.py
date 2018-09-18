@@ -34,18 +34,23 @@ class ProfileEditForm(forms.ModelForm):
 
 class UserListCreateForm(forms.ModelForm):
 	user = forms.ModelChoiceField(widget=forms.HiddenInput, queryset=get_user_model().objects.all(), disabled=True)
+	not_public = forms.BooleanField(label='Would you like this list to be private?', required=False)
 	name = forms.CharField(label='A name for your list' , max_length=150, widget=forms.TextInput(attrs={'class': 'form-control form-control-lg', 'placeholder': 'Books Nietzsche would approve of..'}))
 	list_desc = forms.CharField(label='A description of your list',max_length=500, widget=forms.Textarea(attrs={'class': 'form-control'}))
 	list_image = forms.ImageField(label='A picture for your list', required=False, widget=forms.FileInput(attrs={'class': 'form-control-file'}))
 
 	class Meta:
 		model = UserList
-		fields = ['user', 'name', 'list_desc', 'list_image']
+		fields = ['user', 'name', 'not_public', 'list_desc', 'list_image']
 
 class UserEntryAddForm(forms.ModelForm):
 	user = forms.ModelChoiceField(widget=forms.HiddenInput, queryset=get_user_model().objects.all(), disabled=True)
 	book = forms.ModelChoiceField(widget=forms.HiddenInput, queryset=Book.objects.all(), disabled=True)
 	user_list = forms.ModelChoiceField(label=False, widget=forms.Select(attrs={'class': 'form-control form-control-sm'}), queryset=UserList.objects.all(), empty_label=None)
+
+	def __init__(self, user, *args, **kwargs):
+		super(UserEntryAddForm, self).__init__(*args, **kwargs)
+		self.fields['user_list'].queryset = UserList.objects.filter(user=user)
 
 	class Meta:
 		model = UserListEntry

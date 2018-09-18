@@ -16,13 +16,13 @@
 <div class="container list-container">
 	<div class="row">
 		<div class="col">
-			<a href="awards"><h1>Author Lists</h1></a>
+			<a href="../authors/lists"><h1>Author Lists</h1></a>
 			{% for list in author_lists %}
 				<a href="{{ list.get_absolute_url }}"><p>{{ list.name }}</p></a>
 			{% endfor %}
 		</div>
 		<div class="col">
-			<a href="editorial"><h1>Book Lists</h1></a>
+			<a href="../books/lists"><h1>Book Lists</h1></a>
 			{% for list in book_lists %}
 				<a href="{{ list.get_absolute_url }}"><p>{{ list.name }}</p></a>
 			{% endfor %}

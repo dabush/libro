@@ -1,0 +1,11 @@
+{% extends "accounts_base.html" %}
+
+{% load static %}
+
+{% block content %}
+<div class="col">
+		<div class="site-logo"><img src="{% static 'sitelogo.png' %}" height=75 width=75>LibroDB</div>
+<h1 class="h3 mb-3 font-weight-normal">You have successfully logged out.</h1>
+<p class="mb-e font-weight-normal">You can <a href="{% url 'accounts:login' %}">log in</a> again or return to the <a href="/">home page</a>.</p>
+</div>
+{% endblock %}

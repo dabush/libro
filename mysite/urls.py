@@ -29,6 +29,7 @@ sitemaps = {
 
 urlpatterns = [
     path('', include('home.urls')),
+    path('', include('django.contrib.auth.urls')),
     path('books/', include('books.urls')),
     path('authors/', include('authors.urls')),
     path('admin/', admin.site.urls),
@@ -36,5 +37,4 @@ urlpatterns = [
     path('social-auth/', include('social_django.urls', namespace='social')),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
     path('api/', include(router.urls)),
-    path('book/', TemplateView.as_view(template_name='index.html')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

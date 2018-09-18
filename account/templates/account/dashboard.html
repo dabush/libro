@@ -2,58 +2,73 @@
 {% load static %}
 {% block title %}Dashboard{% endblock %}
 {% block content %}
+	<section class="jumbotron dashboard-jumbotron">
+		<div class="row">
+			<div class="col-8">
+			<h1 class="username">{{user.username}}</h1></div>
+			<div class="col-4">
+				<p class="text-right"><a href="{% url 'accounts:edit' %}">Edit your profile</a></p>
+				<p class="text-right"><a href="{% url 'accounts:password_change' %}">Change your password</a>.</p>
+			</div>
+		</div>
+	</section>
 	<div class="container-fluid dashboard-container">
 		<div class="row">
-			<section class="jumbotron dashboard-jumbotron">
-				<div class="row text-center author-row">
-					<h1>Dashboard</h1>
-					<p>Welcome to your dashboard. You can <a href="{% url 'accounts:edit' %}">edit your profile</a> or <a href="{% url 'accounts:password_change' %}">change your password</a>.</p>
-				</div>
-			</section>
-			<div class="row">
-				<div id="app">
-					<div v-cloak>
-						<b-card no-body>
-						<b-tabs pills card vertical>
-						<b-tab title="Books You've Rated" active>
-						<h1>Your rated books</h1>
+			<div id="app">
+				<div v-cloak>
+					<b-card no-body>
+					<b-tabs pills card vertical>
+					<b-tab title="Books You've Rated" active>
+					<h1>Your rated books</h1>
+					{% if not user_ratings %}
+						<p>You haven't rated any books yet.</p>
+					{% else %}
 						{% for rating in user_ratings %}
-							<p>{{ rating.value }}/10: <a href="{{rating.book.get_absolute_url}}">{{ rating.book }}</a>, by {{ rating.book.author }}</p>
+							<div class="rating-wrapper"><p>{{ rating.value }}/10: <a href="{{rating.book.get_absolute_url}}">{{ rating.book }}</a>, by {{ rating.book.author }}</p>
+							{% include 'books/_rating_delete.html' %}</div>
 						{% endfor %}
-						</b-tab>
-						<b-tab title="Authors You've Liked">
-						<h1>Your liked authors</h1>
+					{% endif %}
+					</b-tab>
+					<b-tab title="Authors You've Liked">
+					<h1>Your liked authors</h1>
+					{% if not liked_authors %}
+						<p>You haven't liked any authors yet.</p>
+					{% else %}
 						{% for author in liked_authors %}
 							<a href="{{author.get_absolute_url}}"><p>{{ author.first_name }} {{ author.last_name }}</p></a>
 						{% endfor %}
-						</b-tab>
-						<b-tab title="Your Lists">
-						{% if user_lists %}
-							<div>
-								<h1>Your Lists</h1>
-								{% for list in user_lists %}
-									<a href="{{ list.get_absolute_url }}"><h2 class="list-wrapper">{{ list.name }}:</h2></a>
-									{% for book in list.book.all %}
-										<span>{{ book }}&nbsp;&nbsp;&nbsp;</span>
-									{% endfor %}
+					{% endif %}
+					</b-tab>
+					<b-tab title="Your Lists">
+					<h1>Your Lists</h1>
+					{% if not user_lists %}
+						<p>You haven't created any lists yet.</p>
+					{% else %}
+						<div>
+							{% for list in user_lists %}
+								<a href="{{ list.get_absolute_url }}"><h2 class="list-wrapper">{% if list.not_public == True %}<i title="This list is private." class="fas fa-eye-slash"></i>{% endif %}{{ list.name }}:</h2></a>
+								{% if not list.book.all %}
+								<p>You haven't add anything to this list yet.</p>
+								{% else %}
+								{% for book in list.book.all %}
+									<span>{{ book }}&nbsp;&nbsp;&nbsp;</span>
 								{% endfor %}
-							</div>
-						{% endif %}
-						</b-tab>
-						<b-tab title="Create a New List">
-						{% include './_list_create.html' %}
-						</b-tab>
-						<b-tab title="Edit Your Password">
-						</b-tab>
-						</b-tabs>
-						</b-card>
+							{% endif %}
+						{% endfor %}
 					</div>
-				</div>
+				{% endif %}
+				</b-tab>
+				<b-tab title="Create a New List">
+				{% include './_list_create.html' %}
+				</b-tab>
+				</b-tabs>
+				</b-card>
 			</div>
 		</div>
 	</div>
+</div>
 {% endblock %}
 {% block scripts %}
-	<!-- 	<script src='{% static 'userlist_ajax.js' %}'></script> -->
-	<script src='{% static 'dashboard.js' %}'></script>
+<!-- 	<script src='{% static 'userlist_ajax.js' %}'></script> -->
+<script src='{% static 'dashboard.js' %}'></script>
 {% endblock %}

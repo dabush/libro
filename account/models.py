@@ -19,9 +19,10 @@ class UserList(models.Model):
 	book = models.ManyToManyField('books.Book', blank=True, through='UserListEntry', related_name='user_list_books')
 	list_desc = models.TextField()
 	list_image = models.ImageField(null=True, blank=True, upload_to='list_images')
+	not_public = models.BooleanField(default=False, help_text='Don\'t make this list available to other users.')
 
 	def get_absolute_url(self):
-		return reverse('accounts:user_list_view', kwargs={'userlist_id': self.id})
+		return reverse('accounts:user_list_view', kwargs={'pk': self.pk})
 
 	def __str__(self):
 		return self.name
