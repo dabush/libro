@@ -683,3 +683,14 @@ div.edit-modal footer {
 div.list-form-wrapper {
 	border-right: 1px solid white;
 }
+
+.eb-footer .col-4 {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.eb-footer .col-4 a {
+	margin-left: 10px;
+	margin-right: 10px;
+}
