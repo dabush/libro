@@ -26,7 +26,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', cast=bool)
 
-ALLOWED_HOSTS = ['165.227.23.126', 'localhost',]
+ALLOWED_HOSTS = ['165.227.23.126', 'localhost', 'www.librodb.com', 'librodb.com',]
 
 
 SITE_ID = 1
