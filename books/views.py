@@ -66,7 +66,6 @@ class BookDetailPage(TemplateView):
 		context['userlist_entry_form'] = userlist_entry_form
 		return context
 
-@login_required
 def book_list(request):
 	books = Book.objects.all()
 	#set to 999 to deal with bug that causes repeat

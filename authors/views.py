@@ -65,7 +65,6 @@ def author_like(request, slug, author_id):
 			pass
 	return JsonResponse({'status':'ko'})
 
-@login_required
 def author_list(request):
 	authors = Author.objects.all()
 	#set to 999 to deal with bug that causes repeat
