@@ -12,7 +12,7 @@
   </section>
   <section class="jumbotron jumbotron-fluid author-detail-jumbotron">
     <div class="row">{% if author.author_image %}
-      <div class="author-image col-4" style="background-image: url('{{ author.author_image.url }}');">
+      <div class="author-image col-4" style="background-image: url('{{ author.author_image.url }}');"><span class="image-credit">© {{ author.image_credit }}</span>
       </div>{% endif %}
       <div class="display-3 col-8">
         <h1 class = "text-dark author-name">{{author.first_name}} {{author.last_name}}</h1>

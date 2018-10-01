@@ -34,6 +34,7 @@ class Author(models.Model):
 	regions = models.ManyToManyField(Region, blank=True)
 	date_added = models.DateField(auto_now_add=True)
 	author_image = models.ImageField(null=True, blank=True, upload_to='author_images')
+	image_credit = models.CharField(max_length=50, blank=True)
 	slug = models.SlugField(max_length=30)
 	featured_author = models.BooleanField()
 	likes = models.ManyToManyField(User, related_name="author_likes", blank=True)

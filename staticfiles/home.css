@@ -167,6 +167,16 @@ div.first-lines {
 	background-size: cover;
 	height: auto;
 	min-height: 50vh;
+	position: relative;
+}
+
+.author-detail-jumbotron .author-image .image-credit {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	font-size: 0.5rem;
+	color: #000000;
+	writing-mode: vertical-lr;
 }
 
 .author-detail-jumbotron h1.author-name {
@@ -332,6 +342,7 @@ section.books-breadcrumbs div.breadcrumbs-wrapper {
 	right: 0;
 	font-size: 0.5rem;
 	color: #000000;
+	writing-mode: vertical-lr;
 }
 
 .book-details p.publisher {
