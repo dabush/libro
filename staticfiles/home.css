@@ -323,6 +323,15 @@ section.books-breadcrumbs div.breadcrumbs-wrapper {
 	height: 550px;
 	width: 85%;
 	margin: 25px auto;
+	position: relative;
+}
+
+.book-details .cover-image .image-credit {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	font-size: 0.5rem;
+	color: #000000;
 }
 
 .book-details p.publisher {

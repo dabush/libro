@@ -22,7 +22,7 @@
 	<section class="book-details">
 		<div class="row book-row">
 			<div class="col-4">
-				<div class ="cover-image" style="background-image: url('{{ book.cover_image.url }}');">
+				<div class ="cover-image" style="background-image: url('{{ book.cover_image.url }}');"><span class="image-credit">© {{ book.image_credit }}</span>
 				</div>
 				<p class="publisher"><span>{{ book.publisher }}</span></p>
 				<p class="book-country"><span>{{ book.book_country.name }}</span></p>
