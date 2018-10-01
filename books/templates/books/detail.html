@@ -39,7 +39,7 @@
 				<div class="list-add-wrapper">
 					{% include './_list_add.html' with listentry_form_url=listentry_form_url userlist_entry_form=userlist_entry_form %}
 				</div>
-				<p class="book-desc">{{ book.book_desc }}</p>
+				<div class="book-desc">{{ book.book_desc|safe }}</div>
 			</div>
 		</div>
 	</section>

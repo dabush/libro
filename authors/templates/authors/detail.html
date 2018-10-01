@@ -30,7 +30,7 @@
         </a>
       {% endwith %}
     </div>
-    <p class= "text-dark author-bio">{{ author.bio }}</p>
+    <div class= "text-dark author-bio">{{ author.bio|safe }}</div>
   </div>
 </div>
 </section>

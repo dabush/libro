@@ -178,7 +178,7 @@ div.first-lines {
 	padding-left: 25px;
 }
 
-.author-detail-jumbotron p.author-bio {
+.author-detail-jumbotron div.author-bio p {
 	font-size: 1rem;
 }
 
@@ -356,7 +356,7 @@ section.books-breadcrumbs div.breadcrumbs-wrapper {
 	font-size: 0.4em;
 }
 
-.book-details p.book-desc {
+.book-details div.book-desc p {
 	font-size: 0.3em;
 }
 
