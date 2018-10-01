@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
+from tinymce import HTMLField
 
 class Theme(models.Model):
 	theme_name = models.CharField(max_length=50)
@@ -65,7 +66,7 @@ class Book(models.Model):
 	genres = models.ManyToManyField(Genre, blank=True)
 	forms = models.ManyToManyField(Form, blank=True)
 	periods = models.ManyToManyField(Period, blank=True)
-	book_desc = models.TextField()
+	book_desc = HTMLField('Description')
 	book_country = CountryField()
 	book_featured = models.BooleanField()
 	lists = models.ManyToManyField('BookList', through='ListEntry', related_name='book_lists')

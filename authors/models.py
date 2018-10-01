@@ -2,6 +2,7 @@ from django.db import models
 from django_countries.fields import CountryField
 from django.urls import reverse
 from django.contrib.auth.models import User
+from tinymce import HTMLField
 
 class School(models.Model):
 	school_name = models.CharField(max_length=50)
@@ -27,7 +28,7 @@ class Author(models.Model):
 	last_name = models.CharField(max_length=50)
 	full_name = models.CharField(max_length=100)
 	birth_year = models.IntegerField()
-	bio = models.TextField()
+	bio = HTMLField('Bio')
 	country = CountryField()
 	schools = models.ManyToManyField(School, blank=True)
 	regions = models.ManyToManyField(Region, blank=True)
