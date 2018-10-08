@@ -4,8 +4,8 @@
 <div class="card list-card mb-3 box-shadow">
     <div class="list-card-bg-image" style="background-image: url('{% if obj.author.author_image %}{{ obj.author.author_image.url }}{% endif %}'); background-size: cover; background-position: center;"></div>
 <div class="card-body">
-    <a href='{{ obj.author.get_absolute_url }}'><h4>{{obj.author.last_name}}</h4></a>
-    <p class="card-text">{{ obj.author.bio|truncatewords:30 }}</p>
+    <a href='{{ obj.author.get_absolute_url }}'><h4>{{obj.author.full_name}}</h4></a>
+    <p class="card-text">{{ obj.author.bio|truncatewords:30|safe }}</p>
 </div>
 </div>
 </div>
