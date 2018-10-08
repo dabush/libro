@@ -105,9 +105,6 @@ div.lines-wrapper {
 	justify-content: center;
 	align-items: center;
 	margin: 0 auto;
-	top: 25%;
-	transform: translateY(-25%);
-	-webkit-transform: translateY(-25%);
 }
 
 .quote-attr {

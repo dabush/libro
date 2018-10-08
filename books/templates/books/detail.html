@@ -15,7 +15,11 @@
 			<div class="left-quotes" style="background-image: url({% static 'leftquotes.png' %});">
 			</div>
 			<div class="first-lines">
+				{% if book.first_lines %}
 				{{ book.first_lines|truncatewords:30}}
+				{% else %}
+				I know nothing in the world that has as much power as a word. Sometimes I write one, and I look at it, until it begins to shine. - Emily Dickinson
+				{% endif %}
 			</div>
 		</div>
 	</section>
